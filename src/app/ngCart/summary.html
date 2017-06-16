@@ -1,0 +1,28 @@
+<md-list>
+  <md-list-item ng-repeat="item in cart.$cart.items" class="container noright">
+    <img alt="{{ person.name }}" ng-src="https://cms.blumewebsites.com/{{ item._data.imagePath }}" class="md-avatar hidden-xs" />
+		<div class="col-xs-4">
+			<p class="product-name">
+				{{ item._name }}
+				<small ng-if="item._data.selectedVariant != 'default'"> &nbsp;{{ item._data.selectedVariant }} &nbsp;</small>
+				<small ng-if="item._quantity > item._data.stock" ><span class="out-of-stock">No hay suficientes</span></small>
+			</p>
+		</div>
+		<div class="form-inline">
+			<div class="form-group">
+				<h5>
+					<span ng-if="vm.store.currency == 'USD'" class="text-muted">{{ item._price | currency }} x</span>
+					<span ng-if="vm.store.currency == 'CRC'" class="text-muted">{{ item._price | currency:'₡' }} x</span>
+					<a class="incr-btn fa fa-angle-left" ng-class="{'inactive':item.getQuantity()==1}" ng-click="item.setQuantity(-1, true)" style="cursor: pointer">
+			      	</a>
+				    <span class="quantity">{{ item.getQuantity() | number }}</span>
+				    <a class="incr-btn fa fa-angle-right" ng-click="item.setQuantity(1, true)" style="cursor: pointer">
+				    </a>
+				</h5>
+			</div>
+		</div>
+		<md-button class="md-icon-button" aria-label="More" ng-click="cart.removeItemById(item._id)">
+			<md-icon><i class="material-icons">delete</i></md-icon>
+		</md-button>
+  </md-list-item>
+</md-list>

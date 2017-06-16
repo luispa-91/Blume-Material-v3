@@ -1,0 +1,19 @@
+<md-divider class="max-top"></md-divider>
+<br />
+<div class="footer-bottom">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h4 class="sub">{{vm.settings.footer.title}}</h4>
+            <p>{{vm.settings.footer.description}}</p>
+          </div>
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <h4 class="sub">Contáctenos</h4>
+            <p ng-repeat="info in vm.settings.footer.contact_info"><i class="fa" ng-class="{ 'fa-envelope' : info.type == 'email', 'fa-phone' : info.type == 'phone', 'fa-map-marker' : info.type == 'address'}" aria-hidden="true"></i> {{info.value}}</p>
+          </div>
+        </div>
+        <br />
+    </div>
+</div>

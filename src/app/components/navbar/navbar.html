@@ -1,0 +1,96 @@
+<!--navbar-static-top-->
+<div style="background-color: white!important;" layout="row" layout-align="center center">
+    <img ui-sref="home" style="cursor: pointer" class="principal-img" ng-src="https://cms.blumewebsites.com/{{vm.settings.home.logo_url}}">
+</div>
+<div ng-cloak>
+  <md-content>
+    <md-toolbar layout="row" layout-align="center center" class="">
+
+      <div class="md-toolbar-tools shadow">
+        <md-button class="md-icon-button launch" ng-click="toggleLeft()"  hide-gt-md>
+          <i class="material-icons">menu</i>
+        </md-button>
+          <span flex></span>
+          <!-- <md-button hide-xs ui-sref="home" class="md-warn"><img ui-sref="home" class="principal-img" ng-src="https://cms.blumewebsites.com/{{vm.settings.logo_url}}" alt="Logo"></md-button> -->
+        <md-button hide-xs ui-sref="home" class="md-warn" ng-if="vm.settings.tabs.home.visible">{{vm.settings.tabs.home.title}}</md-button>
+        <md-button hide-xs ui-sref="products" class="md-warn" ng-if="vm.settings.tabs.products.visible">{{vm.settings.tabs.products.title}}</md-button>
+        <md-menu hide-xs class="menu-bar" ng-if="vm.settings.tabs.collections.visible">
+         <md-button ng-click="openMenu($mdOpenMenu, $event)">
+           {{vm.settings.tabs.collections.title}} <md-icon style="color:black"class="material-icons  principal-color md-48">arrow_drop_down</md-icon>
+         </md-button>
+         <md-menu-content width="4">
+           <md-menu-item ng-repeat="collection in collections">
+             <md-button ui-sref="collection({name: collection.title })">
+               {{collection.title}}
+             </md-button>
+           </md-menu-item>
+         </md-menu-content>
+       </md-menu>
+        <md-button hide-xs ui-sref="locator" class="md-warn" ng-if="vm.settings.tabs.store_locator.visible">{{vm.settings.tabs.store_locator.title}}</md-button>
+        <md-button hide-xs ui-sref="about" class="md-warn" ng-if="vm.settings.tabs.about_us.visible">{{vm.settings.tabs.about_us.title}}</md-button>
+        <md-button hide-xs ui-sref="blog" class="md-warn" ng-if="vm.settings.tabs.blog.visible">{{vm.settings.tabs.blog.title}}</md-button>
+        <!-- <md-button hide-xs ui-sref="contact" class="md-warn" ng-if="vm.settings.tabs.contact_us.visible">{{vm.settings.tabs.contact_us.title}}</md-button> -->
+          <md-button ui-sref="checkout.shops.summary" class="md-icon-button" aria-label="More">
+              <md-icon><i class="material-icons black">shopping_cart</i></md-icon>
+          </md-button>
+          <span class="badge black">{{ vm.items }}</span>
+          <span flex></span>
+    </div>
+    </md-toolbar>
+      <div class="social-back" layout="row" layout-align="center center">
+          <div class="socials">
+            <ul class="social-network" style="padding-left:0px;">
+              <li><a class="i-sociala facebook" href="https://www.facebook.com/blumeapps" target="_blank"><i class="i-color fa fa-facebook"></i></a></li>
+              <li><a class="i-sociala instagram" href="https://www.instagram.com/blumeapps" target="_blank"><i class=" i-color fa fa-instagram"></i></a></li>
+              <li><a class="i-sociala youtube" href="https://www.pinterest.com/blumeapps" target="_blank"><i class=" i-color fa fa-pinterest"></i></a></li>
+            </ul>
+          </div>
+      </div>
+  </md-content>
+
+  <!-- Start Left Menu bar -->
+  <section layout="row" flex ng-cloak>
+   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+     <md-toolbar class="center-block text-center" ng-controller="LeftCtrl">
+       <span><img cla style="max-width:50px;margin-top:0.5px;" ss="img-responsive img-brand md-toolbar-tools principal" ng-src="https://cms.blumewebsites.com/{{vm.settings.home.logo_url}}" /></span>
+     </md-toolbar>
+     <md-content>
+       <md-list ng-controller="LeftCtrl as vm">
+         <md-list-item ng-click="vm.home()" ng-if="vm.settings.tabs.home.visible">
+           <p class="upper-text">{{vm.settings.tabs.home.title}}</p>
+         </md-list-item>
+         <md-list-item ng-click="vm.products()" ng-if="vm.settings.tabs.products.visible">
+           <p class="upper-text">{{vm.settings.tabs.products.title}}</p>
+         </md-list-item>
+         <md-list-item>
+          <p class="upper-text" ng-if="vm.settings.tabs.collections.visible">{{vm.settings.tabs.collections.title}}</p>
+          <md-menu class="md-secondary">
+            <md-button class="md-icon-button">
+              <md-icon md-svg-icon="communication:message"></md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item ng-repeat="collection in collections">
+                <md-button ng-click="vm.collection(collection.title)">
+                  {{ collection.title }}
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-list-item>
+         <md-list-item ng-click="vm.locator()" ng-if="vm.settings.tabs.store_locator.visible">
+           <p class="upper-text">{{vm.settings.tabs.store_locator.title}}</p>
+         </md-list-item>
+         <md-list-item ng-click="vm.about()" ng-if="vm.settings.tabs.about_us.visible">
+           <p class="upper-text">{{vm.settings.tabs.about_us.title}}</p>
+         </md-list-item>
+         <md-list-item ng-click="vm.blog()" ng-if="vm.settings.tabs.blog.visible">
+           <p class="upper-text">{{vm.settings.tabs.blog.title}}</p>
+         </md-list-item>
+         <!-- <md-list-item ng-click="vm.contact()" ng-if="vm.settings.tabs.contact_us.visible">
+           <p class="upper-text">{{vm.settings.tabs.contact_us.title}}</p>
+         </md-list-item> -->
+       </md-list>
+     </md-content>
+   </md-sidenav>
+ </section>
+</div>

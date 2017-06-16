@@ -1,0 +1,91 @@
+.acme-navbar-text{
+  color: white;
+}
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+  background-color: white;
+  color: black;
+  border-bottom: 1px solid #E9E9E9;
+}
+.principal-img{
+  max-height: 100px;
+  margin-top: 15px;
+}
+.navbar-logo{
+  cursor:pointer;
+  height:4.5em;
+}
+.badge {
+    color: rgb(63,81,181);
+    background-color: #fff;
+}
+.social-back{
+  background-color: white!important;
+}
+.socials{
+  margin-top: 0.4em;
+}
+
+.social-network li{
+  display: inline-block;
+}
+.i-sociala {
+    margin-left: 0.3em;
+    display: inline-block;
+    line-height: 26px;
+    border: 1px solid #cccccc;
+    text-align: center;
+    -webkit-border-radius: 15px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 15px;
+    -moz-background-clip: padding;
+    border-radius: 15px;
+    background-clip: padding-box;
+    width: 30px;
+    height: 30px;
+    -moz-transition: border 300ms, background 600ms;
+    -o-transition: border 300ms, background 600ms;
+    -webkit-transition: border 300ms, background 600ms;
+    transition: border 300ms, background 600ms;
+}
+.i-color{
+  color: #CCCCCC;
+}
+.facebook{};
+.facebook:hover{
+  background-color: #3B5998;
+  .i-color{
+    color:white;
+  }
+}
+
+.youtube{};
+.youtube:hover{
+  background-color: #E62117;
+  .i-color{
+    color:white;
+  }
+}
+
+.instagram{};
+.instagram:hover{
+  background-color: #0074B1;
+  .i-color{
+    color:white;
+  }
+}
+
+.twitter{};
+.twitter:hover{
+  background-color: #1DA1F2;
+  .i-color{
+    color:white;
+  }
+}
+
+.vimeo{};
+.vimeo:hover{
+  background-color: #00B3EC;
+  .i-color{
+    color:white;
+  }
+}

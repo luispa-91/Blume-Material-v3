@@ -1,0 +1,24 @@
+<!-- Page Content -->
+<div class="container-fluid">
+   <div class="row products-header">
+     <!-- <div class="col-md-6 col-md-offset-3">
+       <h2 class="text-center black toop upper-text"><i class="material-icons icon-color"><i class="material-icons">lock_outline</i></i> Trámite seguro</h2>
+     </div> -->
+   </div>
+ </div>
+    <div class="container-fluid double-space-top" ng-controller="CheckoutController as vm">
+
+    <!-- Cart totals checkout sidebar -->
+        <div class="col-md-1 col-lg-1"></div>
+
+          <div class="col-md-7 col-lg-7">
+            <div ui-view="" autoscroll="true" class="wrapper"></div>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <div ng-include="'app/cart-totals/cart-totals.view.html'"></div>
+            <br />
+          </div>
+          <div class="col-md-1 col-lg-1"></div>
+        <br />
+
+    </div>

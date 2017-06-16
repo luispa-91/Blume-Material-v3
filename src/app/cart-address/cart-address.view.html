@@ -1,0 +1,178 @@
+<md-card class="card-simple top-shadow card-decoration" md-theme="custom">
+ <md-card-title>
+	 <md-card-title-text>
+		 <span class="upper-text">2. Datos de Compra</span>
+		 <md-divider></md-divider>
+	 </md-card-title-text>
+ </md-card-title>
+ <md-card-content>
+	 <!--Customer information-->
+	 <h4 class="dgrey">Información del Cliente</h4>
+	 <br />
+	 <div class="row">
+		 <div class="col-md-12">
+		 	<div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Nombre completo</label>
+					<input ng-model="vm.customer.full_name" >
+				</md-input-container>
+		 	</div>
+			<div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Correo Electrónico</label>
+					<input ng-model="vm.customer.email" type="email">
+				</md-input-container>
+			</div>
+			<div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Teléfono</label>
+					<input ng-model="vm.customer.phone" >
+				</md-input-container>
+			</div>
+		 </div>
+	 </div> 
+	 <!--Delivery Information-->
+	 <div class="center-block text-center">
+	 	<!-- <md-checkbox ng-if="vm.store.has_pickup_in_store" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
+			Fuera de Costa Rica
+		 </md-checkbox> -->
+	 	<md-checkbox ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.settings.pickup_in_store" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
+			No requiero envío a domicilo
+		 </md-checkbox>
+	 </div>
+	 <div class="row" ng-show="!vm.settings.pickup_in_store && !vm.export">
+		 <div class="col-md-12">
+			 <h4>Punto de referencia &nbsp;
+			 	<i ng-click="vm.currentLocation()" class="material-icons my-location">my_location</i>
+			 	<small ng-show="!vm.loading_location"> (Mostrar mi ubicación)</small>
+			 	<small ng-show="vm.loading_location"> Buscando su ubicación, un momento por favor...</small>
+			 </h4>
+				 <br>
+			 <div class="form-group">
+			 <md-input-container class="md-block" flex-gt-sm>
+			 <label for=""></label>
+				 <input
+				 places-auto-complete size=80
+				 ng-model="vm.address.address"
+				 component-restrictions="{country:'cr'}"
+				 on-place-changed="vm.placeLookup()"
+				 placeholder="Busque un punto cercano al lugar de entrega"/>
+			 </md-input-container>
+			</div>
+				<label>Haz click en el mapa para elegir el punto de entrega</label>
+			 <div>
+				 <ng-map center="San Jose, Costa Rica" zoom="12" on-click="vm.mapClick()">
+				 	<marker draggable="true" on-dragend="vm.dragDestination()" position="[{{vm.destination_coords.lat}},{{vm.destination_coords.lng}}]" title="Punto de entrega">
+				 	</marker>
+				 </ng-map>
+			 </div>
+			 <br />
+			<h4>Comentarios</h4>
+			 <div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+          			<textarea ng-model="vm.address.note" placeholder="Escriba la dirección y detalles del lugar de entrega"  md-maxlength="150" rows="5" ></textarea>
+				</md-input-container>
+			</div>
+			<h4>Transporte 
+				<!-- &nbsp;<small>Distancia aproximada: {{vm.destination_coords.distance}} Kms | {{cart.getTotalWeight()}} Kgs</small> -->
+			</h4><br />
+			 <div class="form-group">
+		 		<md-radio-group ng-model="vm.destination_coords.delivery_type" ng-change="vm.calculateShipping()">
+			      <md-radio-button value="multidomicilio">
+			      	Multidomicilio 
+			      	<span ng-show="vm.destination_coords.delivery_type == 'multidomicilio'">
+			      		<small class="text-muted" ng-if="vm.store.currency == 'USD'">
+				      		{{ cart.getShipping() | currency }} | Tiempo de entrega 1 día (approx)
+				      	</small>
+				      	<small class="text-muted" ng-if="vm.store.currency == 'CRC'">
+				      		{{ cart.getShipping() | currency:'₡' }} | Tiempo de entrega 1 día (approx)
+				      	</small>
+			      	</span>
+			      </md-radio-button>
+			      <md-radio-button value="correosdecostarica">
+			      	Correos de Costa Rica 
+			      	<span ng-show="vm.destination_coords.delivery_type == 'correosdecostarica'">
+			      		<small class="text-muted" ng-if="vm.store.currency == 'USD'">
+				      		{{ cart.getShipping() | currency }} | Tiempo de entrega 1 a 5 días (approx)
+				      	</small>
+				      	<small class="text-muted" ng-if="vm.store.currency == 'CRC'">
+				      		{{ cart.getShipping() | currency:'₡' }} | Tiempo de entrega 1 a 5 días (approx)
+				      	</small>
+			      	</span>
+		      	  </md-radio-button>
+			    </md-radio-group>
+			</div>
+			<br />
+		 </div>
+	 </div>
+	 <div class="row" ng-show="vm.settings.pickup_in_store">
+		 <div class="col-md-12">
+			 <h4>Dirección de cobro</h4>
+			 <br />
+			 <div class="form-group" layout="row">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>País</label>
+					<input ng-model="vm.billing_address.country" >
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Estado / Provincia</label>
+					<input ng-model="vm.billing_address.state">
+				</md-input-container>
+		 	</div>
+			<div class="form-group" layout="row">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Ciudad</label>
+					<input ng-model="vm.billing_address.city" >
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Código Postal</label>
+					<input ng-model="vm.billing_address.zip_code">
+				</md-input-container>
+		 	</div>
+
+		 	<div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+          			<textarea ng-model="vm.billing_address.address" placeholder="Dirección exacta"  md-maxlength="150" rows="5" ></textarea>
+				</md-input-container>
+			</div>
+		 </div>
+	 </div>
+
+	 <div class="row" ng-show="vm.export">
+		 <div class="col-md-12">
+			 <h4>Dirección de cobro</h4>
+			 <br />
+			 <div class="form-group" layout="row">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>País</label>
+					<input ng-model="vm.billing_address.country" >
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Estado / Provincia</label>
+					<input ng-model="vm.billing_address.state">
+				</md-input-container>
+		 	</div>
+			<div class="form-group" layout="row">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Ciudad</label>
+					<input ng-model="vm.billing_address.city" >
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Código Postal</label>
+					<input ng-model="vm.billing_address.zip_code">
+				</md-input-container>
+		 	</div>
+
+		 	<div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+          			<textarea ng-model="vm.billing_address.address" placeholder="Dirección exacta"  md-maxlength="150" rows="5" ></textarea>
+				</md-input-container>
+			</div>
+		 </div>
+	 </div>
+ </md-card-content>
+ <md-card-actions layout="row" layout-align="center center">
+	 <md-button class="pull-left sm-margin-left" ui-sref="checkout.shops.summary">Volver</md-button>
+	 <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.verifyData(vm.settings.pickup_in_store)">Continuar</md-button>
+ </md-card-actions>
+</md-card>

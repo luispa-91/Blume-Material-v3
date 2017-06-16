@@ -1,0 +1,98 @@
+
+  <div class="container-fluid">
+    <div class="row products-header">
+      <div class="col-md-6 col-md-offset-3">
+
+     </div>
+      </div>
+    </div>
+
+    <br/>
+
+    <div class="container double-space-top">
+      <div class="row">
+        <div class="col-md-6">
+          <div>
+            <span ng-if="product.sale_percentage > 0">
+              <div style="position:absolute;top:40px;right:52px;z-index:1">
+                <strong style="color:white">- {{product.sale_percentage}}%</strong>
+              </div>
+              <img style="position:absolute;top:15px;right:30px;" src="assets/images/discount-tag.png" />
+            </span>
+            <carousel interval="30000" style="cursor:pointer">
+               <slide ng-repeat="image in product.images">
+                 <img class="img-responsive" ng-src="https://cms.blumewebsites.com/{{image.relative_url}}" style="margin:auto;">
+               </slide>
+             </carousel>
+           </div>
+        </div>
+        <div class="col-md-6">
+          <div class="product-title"><h2>{{ product.title }} </h2> <span ng-if="product.sku != null">- {{product.sku}}</span></div>
+          <br />
+          <div ta-bind ng-model="product.long_description"></div>
+          <br />
+          <div ng-if="product.options.length > 0">
+              <h4><strong>{{product.options[0].type}}</strong></h4>
+              <span ng-repeat="opt in product.options[0].values">
+                  <label class="btn" href="">
+                  <input type="radio"
+                         ng-model="$parent.$parent.option1"
+                         ng-value="opt"
+                         [ng-change="selectedValueUpdate()"] />
+                  {{opt}}
+                  </label>
+              </span>
+          </div>
+          <div ng-if="product.options.length > 1">
+              <h4>{{product.options[1].type}}</h4>
+              <span ng-repeat="opt in product.options[1].values">
+                  <label class="btn btn-default" href="">
+                  <input type="radio"
+                         ng-model="$parent.$parent.option2"
+                         ng-value="opt"
+                         [ng-change="selectedValueUpdate()"] />
+                  {{opt}}
+                  </label>
+              </span>
+          </div>
+          <div ng-if="product.options.length > 2">
+              <h4>{{product.options[2].type}}</h4>
+              <span ng-repeat="opt in product.options[2].values">
+                  <label class="btn btn-default" href="">
+                  <input type="radio"
+                         ng-model="$parent.$parent.option3"
+                         ng-value="opt"
+                         [ng-change="selectedValueUpdate()"] />
+                  {{opt}}
+                  </label>
+              </span>
+          </div>
+          <br />
+          <div ng-repeat="variant in product.variants | filter:option1 | filter:option2 | filter:option3 | limitTo:1">
+              <div class="product-price text-muted" ng-if="currency == 'USD'">
+                <span ng-if="product.sale_percentage == 0">
+                  {{ variant.price | currency }}
+                </span>
+                <span ng-if="product.sale_percentage > 0">
+                  <small style="color:black"><strike>{{ variant.price | currency }}</strike></small><br />
+                  {{ variant.price * ((100 - product.sale_percentage) / 100) | currency }}
+                </span>
+                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay</small></span>
+              </div>
+              <div class="product-price text-muted" ng-if="currency == 'CRC'">
+                <span ng-if="product.sale_percentage == 0">
+                  {{ variant.price | currency:'₡' }}
+                </span>
+                <span ng-if="product.sale_percentage > 0">
+                  <small style="color:black"><strike>{{ variant.price | currency:'₡' }}</strike></small><br />
+                  {{ variant.price * ((100 - product.sale_percentage) / 100) | currency:'₡' }}
+                </span>
+                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay</small></span>
+              </div>
+              <ngcart-addtocart ng-show="variant.quantity != 0" id="{{ variant.id }}" name="{{ product.title }}" price="{{ variant.price * ((100 - product.sale_percentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.images[0].relative_url,product_id:product.id,weight:variant.weight,selectedVariant:variant.name,stock:variant.quantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-addtocart>
+          </div>
+          <small ng-click="share(product)" style="color:#3b5998"><i class="fa fa-2x fa-facebook-square"></i> &nbsp;Compartir</small>
+        </div>
+      </div>
+      <br />
+  </div>

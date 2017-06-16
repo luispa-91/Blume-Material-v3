@@ -1,0 +1,191 @@
+<md-card class="card-simple top-shadow card-decoration" md-theme="custom">
+  <md-card-title>
+      <md-card-title-text>
+          <span class="upper-text">3. Método de Pago</span>
+          <md-divider></md-divider>
+      </md-card-title-text>
+  </md-card-title>
+  <!-- Show enabled payment methods-->
+    <div ng-show="vm.store.payment_options.twocheckout" style="background-color:#ccc;padding-top:10px;padding-bottom:10px;" ng-click="vm.selected_method = 'TwoCheckout'">
+      <span style="margin-left:15px;">Tarjeta de crédito</span>
+    </div>
+      <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.twocheckout == true && vm.selected_method=='TwoCheckout'">
+      
+            <div class="col-md-6 hidden-xs hidden-sm">
+                <div id="card-container"></div>
+                <br />
+                <div class="center-block text-center">
+                  <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
+                    <span ng-show="!vm.discount_code.valid">Cupón</span>
+                    <span ng-show="vm.discount_code.valid">Gracias!</span>
+                  </md-button>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <form action="#"
+                      name="cardForm"
+                      data-card
+                      data-width="285"
+                      data-card-container="#card-container"
+                      data-placeholders="cardPlaceholders"
+                      data-options="vm.card_options">
+
+                    <div style="margin-top:2.5em">
+                      <div class="form-group c-c">
+                          <md-input-container class="md-block">
+                              <label>Número de tarjeta</label>
+                              <input style="margin-top:10px" type="text" name="CardNumber" card-number data-ng-model="vm.card.number" />
+                          </md-input-container>
+                      </div>
+                      <div class="form-group c-c">
+                          <md-input-container class="md-block">
+                              <label>Nombre de la tarjeta</label>
+                              <input style="margin-top:10px"  type="text" name="CardName" card-name data-ng-model="vm.card.name" />
+                          </md-input-container>
+                      </div>
+                      <div class="form-group c-c">
+                          <md-input-container class="md-block">
+                              <label>MM / YY</label>
+                              <input   style="margin-top:10px" type="text" name="CardExpiry" card-expiry data-ng-model="vm.card.expiry" />
+                          </md-input-container>
+                      </div>
+
+                      <div class="form-group c-c">
+                          <md-input-container class="md-block">
+                              <label>CVC</label>
+                              <input  style="margin-top:10px" type="text" name="CardCvc" card-cvc data-ng-model="vm.card.cvc" />
+                          </md-input-container>
+                      </div>
+                    </div>
+                </form>
+                <div class="center-block text-center hidden-md hidden-lg hidden-xl">
+                  <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
+                    <span ng-show="!vm.discount_code.valid">Cupón</span>
+                    <span ng-show="vm.discount_code.valid">Gracias!</span>
+                  </md-button>
+                </div>
+            </div>
+            <div ng-show="vm.temp.loading">
+              <md-progress-linear md-mode="determinate" value="{{vm.temp.progress}}"></md-progress-linear>
+              <span class="center-block text-center">Por favor espere mientras procesamos su pago...</span>
+            </div>
+            <span class="center-block text-center" ng-show="vm.temp.error_message != ''" style="color:#8B0000">{{vm.temp.error_message}}</span>
+        </md-card-content>
+
+    <div ng-show="vm.store.payment_options.paypal" class="list-title" ng-click="vm.selected_method = 'Paypal'">
+      <span style="margin-left:15px;">Paypal</span>
+    </div>
+        <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.paypal && vm.selected_method=='Paypal'">
+              
+              <form id="PaypalPost" name="PaypalPost" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+                <!-- Identify your business so that you can collect the payments. -->
+                <input type="hidden" name="business" value="{{vm.store.paypal_account}}">
+
+                <!-- Specify a Buy Now button. -->
+                <input type="hidden" name="cmd" value="_xclick">
+
+                <!-- Specify details about the item that buyers will purchase. -->
+                <input type="hidden" name="item_name" value="{{vm.temp.purchase.order_id}}">
+                <input type="hidden" name="amount" value="{{cart.totalCost() - vm.discount_code.amount}}">
+                <input type="hidden" name="currency_code" value="{{vm.store.currency}}">
+
+              </form>
+
+              <div layout="row" layout-align="center center">
+                <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
+                  <span ng-show="!vm.discount_code.valid">Cupón</span>
+                  <span ng-show="vm.discount_code.valid">Gracias!</span>
+                </md-button>
+                <md-button ng-click="vm.setPaymentMethod()" class="md-raised md-primary custom">Pagar</md-button>
+              </div>
+        </md-card-content>
+
+        <div ng-show="vm.store.payment_options.bacsanjose" class="list-title" ng-click="vm.selected_method = 'BACSanJose'">
+      <span style="margin-left:15px;">Tarjeta de Crédito</span>
+    </div>
+        <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.bacsanjose && vm.selected_method=='BACSanJose'">
+
+              <form id="CredomaticPost" name="CredomaticPost" action="https://credomatic.compassmerchantsolutions.com/api/transact.php" method="post">
+
+                <div class="center-block" style="width:50%;margin-top:2.5em">
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <label>Número de tarjeta</label>
+                          <input style="margin-top:10px" type="text" name="ccnumber" ng-model="vm.card.number" />
+                      </md-input-container>
+                  </div>
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <label>Fecha de expriración</label>
+                          <input style="margin-top:10px" type="text" name="ccexp" ng-model="vm.card.expiry" />
+                      </md-input-container>
+                  </div>
+
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <label>CVC</label>
+                          <input  style="margin-top:10px" type="text" name="cvv" ng-model="vm.card.cvc" />
+                      </md-input-container>
+                  </div>
+                </div>
+                <input type="hidden" name="hash" value="{{vm.hash}}" />
+                <input type="hidden" name="time" value="{{vm.timestamp}}" />
+                <input type="hidden" name="amount" value="{{cart.totalCost() - vm.discount_code.amount}}" />
+                <input type="hidden" name="type" value="sale" />
+                <input type="hidden" name="orderid" value="{{vm.temp.purchase.order_id}}" />
+                <input type="hidden" name="key_id" value="7185696" />
+                <input type="hidden" name="processor_id" value="freaks1" />
+                <input type="hidden" name="address" value="{{vm.address.state}}" />
+                <input type="hidden" name="redirect" value="{{vm.website_url}}#/checkout/confirmed" />
+              </form>
+              <!-- Display the payment button. -->
+                <div layout="row" layout-align="center center">
+                  <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
+                    <span ng-show="!vm.discount_code.valid">Cupón</span>
+                    <span ng-show="vm.discount_code.valid">Gracias!</span>
+                  </md-button>
+                  <md-button ng-click="vm.setPaymentMethod()" class="md-raised md-primary custom">Pagar</md-button>
+                </div>
+        </md-card-content>
+
+        <div ng-show="vm.store.payment_options.bankaccount" class="list-title" ng-click="vm.selected_method = 'BankAccount'">
+        <span style="margin-left:15px;">Transferencia</span>
+      </div>
+          <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.bankaccount && vm.selected_method=='BankAccount'">
+
+              <div ng-show="!vm.temp.purchase.order_url">
+                  <div class="center-block text-center">
+                    <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
+                      <span ng-show="!vm.discount_code.valid">Cupón</span>
+                      <span ng-show="vm.discount_code.valid">Gracias!</span>
+                    </md-button>
+                  </div>
+
+                  <md-button class="md-raised md-primary custom center-block text-center" ng-click="vm.setPaymentMethod()">Pagar con transferencia</md-button>
+              </div>
+
+                <div ng-show="vm.temp.purchase.order_url" class="center-block text-center">
+                  <h2>Su orden ha sido creada!</h2>
+                  <p>Para pagar su orden, deposite el monto total de la compra a la siguiente cuenta: <br /><br />
+                    <strong>Banco</strong> {{vm.store.bank_information.bank}}<br />
+                    <strong>Cuenta</strong> {{vm.store.bank_information.account}}<br />
+                    <strong>Cuenta Cliente</strong> {{vm.store.bank_information.outside_account}}<br />
+                    <strong>Nombre</strong> {{vm.store.bank_information.owner}}<br />
+                    <strong>Cédula</strong> {{vm.store.bank_information.owner_id}}<br />
+                    <strong>Moneda</strong> {{vm.store.bank_information.currency}}<br />
+                  </p>
+                  <p>Una vez que realice el pago, tome una foto del comprobante y adjuntelo a la factura. </p>
+
+                  <md-button target="_blank" href="http://invoice.madebyblume.com/#/bank-transfer/{{vm.temp.purchase.order_url}}" class="md-raised md-primary custom">Cargar Comprobante</md-button>
+                </div>
+          </md-card-content>
+
+        <md-card-actions layout="row" layout-align="center center">
+            <md-button class="pull-left sm-margin-left" ui-sref="checkout.address" ng-disabled="vm.temp.loading">Volver</md-button> &nbsp;
+            <md-button ng-show="vm.selected_method=='TwoCheckout'" class="pull-left sm-margin-left md-raised md-primary custom" ng-click="vm.setPaymentMethod()" ng-disabled="vm.temp.loading">Pagar</md-button>
+        </md-card-actions>
+
+    <!-- CREDIT CARD FORM ENDS HERE -->
+</md-card>

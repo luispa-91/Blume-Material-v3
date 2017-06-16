@@ -1,0 +1,32 @@
+<div class="container-fluid" style="height:65vh;">
+  <div class="row">
+    <div class="map">
+      <ng-map scrollwheel="false" style="height:65vh;" default-style="false" center="San Jose, Costa Rica" zoom="12">
+          <div ng-repeat="location in vm.store_locations">
+          	<marker draggable="false" id="custom-marker-{{$index}}" title="{{location.title}}" on-click="vm.showInfo(event, location)" position="{{location.coordinates}}">
+          </marker>
+            <info-window id="foo" on-mouseover="vm.mouseover()">
+  		      <div ng-non-bindable="">
+  		        <strong>{{vm.selected_store.title}}</strong>
+  		        <br />
+  		        <small ng-if="vm.selected_store.phone !=''"><i class="fa fa-phone"></i> {{vm.selected_store.phone}}</small><br />
+  		        <small ng-if="vm.selected_store.schedule !=''"><i class="fa fa-calendar"></i> {{vm.selected_store.schedule}}</small>
+  		      </div>
+  		    </info-window>
+          </div>
+      </ng-map>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3" ng-repeat="location in vm.store_locations">
+      <h3>{{location.title}}</h3>
+      <small ng-if="vm.selected_store.phone !=''"><i class="fa fa-phone"></i> {{location.phone}}</small><br />
+      <small ng-if="vm.selected_store.schedule !=''"><i class="fa fa-calendar"></i> {{location.schedule}}</small>
+    </div>
+  </div>
+</div>

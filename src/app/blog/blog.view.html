@@ -1,0 +1,35 @@
+<div class="container max-top">
+    <div class="row">
+        <div class="col-md-8">
+            <md-card class="card-animation min-top" ng-repeat="post in posts | filter:criteria">
+                <md-card-content>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <a ui-sref="blog-post({ post_id: post.id })"><div style="background:url(https://cms.blumewebsites.com/{{post.image_url}}) no-repeat center;background-size:cover" class="md-card-image img-blog img-responsive" alt="image"></div></a>
+                        </div>
+                        <div class="col-md-7">
+                            <a ui-sref="blog-post({ post_id: post.id })" style="text-decoration:none;color:black;"><h4>{{post.title}}</h4></a>
+                            <a class="l-b" ui-sref="blog-post({ post_id: post.id })"><strong>{{post.type}}</strong></a>
+                            <p class="min-top t-b text-justify">{{post.short_description}}</p>
+                            <md-divider></md-divider>
+                            <span class="i-b">{{post.created_date | date}}</span>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div class="col-md-4" md-theme="custom">
+          <md-card class="card-animation min-top">
+              <md-card-content>
+                <div class="form-group">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <md-icon><i class="material-icons">search</i></md-icon>
+                    <label>Buscar</label>
+                    <input ng-model="criteria" >
+                  </md-input-container>
+                </div>
+              </md-card-content>
+          </md-card>
+        </div>
+    </div>
+</div>
