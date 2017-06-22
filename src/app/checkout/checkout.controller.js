@@ -36,7 +36,6 @@
             vm.getStoreSettings().then(function(results){
                 vm.store = results;
                 setTaxRate();
-
                 setDefaultPaymentMethod();
             });
             //Get Website settings
