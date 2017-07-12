@@ -28,6 +28,7 @@
             vm.two_co = Checkout.two_co;
             vm.temp = Checkout.temp;
             vm.selected_method = "";
+            vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
             vm.customer_address = Delivery.customer_address;
             if(!vm.address.address){
                 ngCart.setShipping(0);
@@ -98,7 +99,6 @@
         function setPaymentMethod(){
             if(vm.selected_method == 'TwoCheckout'){
                 Checkout.order.payment_method = 'Credit Card'
-                console.log(Checkout.order);
                 vm.makePayment();
             } else if(vm.selected_method == 'BankAccount'){
                 Checkout.order.payment_method = 'Bank Transfer'
@@ -107,8 +107,8 @@
                 Checkout.order.payment_method = 'BAC San Jose'
                 vm.createCustomer().then(function(results){
                     $timeout(function () { 
-                        var total = (ngCart.totalCost()) - vm.discount_code.amount;
-                        vm.prehash = vm.temp.purchase.order_id + "|" + total + "|" + vm.timestamp + "|CAwDP8vg6wbxP42FS775r6Q8RfB2j2Ep";
+                        vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
+                        vm.prehash = vm.temp.purchase.order_id + "|" + vm.total + "|" + vm.timestamp + "|CAwDP8vg6wbxP42FS775r6Q8RfB2j2Ep";
                         vm.hash = md5.createHash(vm.prehash);
                         submitBAC();
                          }, 2000, true);

@@ -19,8 +19,8 @@
           var post_id = $stateParams.post_id;
 
           Blog.getPostDetails(post_id)
-              .success(function (data) {
-                  $scope.post = data;
+              .then(function (data) {
+                  $scope.post = data.data;
                   $scope.company_name = APP_INFO.directory;
               })
 

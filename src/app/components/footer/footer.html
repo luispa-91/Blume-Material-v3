@@ -11,7 +11,9 @@
           </div>
           <div class="col-md-4">
             <h4 class="sub">Contáctenos</h4>
-            <p ng-repeat="info in vm.settings.footer.contact_info"><i class="fa" ng-class="{ 'fa-envelope' : info.type == 'email', 'fa-phone' : info.type == 'phone', 'fa-map-marker' : info.type == 'address'}" aria-hidden="true"></i> {{info.value}}</p>
+            <p ng-repeat="info in vm.settings.footer.contact_info"><a ng-if="info.type == 'email'" href="mailTo:{{info.value}}"><i class="fa" ng-class="{ 'fa-envelope' : info.type == 'email', 'fa-phone' : info.type == 'phone', 'fa-map-marker' : info.type == 'address'}" aria-hidden="true"></i> {{info.value}}</a>
+              <span ng-if="info.type != 'email'" href="mailTo:{{info.value}}"><i class="fa" ng-class="{ 'fa-envelope' : info.type == 'email', 'fa-phone' : info.type == 'phone', 'fa-map-marker' : info.type == 'address'}" aria-hidden="true"></i> {{info.value}}</span>
+            </p>
           </div>
         </div>
         <br />

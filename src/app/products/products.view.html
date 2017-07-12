@@ -33,9 +33,9 @@
           </svg>
         </div>
       </div>
-      <div ng-repeat="product in catalog | filter:selectedCategory | filter:criteria" class="col-md-3 hero-feature">
+      <div ng-repeat="product in catalog | filter:selectedCategory | filter:criteria" class="col-md-3 col-sm-6 no-padding">
         <md-card class="card-animation card-h">
-           <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{ product.cover_image}}) no-repeat center; background-size:cover;" class="md-card-image img-card" alt="{{ ::product.title}}">
+           <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{ product.cover_image}}) no-repeat center; background-size:contain;" class="md-card-image img-card" alt="{{ ::product.title}}">
             <span ng-if="product.sale_percentage > 0">
               <div style="position:absolute;top:40px;right:52px;z-index:1">
                 <strong style="color:white">- {{product.sale_percentage}}%</strong>

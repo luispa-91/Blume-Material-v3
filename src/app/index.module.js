@@ -19,7 +19,8 @@
     'ngStorage',
     'gavruk.card',
     'angular-md5',
-    'textAngular']).config(function($mdThemingProvider) {
+    'textAngular',
+    'slick']).config(function($mdThemingProvider) {
     $mdThemingProvider.theme("custom").primaryPalette("teal").accentPalette("deep-orange");
   });;
 })();

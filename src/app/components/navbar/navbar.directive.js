@@ -28,7 +28,7 @@
         
         //Get Catalog collection titles
         Catalog.getCollections(APP_INFO.ID)
-            .success(function (data) {
+            .then(function (data) {
                 $scope.collections = data;
             });
 

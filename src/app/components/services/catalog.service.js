@@ -7,88 +7,39 @@
         function Catalog($http, $localStorage, ngCart, $state, APP_INFO){
 
           var getProducts = function (company_id) {
-              return $http({
-                  method: "GET",
-                  url: "https://central-api.madebyblume.com/v1/website/products",
-                  params: {
-                      company_id: company_id
-                  },
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  }
-              })
+              return $http.get("https://central-api.madebyblume.com/v1/website/products?company_id=" + company_id).then(function (results) {
+                  return results.data;
+              });
           }
 
           var getCategories = function(company_id){
-              return $http({
-                  method: "GET",
-                  url: "https://central-api.madebyblume.com/v1/website/product-types",
-                  params: {
-                      company_id: company_id
-                  },
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  }
-              })
+              return $http.get("https://central-api.madebyblume.com/v1/website/product-types?company_id=" + company_id).then(function (results) {
+                  return results.data;
+              });
           }
 
           var getFeaturedProducts = function (company_id) {
-              return $http({
-                  method: "GET",
-                  url: "https://central-api.madebyblume.com/v1/website/products/featured",
-                  params: {
-                      company_id: company_id
-                  },
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  }
-              })
+              return $http.get("https://central-api.madebyblume.com/v1/website/products/featured?company_id=" + company_id).then(function (results) {
+                  return results.data;
+              });
           }
 
           var productExpand = function (product_id) {
-              return $http({
-                  method: "GET",
-                  url: "https://central-api.madebyblume.com/v1/website/products/expand",
-                  params: {
-                      product_id: product_id
-                  },
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  }
-              })
+              return $http.get("https://central-api.madebyblume.com/v1/website/products/expand?product_id=" + product_id).then(function (results) {
+                  return results.data;
+              });
           }
 
           var getCollections = function (company_id) {
-              return $http({
-                  method: "GET",
-                  url: "https://central-api.madebyblume.com/v1/website/collections",
-                  params: {
-                      company_id: company_id
-                  },
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  }
-              })
+              return $http.get("https://central-api.madebyblume.com/v1/website/collections?company_id=" + company_id).then(function (results) {
+                  return results.data;
+              });
           }
 
           var getSliderPhotos = function (company_name) {
-              return $http({
-                  method: "GET",
-                  url: "https://central-api.madebyblume.com/v1/files/images",
-                  params: {
-                      company_name: company_name,
-                      image_dir: 'website/slider'
-                  },
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  }
-              })
+              return $http.get("https://central-api.madebyblume.com/v1/files/images?company_name=" + company_name + "&image_dir=website/slider").then(function (results) {
+                  return results.data;
+              });
           }
 
           var setStoreData = function (company_id) {

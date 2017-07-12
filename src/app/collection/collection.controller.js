@@ -12,13 +12,13 @@
 	    function init() {
 	      vm.loader = true;
 	      Catalog.getProducts(APP_INFO.ID)
-	          .success(function (data) {
+	          .then(function (data) {
 	              $scope.catalog = data;
 	              vm.loader = false;
 	          });
 
 	      Catalog.getCategories(APP_INFO.ID)
-	          .success(function (data) {
+	          .then(function (data) {
 	              $scope.categories = data;
 	          });
 

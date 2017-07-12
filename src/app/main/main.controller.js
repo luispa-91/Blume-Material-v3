@@ -16,13 +16,13 @@
 
       //Get catalog products
       Catalog.getFeaturedProducts(APP_INFO.ID)
-        .success(function (data) {
+        .then(function (data) {
           vm.catalog = data;
           vm.loader = false;
         });
 
       Catalog.getSliderPhotos(APP_INFO.directory)
-        .success(function (data) {
+        .then(function (data) {
             vm.sliderPhotos = data;
             vm.company_name = APP_INFO.directory;
         });
@@ -50,7 +50,7 @@
 
       //Get collections
       Catalog.getCollections(APP_INFO.ID)
-            .success(function (data) {
+            .then(function (data) {
                 $scope.collections = data;
             });
 

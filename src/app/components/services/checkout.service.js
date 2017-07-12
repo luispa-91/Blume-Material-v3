@@ -220,7 +220,6 @@
               expMonth: card.exp_month,
               expYear: card.exp_year
             };
-            console.log(args);
             // Make the token request
             TCO.requestToken(successCallback, errorCallback, args);
 
@@ -273,7 +272,6 @@
           }
 
           var chargeCard = function (token, billingInfo) {
-            console.log(billingInfo);
             return $http.post('https://central-api.madebyblume.com/v1/payments/2co/invoice?token=' + token, billingInfo).then(function (results) {
                 //Verify if payment is approved
                 if(results.data[0] == "A"){

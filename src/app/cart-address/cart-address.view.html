@@ -37,7 +37,7 @@
 			Fuera de Costa Rica
 		 </md-checkbox> -->
 	 	<md-checkbox ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.settings.pickup_in_store" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
-			No requiero envío a domicilo
+			Recoger en la tienda
 		 </md-checkbox>
 	 </div>
 	 <div class="row" ng-show="!vm.settings.pickup_in_store && !vm.export">
@@ -132,7 +132,7 @@
 
 		 	<div class="form-group">
 				<md-input-container class="md-block" flex-gt-sm>
-          			<textarea ng-model="vm.billing_address.address" placeholder="Dirección exacta"  md-maxlength="150" rows="5" ></textarea>
+          			<textarea ng-model="vm.billing_address.address" placeholder="Comentarios"  md-maxlength="150" rows="5" ></textarea>
 				</md-input-container>
 			</div>
 		 </div>
@@ -165,7 +165,7 @@
 
 		 	<div class="form-group">
 				<md-input-container class="md-block" flex-gt-sm>
-          			<textarea ng-model="vm.billing_address.address" placeholder="Dirección exacta"  md-maxlength="150" rows="5" ></textarea>
+          			<textarea ng-model="vm.billing_address.address" placeholder="Comentarios"  md-maxlength="150" rows="5" ></textarea>
 				</md-input-container>
 			</div>
 		 </div>

@@ -12,8 +12,8 @@
         function init() {
           vm.loader = true;
           Blog.getPosts(APP_INFO.ID)
-              .success(function (data) {
-                  $scope.posts = data;
+              .then(function (data) {
+                  $scope.posts = data.data;
                   vm.loader = false;
               });
 
