@@ -14,25 +14,6 @@
       </svg>
     </div>
   </div>
-  <div class="row content-margin" ng-if="vm.settings.home.text != ''">
-      <div class="col-sm-12 text-center ct-u-padding-top-25">
-          <div class="col-md-6">
-            <br />
-            <h1>{{vm.settings.home.title}}</h1>
-            <br />
-              <p style="line-height:2em;">{{vm.settings.home.text}}</p>
-              <br />
-              <p><md-button class="md-raised md-primary custom" ui-sref="products">&nbsp;Ver productos&nbsp;</md-button></p>
-          </div>
-          <div class="col-md-6" ng-if="vm.settings.home.has_instagram">
-              <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/6a4dc78dfa2356b382000d81d3175946.html" id="lightwidget_6a4dc78dfa" name="lightwidget_6a4dc78dfa"  scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
-          </div>
-          <div class="col-md-6" ng-if="!vm.settings.home.has_instagram">
-              <p style="line-height:2em;">{{vm.settings.home.secondary_text}}</p>
-              <br />
-          </div>
-      </div>
-  </div>
   <div class="row min-top primary-bc">
     <div class="col-md-3 col-sm-6 no-padding" ng-repeat="product in vm.catalog">
       <md-card class="card-animation card-h">
@@ -74,6 +55,26 @@
          </md-card-actions>
        </md-card>
     </div>
+  </div>
+
+  <div class="row content-margin" ng-if="vm.settings.home.text != ''">
+      <div class="col-sm-12 text-center ct-u-padding-top-25">
+          <div class="col-md-6">
+            <br />
+            <h1>{{vm.settings.home.title}}</h1>
+            <br />
+              <p style="line-height:2em;">{{vm.settings.home.text}}</p>
+              <br />
+              <p><md-button class="md-raised md-primary custom" ui-sref="products">&nbsp;Ver productos&nbsp;</md-button></p>
+          </div>
+          <div class="col-md-6" ng-if="vm.settings.home.has_instagram">
+              <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/6a4dc78dfa2356b382000d81d3175946.html" id="lightwidget_6a4dc78dfa" name="lightwidget_6a4dc78dfa"  scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
+          </div>
+          <div class="col-md-6" ng-if="!vm.settings.home.has_instagram">
+              <p style="line-height:2em;">{{vm.settings.home.secondary_text}}</p>
+              <br />
+          </div>
+      </div>
   </div>
 
 </div>

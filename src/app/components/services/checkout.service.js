@@ -78,9 +78,9 @@
             }
             if(outOfStockVariants > 0){
                 if(outOfStockVariants == 1){
-                    swal('Atención','Un producto en su carrito no está disponible, revise la cantidad o comuníquese con nosotros al ' + APP_INFO.contact.phone + ' para más información','warning');
+                    swal('Atención','Un producto en su carrito no está disponible, revise la cantidad o comuníquese con nosotros para más información','warning');
                 } else {
-                    swal('Atención','Algunos productos en su carrito no están disponibles, revise la cantidad o comuníquese con nosotros al ' + APP_INFO.contact.phone + ' para más información','warning');
+                    swal('Atención','Algunos productos en su carrito no están disponibles, revise la cantidad o comuníquese con nosotros para más información','warning');
                 }
             } else {
                 $state.go('checkout.address');
@@ -89,12 +89,13 @@
           }
 
           //Data validation before submitting card information
-          var verifyData = function(pickup_in_store){
+          var verifyData = function(pickup_in_store, international_shipping){
              
              //Initialize variables
              var address_complete = false;
              var customer_complete = false;
              var billing_address_complete = false;
+             Delivery.pickup_in_store = pickup_in_store;
 
             //Validate customer data
             if(Delivery.customer.full_name == ""){
@@ -119,9 +120,9 @@
                     billing_address_complete = true;
                   }
               } else {
-                if(Delivery.address.address2 == ""){
+                if(Delivery.address.address2 == "" && !international_shipping){
                   swal('Atención','Por favor haga click en el mapa o ingrese un de referencia para la entrega.','warning');
-                } else if(Delivery.address.note == ""){
+                } else if(Delivery.address.note == "" && !international_shipping){
                   swal('Atención','Por favor ingrese la dirección exacta para la entrega.','warning');
                 } else {
                   address_complete = true;
@@ -253,7 +254,7 @@
                 temp.customer_id = results.data;
                 temp.progress = 33;
                 //Build order with current cart information and store settings
-                if(settings.pickup_in_store){
+                if(Delivery.pickup_in_store){
                   buildOrder();
                 } else {
                   customer_address.id = temp.customer_id;
@@ -277,7 +278,7 @@
                 if(results.data[0] == "A"){
                   temp.progress = 100;
                   //Verify if order is to be picked up at the store
-                  if(settings.pickup_in_store){
+                  if(Delivery.pickup_in_store){
                     sendConfirmationEmail();
                   } else {
                     createShippingInvoice();
@@ -348,7 +349,7 @@
               order.created_by = created_by;
               order.items = ngCart.getCustomItems();
               //If order is to be picked up at the store
-              if(settings.pickup_in_store){
+              if(Delivery.pickup_in_store){
                 createOrder();
               } else {
                 createOrderWithDelivery();
@@ -359,7 +360,7 @@
           var buildBillingInformation = function(){
             temp.progress = 85
             //Verify if order needs delivery
-            if(settings.pickup_in_store){
+            if(Delivery.pickup_in_store){
               billing_information.address = billing_address.address;
               billing_information.city = billing_address.city;
               billing_information.zipCode = billing_address.zip_code;

@@ -8,6 +8,8 @@
     'ngAria',
     'ui.router',
     'ui.bootstrap',
+    'ui.select', 
+    'ngSanitize',
     'toastr',
     'cloudinary',
     'ngFileUpload',

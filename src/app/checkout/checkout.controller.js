@@ -5,8 +5,8 @@
         .module('angular')
         .controller('CheckoutController', CheckoutController);
 
-    CheckoutController.$inject = ['ngCart', 'Checkout', 'Delivery', 'Website', '$scope', 'md5', 'APP_INFO', '$timeout'];
-    function CheckoutController(ngCart, Checkout, Delivery, Website, $scope, md5, APP_INFO, $timeout) {
+    CheckoutController.$inject = ['ngCart', 'Checkout', 'Delivery', 'Website', '$scope', 'md5', 'APP_INFO', '$timeout', 'Countries'];
+    function CheckoutController(ngCart, Checkout, Delivery, Website, $scope, md5, APP_INFO, $timeout, Countries) {
         var vm = this;
 
         init();
@@ -28,6 +28,9 @@
             vm.two_co = Checkout.two_co;
             vm.temp = Checkout.temp;
             vm.selected_method = "";
+            vm.countries = Countries.list;
+            vm.country_selected = "";
+            vm.pickup_in_store = false;
             vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
             vm.customer_address = Delivery.customer_address;
             if(!vm.address.address){
@@ -63,6 +66,7 @@
             vm.distanceBasedPricing = Delivery.distanceBasedPricing;
             vm.weightBasedPricing = Delivery.weightBasedPricing;
             vm.currentLocation = currentLocation;
+            vm.calculateExportShipping = Delivery.calculateExportShipping;
 
             //Cart checkout functions
             vm.getToken = Checkout.getToken;
@@ -72,8 +76,6 @@
             vm.setPaymentMethod = setPaymentMethod;
 
             vm.timestamp = Math.round((new Date()).getTime() / 1000);
-
-
             
 
         }
@@ -97,6 +99,7 @@
         }
 
         function setPaymentMethod(){
+            vm.syncCustomerAddress();
             if(vm.selected_method == 'TwoCheckout'){
                 Checkout.order.payment_method = 'Credit Card'
                 vm.makePayment();

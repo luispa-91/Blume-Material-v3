@@ -8,6 +8,7 @@
 
           var clickedMap = false;
           var settings = {};
+          var pickup_in_store = false;
 
           var mapClick = function (e){
               destination_coords.lat = parseFloat(e.latLng.lat());
@@ -74,7 +75,7 @@
             //Calculate shipping price based on distance and weight
             if(destination_coords.delivery_type == 'multidomicilio'){
               distanceBasedPricing();
-            } else {
+            } else if(destination_coords.delivery_type == 'correosdecostarica'){
               weightBasedPricing();
             }
 
@@ -207,15 +208,86 @@
 
           var getSettings = function () {
                 return $http.get('https://central-api.madebyblume.com/v1/website/settings/delivery?company_id=' + APP_INFO.ID).then(function (results) {
+                    
                     settings = results.data;
                     return results.data;
                 });
             };
 
-          var calculateExportShipping = function(){
+          var calculateExportShipping = function(country){
 
             var weight = Math.ceil(ngCart.getTotalWeight());
-            console.log(weight);
+            var price = 0;
+            var base_price = 0;
+            var base_weight = 0.1;
+            var additional_weight = 0;
+            var additional_weight_price = 0;
+
+            
+
+            if(country.continent=='Central America'){
+
+              //Set base price and additional weight price
+              if(settings.currency == 'USD'){
+                base_price = 2;
+                additional_weight_price = 1.9;
+              } else {
+                base_price = 1100;
+                additional_weight_price = 1050;
+              }
+
+            } else if(country.continent=='North America' || country.continent=='South America' || country.continent=='Antillas'){
+              
+              //Set base price and additional weight price
+              if(settings.currency == 'USD'){
+                base_price = 2.5;
+                additional_weight_price = 2.2;
+              } else {
+                base_price = 1400;
+                additional_weight_price = 1250;
+              }
+
+            } else if(country.continent=='Europe'){
+              
+              //Set base price and additional weight price
+              if(settings.currency == 'USD'){
+                base_price = 4;
+                additional_weight_price = 3.8;
+              } else {
+                base_price = 2100;
+                additional_weight_price = 1950;
+              }
+
+            } else if(country.continent=='Asia' || country.continent=='Africa' || country.continent=='Oceania'){
+              
+              //Set base price and additional weight price
+              if(settings.currency == 'USD'){
+                base_price = 5.2;
+                additional_weight_price = 4.9;
+              } else {
+                base_price = 2750;
+                additional_weight_price = 2550;
+              }
+
+            }
+
+            //Calculate additional weight
+            if(weight > base_weight){
+              additional_weight = Math.ceil(weight - base_weight);
+            }
+
+            //Calculate price
+            price = base_price + (additional_weight * additional_weight_price);
+              if(settings.currency == 'USD'){
+                price += 1.6;
+              } else {
+                price += 850;
+              }
+
+            address.country = country.name;
+
+            //Set cart shipping
+            ngCart.setShipping(price);
 
           }
 
@@ -305,7 +377,8 @@
               distanceBasedPricing: distanceBasedPricing,
               weightBasedPricing: weightBasedPricing,
               currentLocation: currentLocation,
-              calculateExportShipping: calculateExportShipping
+              calculateExportShipping: calculateExportShipping,
+              pickup_in_store: pickup_in_store
             }
         }
 })();

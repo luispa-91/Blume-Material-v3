@@ -33,14 +33,14 @@
 	 </div> 
 	 <!--Delivery Information-->
 	 <div class="center-block text-center">
-	 	<!-- <md-checkbox ng-if="vm.store.has_pickup_in_store" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
-			Fuera de Costa Rica
-		 </md-checkbox> -->
-	 	<md-checkbox ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.settings.pickup_in_store" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
-			Recoger en la tienda
+	 	<md-checkbox ng-if="vm.store.has_pickup_in_store" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
+			Envíos internacionales
+		 </md-checkbox>
+	 	<md-checkbox ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.pickup_in_store" ng-change="vm.toggleDelivery(vm.pickup_in_store)" aria-label="Checkbox 1">
+			Recoger en la tienda 
 		 </md-checkbox>
 	 </div>
-	 <div class="row" ng-show="!vm.settings.pickup_in_store && !vm.export">
+	 <div class="row" ng-show="!vm.pickup_in_store && !vm.export">
 		 <div class="col-md-12">
 			 <h4>Punto de referencia &nbsp;
 			 	<i ng-click="vm.currentLocation()" class="material-icons my-location">my_location</i>
@@ -105,7 +105,7 @@
 			<br />
 		 </div>
 	 </div>
-	 <div class="row" ng-show="vm.settings.pickup_in_store">
+	 <div class="row" ng-show="vm.pickup_in_store">
 		 <div class="col-md-12">
 			 <h4>Dirección de cobro</h4>
 			 <br />
@@ -144,28 +144,36 @@
 			 <br />
 			 <div class="form-group" layout="row">
 				<md-input-container class="md-block" flex-gt-sm>
-					<label>País</label>
-					<input ng-model="vm.billing_address.country" >
+					<ui-select style="width:95%" class="mui-dropdown" placeholder="Seleccione un pais" ng-model="vm.country_selected" ng-disabled="false" title="Seleccione un país" on-select="vm.calculateExportShipping($select.selected)">
+				    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+				    <ui-select-choices repeat="country in vm.countries | filter: $select.search">
+				      <span ng-bind-html="country.name | highlight: $select.search"></span>
+				    </ui-select-choices>
+				  </ui-select>
 				</md-input-container>
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Estado / Provincia</label>
-					<input ng-model="vm.billing_address.state">
+					<input ng-model="vm.address.state">
 				</md-input-container>
 		 	</div>
 			<div class="form-group" layout="row">
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Ciudad</label>
-					<input ng-model="vm.billing_address.city" >
+					<input ng-model="vm.address.city" >
 				</md-input-container>
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Código Postal</label>
-					<input ng-model="vm.billing_address.zip_code">
+					<input ng-model="vm.address.zip_code">
 				</md-input-container>
 		 	</div>
-
+			 <div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+          			<textarea ng-model="vm.address.address" placeholder="Escriba la dirección y detalles del lugar de entrega"  md-maxlength="150" rows="5" ></textarea>
+				</md-input-container>
+			</div>
 		 	<div class="form-group">
 				<md-input-container class="md-block" flex-gt-sm>
-          			<textarea ng-model="vm.billing_address.address" placeholder="Comentarios"  md-maxlength="150" rows="5" ></textarea>
+          			<textarea ng-model="vm.address.note" placeholder="Comentarios"  md-maxlength="150" rows="5" ></textarea>
 				</md-input-container>
 			</div>
 		 </div>
@@ -173,6 +181,6 @@
  </md-card-content>
  <md-card-actions layout="row" layout-align="center center">
 	 <md-button class="pull-left sm-margin-left" ui-sref="checkout.shops.summary">Volver</md-button>
-	 <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.verifyData(vm.settings.pickup_in_store)">Continuar</md-button>
+	 <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.verifyData(vm.pickup_in_store, vm.export)">Continuar</md-button>
  </md-card-actions>
 </md-card>
