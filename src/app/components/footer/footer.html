@@ -11,8 +11,17 @@
           </div>
           <div class="col-md-4">
             <h4 class="sub">Contáctenos</h4>
-            <p ng-repeat="info in vm.settings.footer.contact_info"><a ng-if="info.type == 'email'" href="mailTo:{{info.value}}"><i class="fa" ng-class="{ 'fa-envelope' : info.type == 'email', 'fa-phone' : info.type == 'phone', 'fa-map-marker' : info.type == 'address'}" aria-hidden="true"></i> {{info.value}}</a>
-              <span ng-if="info.type != 'email'" href="mailTo:{{info.value}}"><i class="fa" ng-class="{ 'fa-envelope' : info.type == 'email', 'fa-phone' : info.type == 'phone', 'fa-map-marker' : info.type == 'address'}" aria-hidden="true"></i> {{info.value}}</span>
+            <p ng-repeat="info in vm.settings.footer.contact_info">
+
+              <!-- Email -->
+              <a ng-if="info.type == 'email'" href="mailTo:{{info.value}}"><i class="fa fa-envelope" aria-hidden="true"></i> {{info.value}}</a>
+
+              <!-- Phone -->
+              <a ng-if="info.type == 'phone'" href="tel:{{info.value}}"><i class="fa fa-phone" aria-hidden="true"></i> {{info.value}}</a>
+
+              <!-- Address -->
+              <a ng-if="info.type == 'address'" href="http://maps.google.com/?q={{info.value}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i> {{info.value}}</a>
+
             </p>
           </div>
         </div>

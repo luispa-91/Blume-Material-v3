@@ -1,8 +1,15 @@
 <md-card class="card-simple top-shadow card-decoration">
  <md-card-title>
 	 <md-card-title-text>
-		 <span class="upper-text">1. Resumen de compra</span>
-     <md-divider></md-divider>
+		 <span class="upper-text">1. Resumen de Compra
+		 	<div class="pull-right">
+		 		<img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/visa.svg" class="card-logo" />
+		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/mastercard.svg" class="card-logo" />
+		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/discover.svg" class="card-logo" />
+		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/amex.svg" class="card-logo" />
+	 		</div>
+		 </span> 
+		 <md-divider></md-divider>
 	 </md-card-title-text>
  </md-card-title>
  <md-card-content>

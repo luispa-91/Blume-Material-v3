@@ -12,6 +12,12 @@
               });
           }
 
+          var getDiscountProducts = function (company_id) {
+              return $http.get("https://central-api.madebyblume.com/v1/products/sale/all?company_id=" + company_id).then(function (results) {
+                  return results.data;
+              });
+          }
+
           var getCategories = function(company_id){
               return $http.get("https://central-api.madebyblume.com/v1/website/product-types?company_id=" + company_id).then(function (results) {
                   return results.data;
@@ -56,6 +62,7 @@
 
             return {
               getProducts: getProducts,
+              getDiscountProducts: getDiscountProducts,
               getFeaturedProducts: getFeaturedProducts,
               getCategories: getCategories,
               productExpand: productExpand,

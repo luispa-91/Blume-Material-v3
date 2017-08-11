@@ -41,10 +41,26 @@
     <div ui-view></div>
     <acme-footer></acme-footer>
     <div layout="row">
-        <md-button aria-label="Facebook Chat" href="http://m.me/blumeapps" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=450,height=650,toolbar=1,resizable=0'); return false;" target="_blank" class="md-raised md-fab md-fab-bottom-right" style="position:fixed;background-color:black">
-            <md-icon class="material-icons" style="color:white">question_answer</md-icon>
-        </md-button>
+        <!-- WhatsHelp.io widget -->
+    <script type="text/javascript">
+        (function () {
+            var options = {
+                facebook: "754771351335371", // Facebook page ID
+                whatsapp: "+50670125006", // WhatsApp number
+                company_logo_url: "//cms.blumewebsites.com/demoshop/website/about/qum85d2av.png", // URL of company logo (png, jpg, gif)
+                greeting_message: "Necesita ayuda? Escríbanos y estaremos en contacto pronto", // Text of greeting message
+                call_to_action: "Envíenos un mensaje", // Call to action
+                button_color: "#129BF4", // Color of button
+                position: "right", // Position may be 'right' or 'left'
+                order: "facebook,whatsapp" // Order of buttons
+            };
+            var proto = document.location.protocol, host = "whatshelp.io", url = proto + "//static." + host;
+            var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+            s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+        })();
+    </script>
+    <!-- /WhatsHelp.io widget -->
     </div>
 
     <script src="https://maps.google.com/maps/api/js?key=AIzaSyBDdVu-83M18eaS1S2L6gPHoHEHWazzggA&libraries=visualization,drawing,geometry,places"></script>
@@ -105,10 +121,11 @@
     <script src="app/components/footer/footer.directive.js"></script>
     <script src="app/products/catalog.controller.js"></script>
     <script src="app/product/product.controller.js"></script>
-    <script src="app/ngCart/ngCart.js"></script>
     <script src="app/main/main.controller.js"></script>
+    <script src="app/ngCart/ngCart.js"></script>
     <script src="app/locator/locator.controller.js"></script>
     <script src="app/faq/faq.controller.js"></script>
+    <script src="app/discounts/discounts.controller.js"></script>
     <script src="app/collection/collection.controller.js"></script>
     <script src="app/checkout/checkout.controller.js"></script>
     <script src="app/cart-confirmed/confirmation.controller.js"></script>

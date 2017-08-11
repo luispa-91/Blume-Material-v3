@@ -104,13 +104,10 @@
         vm.close();
     }
 
-
-
-
-
-
-
-
+    vm.discounts = function(){
+        $state.go('discounts');
+        vm.close();
+    }
 
   }
 })();

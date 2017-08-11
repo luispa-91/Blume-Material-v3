@@ -1,7 +1,14 @@
 <md-card class="card-simple top-shadow card-decoration" md-theme="custom">
  <md-card-title>
 	 <md-card-title-text>
-		 <span class="upper-text">2. Datos de Compra</span>
+		 <span class="upper-text">2. Datos de Compra
+		 	<div class="pull-right">
+		 		<img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/visa.svg" class="card-logo" />
+		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/mastercard.svg" class="card-logo" />
+		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/discover.svg" class="card-logo" />
+		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/amex.svg" class="card-logo" />
+	 		</div>
+		 </span> 
 		 <md-divider></md-divider>
 	 </md-card-title-text>
  </md-card-title>
@@ -33,7 +40,7 @@
 	 </div> 
 	 <!--Delivery Information-->
 	 <div class="center-block text-center">
-	 	<md-checkbox ng-if="vm.store.has_pickup_in_store" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
+	 	<md-checkbox ng-if="!vm.pickup_in_store" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
 			Envíos internacionales
 		 </md-checkbox>
 	 	<md-checkbox ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.pickup_in_store" ng-change="vm.toggleDelivery(vm.pickup_in_store)" aria-label="Checkbox 1">

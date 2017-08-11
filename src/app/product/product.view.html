@@ -47,7 +47,7 @@
                 </select>
           </div>
           <br />
-          <div ng-repeat="variant in product.variants | filter:vm.option1 | filter:vm.option2 | filter:vm.option3 | limitTo:1">
+          <div ng-repeat="variant in product.variants | filter:vm.option1+vm.option2+vm.option3 | limitTo:1">
               <div class="product-price text-muted" ng-if="currency == 'USD'">
                 <span ng-if="product.sale_percentage == 0">
                   {{ variant.price | currency }}

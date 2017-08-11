@@ -3,8 +3,8 @@
 
     angular
         .module('angular')
-        .controller('CatalogController', CatalogController);
-        function CatalogController($scope, Catalog, APP_INFO) {
+        .controller('DiscountController', DiscountController);
+        function DiscountController($scope, Catalog, APP_INFO) {
         var vm = this;
 
         $scope.setCategoryFilter = setCategoryFilter;
@@ -15,7 +15,7 @@
           $scope.selectedCategory = "";
 
           vm.loader = true;
-          Catalog.getProducts(APP_INFO.ID)
+          Catalog.getDiscountProducts(APP_INFO.ID)
               .then(function (data) {
                   $scope.catalog = data;
                   vm.loader = false;

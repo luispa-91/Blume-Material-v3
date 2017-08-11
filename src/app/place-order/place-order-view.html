@@ -1,9 +1,16 @@
 <md-card class="card-simple top-shadow card-decoration" md-theme="custom">
   <md-card-title>
       <md-card-title-text>
-          <span class="upper-text">3. Método de Pago</span>
-          <md-divider></md-divider>
-      </md-card-title-text>
+     <span class="upper-text">3. Método de Pago
+      <div class="pull-right">
+        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/visa.svg" class="card-logo" />
+            <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/mastercard.svg" class="card-logo" />
+            <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/discover.svg" class="card-logo" />
+            <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/amex.svg" class="card-logo" />
+      </div>
+     </span> 
+     <md-divider></md-divider>
+   </md-card-title-text>
   </md-card-title>
   <!-- Show enabled payment methods-->
     <div ng-show="vm.store.payment_options.twocheckout" style="background-color:#ccc;padding-top:10px;padding-bottom:10px;" ng-click="vm.selected_method = 'TwoCheckout'">

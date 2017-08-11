@@ -20,6 +20,12 @@
         controller: 'CatalogController',
         controllerAs: 'vm'
       })
+      .state('discounts', {
+        url: '/discounts',
+        templateUrl: 'app/discounts/discounts.view.html',
+        controller: 'DiscountController',
+        controllerAs: 'vm'
+      })
       .state('product', {
         url: '/product/:product_id',
         templateUrl: 'app/product/product.view.html',

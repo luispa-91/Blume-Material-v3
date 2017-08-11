@@ -26,9 +26,11 @@
            </md-menu-item>
          </md-menu-content>
        </md-menu>
+       <!-- <md-button ng-repeat="collection in collections" hide-xs ui-sref="collection({name: collection.title })" class="md-warn">{{collection.title}}</md-button> -->
         <md-button hide-xs ui-sref="locator" class="md-warn" ng-if="vm.settings.tabs.store_locator.visible">{{vm.settings.tabs.store_locator.title}}</md-button>
         <md-button hide-xs ui-sref="about" class="md-warn" ng-if="vm.settings.tabs.about_us.visible">{{vm.settings.tabs.about_us.title}}</md-button>
         <md-button hide-xs ui-sref="blog" class="md-warn" ng-if="vm.settings.tabs.blog.visible">{{vm.settings.tabs.blog.title}}</md-button>
+        <md-button hide-xs ui-sref="discounts" style="background-color:#e11000;color:white;">Descuentos</md-button>
         <!-- <md-button hide-xs ui-sref="contact" class="md-warn" ng-if="vm.settings.tabs.contact_us.visible">{{vm.settings.tabs.contact_us.title}}</md-button> -->
           <md-button ui-sref="checkout.shops.summary" class="md-icon-button" aria-label="More">
               <md-icon><i class="material-icons black">shopping_cart</i></md-icon>
@@ -37,7 +39,7 @@
           <span flex></span>
     </div>
     </md-toolbar>
-      <div class="social-back" layout="row" layout-align="center center">
+      <!-- <div class="social-back" layout="row" layout-align="center center">
           <div class="socials">
             <ul class="social-network" style="padding-left:0px;">
               <li><a class="i-sociala facebook" href="https://www.facebook.com/blumeapps" target="_blank"><i class="i-color fa fa-facebook"></i></a></li>
@@ -45,7 +47,7 @@
               <li><a class="i-sociala youtube" href="https://www.pinterest.com/blumeapps" target="_blank"><i class=" i-color fa fa-pinterest"></i></a></li>
             </ul>
           </div>
-      </div>
+      </div> -->
   </md-content>
 
   <!-- Start Left Menu bar -->
@@ -85,6 +87,9 @@
          </md-list-item>
          <md-list-item ng-click="vm.blog()" ng-if="vm.settings.tabs.blog.visible">
            <p class="upper-text">{{vm.settings.tabs.blog.title}}</p>
+         </md-list-item>
+         <md-list-item ng-click="vm.discounts()" style="background-color:#e11000;color:white;">
+           <p class="upper-text">Descuentos</p>
          </md-list-item>
          <!-- <md-list-item ng-click="vm.contact()" ng-if="vm.settings.tabs.contact_us.visible">
            <p class="upper-text">{{vm.settings.tabs.contact_us.title}}</p>
