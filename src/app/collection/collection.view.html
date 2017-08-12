@@ -2,10 +2,18 @@
       <div class="row products-header">
         <div class="col-md-6 col-md-offset-3">
           <h2 class="text-center black toop">{{vm.collection}}</h2>
-          <div class="form-group">
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>Buscar en {{vm.collection}}</label>
-              <md-icon><i class="material-icons icon-color">search</i></md-icon>
+          <div class="form-group" layout="row">
+            <md-input-container>
+              <label>Categorías</label>
+              <md-select ng-model="selectedCategory">
+                <md-option ng-value=""><em>Todas</em></md-option>
+                <md-option ng-repeat="category in categories" ng-value="category.title" ng-if="category.title!=''">
+                  {{ category.title }}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container flex-gt-sm>
+              <label><md-icon><i class="material-icons icon-color">search</i></md-icon> Buscar en {{vm.collection}}</label>
               <input ng-model="criteria">
             </md-input-container>
           </div>
@@ -14,16 +22,6 @@
 </div>
     <!-- Page Content -->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                  <div class="input-group center-block text-center">
-                      <md-button class="md-raised" ng-click="selectedCategory=''">Todos</md-button>
-                      <md-button class="md-raised" ng-repeat="category in categories" ng-click="setCategoryFilter(category)" ng-if="category.title!=''">{{ category.title }}</md-button>
-                  </div>
-              </div>
-            </div>
-        </div>
         <br />
         <!-- Page Features -->
           <div class="row text-center">

@@ -3010,9 +3010,7 @@ md-menu-content {
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
-  padding: 8px 0;
-  max-height: 304px;
-  overflow-y: auto; }
+  padding: 8px 0; }
   md-menu-content.md-dense {
     max-height: 208px; }
     md-menu-content.md-dense md-menu-item {
