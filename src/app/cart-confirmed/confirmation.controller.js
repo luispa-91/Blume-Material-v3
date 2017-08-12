@@ -25,9 +25,9 @@
                         //Mark as paid
                         Order.saveAsPaid(vm.order_id).then(function(results){
                             if(vm.temp.purchase.shipment_id != 0){
-                              Order.createShippingInvoice(vm.order_id, vm.temp.purchase.shipment_id).then(function (results) {
-                              });
                               Order.mailReceiptWithTracking(vm.order_id).then(function (results) {
+                              });
+                              Order.createShippingInvoice(vm.order_id, vm.temp.purchase.shipment_id).then(function (results) {
                               });
                               console.log("Order paid!");
                             } else {

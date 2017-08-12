@@ -87,6 +87,7 @@
                 vm.calculateShipping();
                 vm.syncCustomerAddress();
                 vm.syncBillingAddress();
+                vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
                 vm.loading_location = false;
                 $scope.$apply();
                 }, 500);
@@ -106,24 +107,7 @@
             } else if(vm.selected_method == 'BankAccount'){
                 Checkout.order.payment_method = 'Bank Transfer'
                 vm.createCustomer();
-            } else if(vm.selected_method == 'BACSanJose'){
-                Checkout.order.payment_method = 'BAC San Jose'
-                vm.createCustomer().then(function(results){
-                    $timeout(function () { 
-                        vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
-                        vm.prehash = vm.temp.purchase.order_id + "|" + vm.total + "|" + vm.timestamp + "|CAwDP8vg6wbxP42FS775r6Q8RfB2j2Ep";
-                        vm.hash = md5.createHash(vm.prehash);
-                        submitBAC();
-                         }, 2000, true);
-                });
-            } else if(vm.selected_method == 'Paypal'){
-                Checkout.order.payment_method = 'Paypal'
-                vm.createCustomer().then(function(results){
-                    $timeout(function () { 
-                        submitPaypal();
-                         }, 2000, true);
-                });
-            }
+            } 
         }
 
         function currentLocation(){

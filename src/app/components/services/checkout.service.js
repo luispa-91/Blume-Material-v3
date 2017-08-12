@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .factory('Checkout', Checkout);
-        Checkout.$inject = ['$http', 'ngCart', '$state', 'Delivery', '$mdDialog', '$rootScope', 'APP_INFO'];
-        function Checkout($http, ngCart, $state, Delivery, $mdDialog, $rootScope, APP_INFO){
+        Checkout.$inject = ['$http', 'ngCart', '$state', 'Delivery', '$mdDialog', '$rootScope', 'APP_INFO', '$timeout', 'md5'];
+        function Checkout($http, ngCart, $state, Delivery, $mdDialog, $rootScope, APP_INFO, $timeout, md5){
 
           var settings = {};
           var getSettings = Delivery.getSettings;
@@ -50,7 +50,10 @@
             token: '',
             progress: 1,
             loading: false,
-            error_message: ''
+            error_message: '',
+            prehash: '',
+            hash: '',
+            timestamp: ''
           }
 
           var order = {
@@ -131,7 +134,18 @@
             }
 
             if(customer_complete && billing_address_complete || customer_complete && address_complete){
-              $state.go('checkout.placeOrder');
+              createCustomer().then(function(results){
+                  $timeout(function () { 
+                      temp.timestamp = Math.round((new Date()).getTime() / 1000);
+                      var total = (ngCart.totalCost() - discount_code.amount).toFixed(2);
+                      temp.prehash = temp.purchase.order_id + "|" + total + "|" + temp.timestamp + "|jbYeT4VfN9QsP3X4vh3Kz5c9sv6q5yx9";
+                      temp.hash = md5.createHash(temp.prehash);
+                      // submitBAC();
+                       }, 2000, true);
+                  $rootScope.$emit('notifying-service-event');
+                  $state.go('checkout.placeOrder');
+              });
+              
             }
 
           }
@@ -155,7 +169,7 @@
             };
 
           var verifyDiscount = function () {
-                return $http.get('https://central-api.madebyblume.com/v1/company/find/promocode?word=' + discount_code.value + '&company_id=' + APP_INFO.ID).then(function (results) {
+                return $http.get('https://central-api.madebyblume.com/v1/company/promocode/apply?word=' + discount_code.value + '&order_id=' + temp.purchase.order_id).then(function (results) {
                     return results;
                 });
             };
@@ -173,17 +187,30 @@
                     }
                     discount_code.amount = promo.discount;
                     discount_code.valid = true;
+                    temp.timestamp = Math.round((new Date()).getTime() / 1000);
+                    var total = (ngCart.totalCost() - discount_code.amount).toFixed(2);
+                    temp.prehash = temp.purchase.order_id + "|" + total + "|" + temp.timestamp + "|jbYeT4VfN9QsP3X4vh3Kz5c9sv6q5yx9";
+                    temp.hash = md5.createHash(temp.prehash);
                   } 
                   if(promo.type == "Percentage"){
                     var temp = total - shipping - tax;
                     discount_code.amount = (promo.discount / 100) * temp;
                     discount_code.valid = true;
+                    temp.timestamp = Math.round((new Date()).getTime() / 1000);
+                    var total = (ngCart.totalCost() - discount_code.amount).toFixed(2);
+                    temp.prehash = temp.purchase.order_id + "|" + total + "|" + temp.timestamp + "|jbYeT4VfN9QsP3X4vh3Kz5c9sv6q5yx9";
+                    temp.hash = md5.createHash(temp.prehash);
                   }
                   if(promo.type == "Shipping"){
                     discount_code.amount = (promo.discount / 100) * shipping;
                     discount_code.valid = true;
+                    temp.timestamp = Math.round((new Date()).getTime() / 1000);
+                    var total = (ngCart.totalCost() - discount_code.amount).toFixed(2);
+                    temp.prehash = temp.purchase.order_id + "|" + total + "|" + temp.timestamp + "|jbYeT4VfN9QsP3X4vh3Kz5c9sv6q5yx9";
+                    temp.hash = md5.createHash(temp.prehash);
                   }
                 }
+                $rootScope.$emit('notifying-service-event');
             })
           }
 
