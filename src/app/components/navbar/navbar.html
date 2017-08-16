@@ -1,12 +1,12 @@
 <!--navbar-static-top-->
-<div style="background-color: white!important;" layout="row" layout-align="center center">
+<div class="logo-bg-color" layout="row" layout-align="center center">
     <img ui-sref="home" style="cursor: pointer" class="principal-img" ng-src="https://cms.blumewebsites.com/{{vm.settings.home.logo_url}}">
 </div>
 <div ng-cloak>
   <md-content>
     <md-toolbar layout="row" layout-align="center center" class="">
 
-      <div class="md-toolbar-tools shadow">
+      <div class="navbar-color md-toolbar-tools shadow">
         <md-button class="md-icon-button launch" ng-click="toggleLeft()"  hide-gt-md>
           <i class="material-icons">menu</i>
         </md-button>
@@ -33,13 +33,13 @@
         <md-button hide-xs ui-sref="discounts" style="background-color:#e11000;color:white;">Descuentos</md-button>
         <!-- <md-button hide-xs ui-sref="contact" class="md-warn" ng-if="vm.settings.tabs.contact_us.visible">{{vm.settings.tabs.contact_us.title}}</md-button> -->
           <md-button ui-sref="checkout.shops.summary" class="md-icon-button" aria-label="More">
-              <md-icon><i class="material-icons black">shopping_cart</i></md-icon>
+              <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
           </md-button>
           <span class="badge black">{{ vm.items }}</span>
           <span flex></span>
     </div>
     </md-toolbar>
-      <!-- <div class="social-back" layout="row" layout-align="center center">
+      <!-- <div class="social-color" layout="row" layout-align="center center">
           <div class="socials">
             <ul class="social-network" style="padding-left:0px;">
               <li><a class="i-sociala facebook" href="https://www.facebook.com/blumeapps" target="_blank"><i class="i-color fa fa-facebook"></i></a></li>

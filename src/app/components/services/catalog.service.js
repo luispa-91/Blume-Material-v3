@@ -25,7 +25,7 @@
           }
 
           var getFeaturedProducts = function (company_id) {
-              return $http.get("https://central-api.madebyblume.com/v1/website/products/featured?company_id=" + company_id).then(function (results) {
+              return $http.get("https://central-api.madebyblume.com/v1/products/featured?company_id=" + company_id).then(function (results) {
                   return results.data;
               });
           }
