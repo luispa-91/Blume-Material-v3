@@ -62,7 +62,9 @@
           var toggleDelivery = function(pickup_in_store){
             if(pickup_in_store || destination_coords.lat == ''){
               ngCart.setShipping(0);
+              destination_coords.delivery_type = '';
             } else {
+              destination_coords.delivery_type = 'multidomicilio';
               calculateShipping();
             }
           }

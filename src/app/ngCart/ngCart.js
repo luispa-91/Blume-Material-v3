@@ -146,7 +146,7 @@ angular.module('ngCart', ['ngCart.directives'])
             var weight = 0;
             var items = this.getItems();
             angular.forEach(items, function (item) {
-                weight += item._data.weight;
+                weight += item._data.weight * item.getQuantity();
             });
             return weight;
         };

@@ -71,6 +71,12 @@
 
           var checkStock = function () {
 
+            if(discount_code.valid){
+                discount_code.valid = false;
+                discount_code.value = '';
+                discount_code.amount = 0;
+            }
+
             var outOfStockVariants = 0;
             var cartItems = ngCart.$cart.items;
 
@@ -86,6 +92,10 @@
                     swal('Atención','Algunos productos en su carrito no están disponibles, revise la cantidad o comuníquese con nosotros para más información','warning');
                 }
             } else {
+              //Recalculate delivery if address is already set
+                if(Delivery.destination_coords.distance > 0){
+                  $rootScope.$emit('notifying-service-event');
+                }
                 $state.go('checkout.address');
             }
 
@@ -193,8 +203,8 @@
                     temp.hash = md5.createHash(temp.prehash);
                   } 
                   if(promo.type == "Percentage"){
-                    var temp = total - shipping - tax;
-                    discount_code.amount = (promo.discount / 100) * temp;
+                    var pretotal = total - shipping - tax;
+                    discount_code.amount = (promo.discount / 100) * pretotal;
                     discount_code.valid = true;
                     temp.timestamp = Math.round((new Date()).getTime() / 1000);
                     var total = (ngCart.totalCost() - discount_code.amount).toFixed(2);
@@ -240,6 +250,7 @@
             }
 
             //Setup token request arguments
+
             var args = {
               sellerId: two_co.seller_id,
               publishableKey: two_co.publishable_key,
@@ -300,6 +311,7 @@
           }
 
           var chargeCard = function (token, billingInfo) {
+            
             return $http.post('https://central-api.madebyblume.com/v1/payments/2co/invoice?token=' + token, billingInfo).then(function (results) {
                 //Verify if payment is approved
                 if(results.data[0] == "A"){
@@ -307,9 +319,11 @@
                   //Verify if order is to be picked up at the store
                   if(Delivery.pickup_in_store){
                     sendConfirmationEmail();
+                    updateStoreStock();
                   } else {
                     createShippingInvoice();
                     sendConfirmationEmailWithTracking();
+                    updateStoreStock();
                   }
                 } else {
                   temp.progress = 1;
@@ -431,6 +445,12 @@
               });
           }
 
+          var updateStoreStock = function(order_id){
+            return $http.post('https://central-api.madebyblume.com/v1/orders/stock-update?order_id=' + order_id).then(function (results) {
+                return results;
+              });
+          }
+
             return {
               checkStock: checkStock,
               showPrompt: showPrompt,
@@ -444,7 +464,8 @@
               chargeCard: chargeCard,
               makePayment: makePayment,
               order: order,
-              createCustomer: createCustomer
+              createCustomer: createCustomer,
+              updateStoreStock: updateStoreStock
             }
         }
 })();

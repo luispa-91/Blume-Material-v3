@@ -9,7 +9,7 @@
 
     <br/>
 
-    <div class="container double-space-top" ng-init="index=2">
+    <div class="container double-space-top special-font-color" ng-init="index=2">
       <div class="row">
         <div class="col-md-6">
           <div>
@@ -33,7 +33,7 @@
           <br />
           <div ng-if="product.options.length > 0">
               <h4><strong>{{product.options[0].type}}</strong></h4>
-              <select class="form-control options-format" ng-change="changeValue()" ng-model="vm.option1" ng-options="variant as variant for variant in product.options[0].values">
+              <select class="form-control options-format" ng-model="vm.option1" ng-options="variant as variant for variant in product.options[0].values">
         </select>
           </div>
           <div ng-if="product.options.length > 1">
@@ -47,8 +47,8 @@
                 </select>
           </div>
           <br />
-          <div ng-repeat="variant in product.variants | filter:vm.option1+vm.option2+vm.option3 | limitTo:1">
-              <div class="product-price text-muted" ng-if="currency == 'USD'">
+          <div ng-repeat="variant in product.variants | filter:{name: vm.option1+vm.option2+vm.option3} : true | limitTo:1">
+              <div class="product-price" ng-if="currency == 'USD'">
                 <span ng-if="product.sale_percentage == 0">
                   {{ variant.price | currency }}
                 </span>
@@ -56,9 +56,9 @@
                   <small style="color:black"><strike>{{ variant.price | currency }}</strike></small><br />
                   {{ variant.price * ((100 - product.sale_percentage) / 100) | currency }}
                 </span>
-                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay</small></span>
+                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay disponible en este momento</small></span>
               </div>
-              <div class="product-price text-muted" ng-if="currency == 'CRC'">
+              <div class="product-price" ng-if="currency == 'CRC'">
                 <span ng-if="product.sale_percentage == 0">
                   {{ variant.price | currency:'₡' }}
                 </span>
@@ -66,7 +66,7 @@
                   <small style="color:black"><strike>{{ variant.price | currency:'₡' }}</strike></small><br />
                   {{ variant.price * ((100 - product.sale_percentage) / 100) | currency:'₡' }}
                 </span>
-                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay</small></span>
+                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay disponible en este momento</small></span>
               </div>
               <ngcart-addtocart ng-show="variant.quantity != 0" id="{{ variant.id }}" name="{{ product.title }}" price="{{ variant.price * ((100 - product.sale_percentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.images[0].relative_url,product_id:product.id,weight:variant.weight,selectedVariant:variant.name,stock:variant.quantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-addtocart>
           </div>

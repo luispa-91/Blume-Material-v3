@@ -1,6 +1,5 @@
 <md-divider class="max-top"></md-divider>
-<br />
-<div class="footer-bottom footer-color">
+<div class="footer-bottom footer-color special-font-color">
     <div class="container">
         <div class="row">
           <div class="col-md-4">
@@ -14,13 +13,13 @@
             <p ng-repeat="info in vm.settings.footer.contact_info">
 
               <!-- Email -->
-              <a ng-if="info.type == 'email'" href="mailTo:{{info.value}}"><i class="fa fa-envelope" aria-hidden="true"></i> {{info.value}}</a>
+              <a ng-if="info.type == 'email'" href="mailTo:{{info.value}}" class="special-font-color"><i class="fa fa-envelope" aria-hidden="true"></i> {{info.value}}</a>
 
               <!-- Phone -->
-              <a ng-if="info.type == 'phone'" href="tel:{{info.value}}"><i class="fa fa-phone" aria-hidden="true"></i> {{info.value}}</a>
+              <a ng-if="info.type == 'phone'" href="tel:{{info.value}}" class="special-font-color"><i class="fa fa-phone" aria-hidden="true"></i> {{info.value}}</a>
 
               <!-- Address -->
-              <a ng-if="info.type == 'address'" href="http://maps.google.com/?q={{info.value}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i> {{info.value}}</a>
+              <a ng-if="info.type == 'address'" href="http://maps.google.com/?q={{info.value}}" target="_blank" class="special-font-color"><i class="fa fa-map-marker" aria-hidden="true"></i> {{info.value}}</a>
 
             </p>
           </div>

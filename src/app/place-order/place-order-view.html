@@ -120,32 +120,32 @@
                   <div class="form-group c-c">
                       <md-input-container class="md-block">
                           <label>Número de tarjeta</label>
-                          <input style="margin-top:10px" type="text" name="ccnumber" ng-model="vm.card.number" />
+                          <input placeholder="Ej: 4242414142424141" style="margin-top:10px" type="text" name="ccnumber" ng-model="vm.card.number" />
                       </md-input-container>
                   </div>
                   <div class="form-group c-c">
                       <md-input-container class="md-block">
                           <label>Fecha de expriración</label>
-                          <input style="margin-top:10px" type="text" name="ccexp" ng-model="vm.card.expiry" />
+                          <input placeholder="Ej: 0219" style="margin-top:10px" type="text" name="ccexp" ng-model="vm.card.expiry" />
                       </md-input-container>
                   </div>
 
                   <div class="form-group c-c">
                       <md-input-container class="md-block">
                           <label>CVC</label>
-                          <input  style="margin-top:10px" type="text" name="cvv" ng-model="vm.card.cvc" />
+                          <input placeholder="Ej: 750" style="margin-top:10px" type="text" name="cvv" ng-model="vm.card.cvc" />
                       </md-input-container>
                   </div>
                 </div>
-                <input type="hidden" name="hash" value="{{vm.hash}}" />
-                <input type="hidden" name="time" value="{{vm.timestamp}}" />
+                <input type="hidden" name="hash" value="{{vm.temp.hash}}" />
+                <input type="hidden" name="time" value="{{vm.temp.timestamp}}" />
                 <input type="hidden" name="amount" value="{{vm.total}}" />
                 <input type="hidden" name="type" value="sale" />
                 <input type="hidden" name="orderid" value="{{vm.temp.purchase.order_id}}" />
-                <input type="hidden" name="key_id" value="7185696" />
-                <input type="hidden" name="processor_id" value="freaks1" />
+                <input type="hidden" name="key_id" value="" />
+                <input type="hidden" name="processor_id" value="" />
                 <input type="hidden" name="address" value="{{vm.address.state}}" />
-                <input type="hidden" name="redirect" value="{{vm.website_url}}#/checkout/confirmed" />
+                <input type="hidden" name="redirect" value="{{vm.website_url}}#!/checkout/confirmed" />
               </form>
               <!-- Display the payment button. -->
                 <div layout="row" layout-align="center center">

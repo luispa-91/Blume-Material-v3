@@ -142,6 +142,13 @@
                 });
             };
 
+            var _saveAsDraft = function (order_id) {
+
+                return $http.post('https://central-api.madebyblume.com/v1/orders/save-draft?order_id=' + order_id).then(function (results) {
+                    return results;
+                });
+            };
+
             var _applyDiscount = function (promoCode) {
 
                 return $http.get('https://central-api.madebyblume.com/v1/company/find/promocode?word=' + promoCode + '&company_id=' + APP_INFO.ID).then(function (results) {
@@ -156,7 +163,8 @@
                 mailReceiptWithTracking: _mailReceiptWithTracking,
                 createShippingInvoice: _createShippingInvoice,
                 applyDiscount: _applyDiscount,
-                saveAsPaid: _saveAsPaid
+                saveAsPaid: _saveAsPaid,
+                saveAsDraft: _saveAsDraft
             }
 
         }

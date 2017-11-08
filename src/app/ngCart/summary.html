@@ -1,8 +1,8 @@
 <md-list>
   <md-list-item ng-repeat="item in cart.$cart.items" class="container noright">
-    <img alt="{{ person.name }}" ng-src="https://cms.blumewebsites.com/{{ item._data.imagePath }}" class="md-avatar hidden-xs" />
+    <img style="cursor:pointer" alt="{{ person.name }}" ng-src="https://cms.blumewebsites.com/{{ item._data.imagePath }}" class="md-avatar hidden-xs" ui-sref="product({ product_id: item._data.product_id })" />
 		<div class="col-xs-4">
-			<p class="product-name">
+			<p style="cursor:pointer" class="product-name" ui-sref="product({ product_id: item._data.product_id })">
 				{{ item._name }}
 				<small ng-if="item._data.selectedVariant != 'default'"> &nbsp;{{ item._data.selectedVariant }} &nbsp;</small>
 				<small ng-if="item._quantity > item._data.stock" ><span class="out-of-stock">No hay suficientes</span></small>

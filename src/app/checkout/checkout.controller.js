@@ -20,6 +20,11 @@
             vm.address = Delivery.address;
             vm.billing_address = Delivery.billing_address;
             vm.destination_coords = Delivery.destination_coords;
+            if(Checkout.discount_code.valid){
+                Checkout.discount_code.valid = false;
+                Checkout.discount_code.value = '';
+                Checkout.discount_code.amount = 0;
+            }
             vm.discount_code = Checkout.discount_code;
             vm.website_url = APP_INFO.website_url;
             vm.loading_location = false;

@@ -24,18 +24,24 @@
                     if(vm.response_code == '100'){
                         //Mark as paid
                         Order.saveAsPaid(vm.order_id).then(function(results){
-                            if(vm.temp.purchase.shipment_id != 0){
+                            var temp = results.data;
+                            if(temp.shipment_id != 0){
                               Order.mailReceiptWithTracking(vm.order_id).then(function (results) {
                               });
-                              Order.createShippingInvoice(vm.order_id, vm.temp.purchase.shipment_id).then(function (results) {
+                              Order.createShippingInvoice(vm.order_id, temp.shipment_id).then(function (results) {
                               });
-                              console.log("Order paid!");
+                              Checkout.updateStoreStock(vm.order_id).then(function (results) {
+                              });
                             } else {
                               Order.mailReceipt(vm.order_id).then(function (results) {
-                                console.log("Order paid!");
+                                
+                              });
+                              Checkout.updateStoreStock(vm.order_id).then(function (results) {
                               });
                             }
                         });
+                    } else {
+                        Order.saveAsDraft(vm.order_id).then(function(results){});
                     }
                 }
             });
