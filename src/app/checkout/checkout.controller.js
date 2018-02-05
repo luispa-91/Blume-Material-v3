@@ -30,12 +30,25 @@
             vm.loading_location = false;
             vm.card = Checkout.card;
             vm.card_options = Checkout.card_options;
+            vm.card_options_2 = Checkout.card_options_2;
             vm.two_co = Checkout.two_co;
             vm.temp = Checkout.temp;
-            vm.selected_method = "";
+            vm.selected_method = "TwoCheckout";
+            vm.use_ft_payment = false;
             vm.countries = Countries.list;
             vm.country_selected = "";
             vm.pickup_in_store = false;
+            vm.bac = APP_INFO.bac;
+            vm.getDeliveryFares = Delivery.getDeliveryFares;
+            vm.changeDeliveryCompany = Delivery.changeDeliveryCompany;
+            vm.getDeliveryFares().then(function(results){
+                vm.store_fares = results;
+                if(vm.store_fares.length == 0){
+                    vm.pickup_in_store = true;
+                }
+            });
+            
+
             vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
             vm.customer_address = Delivery.customer_address;
             if(!vm.address.address){
@@ -79,6 +92,9 @@
             vm.makePayment = Checkout.makePayment;
             vm.createCustomer = Checkout.createCustomer;
             vm.setPaymentMethod = setPaymentMethod;
+            vm.payWithFtTechnologies = payWithFtTechnologies;
+            vm.selectCardAsPaymentMethod = selectCardAsPaymentMethod;
+            vm.submitBAC = submitBAC;
 
             vm.timestamp = Math.round((new Date()).getTime() / 1000);
             
@@ -107,12 +123,18 @@
         function setPaymentMethod(){
             vm.syncCustomerAddress();
             if(vm.selected_method == 'TwoCheckout'){
-                Checkout.order.payment_method = 'Credit Card'
+                Checkout.order.payment_method = 'Credit Card';
                 vm.makePayment();
+            } else if(vm.selected_method == 'FtTechnologies'){
+                Checkout.order.payment_method = 'Credit Card';
+                payWithFtTechnologies();
             } else if(vm.selected_method == 'BankAccount'){
-                Checkout.order.payment_method = 'Bank Transfer'
+                Checkout.order.payment_method = 'Bank Transfer';
                 vm.createCustomer();
-            } 
+            } else if(vm.selected_method =='Paypal'){
+                Checkout.order.payment_method = 'Paypal';
+                submitPaypal();
+            }
         }
 
         function currentLocation(){
@@ -123,6 +145,8 @@
         function setDefaultPaymentMethod(){
             if(vm.store.payment_options.twocheckout){
                 vm.selected_method = "TwoCheckout";
+            } else if(vm.store.payment_options.fttechnologies){
+                vm.selected_method = "FtTechnologies";
             } else if(vm.store.payment_options.bacsanjose){
                 vm.selected_method = "BACSanJose";
             } else if(vm.store.payment_options.paypal){
@@ -133,12 +157,61 @@
         }
 
         function submitBAC(){
-            document.getElementById("CredomaticPost").submit();
+            vm.card.exp_month = vm.card.expiry.substring(0, 2);
+            if(vm.card.expiry.length > 7){
+              vm.card.exp_year = vm.card.expiry.substring(7, 9);
+            } else {
+              vm.card.exp_year = vm.card.expiry.substring(5, 7);
+            }
+
+            vm.card.expiry = vm.card.exp_month + vm.card.exp_year;
+            
+
+            setTimeout(function(){
+                document.getElementById("CredomaticPost").submit();
+                }, 1500);
         }
 
         function submitPaypal(){
             document.getElementById("PaypalPost").submit();
         }
 
+        function payWithFtTechnologies(){
+
+            //split expiry date
+            vm.card.exp_month = parseInt(vm.card.expiry.substring(0, 2));
+            if(vm.card.expiry.length > 7){
+              vm.card.exp_year = parseInt('20' + vm.card.expiry.substring(7, 9));
+            } else {
+              vm.card.exp_year = parseInt('20' + vm.card.expiry.substring(5, 7));
+            }
+
+            var card_number = vm.card.number.replace(/\s/g, '');
+            
+            vm.temp = Checkout.temp;
+            
+            var args = {
+                applicationName:APP_INFO.gateway.applicationName,
+                applicationPassword:APP_INFO.gateway.applicationPassword,
+                chargeDescription: vm.temp.purchase.order_number,
+                transactionCurrency: vm.store.currency,
+                transactionAmount: vm.total,
+                primaryAccountNumber: card_number,
+                expirationMonth: vm.card.exp_month,
+                expirationYear: vm.card.exp_year,
+                verificationValue: vm.card.cvc
+            };
+
+            Checkout.chargeCardUsingFtTechnologies(args);
+
+        }
+
+        function selectCardAsPaymentMethod() {
+            if(vm.store.payment_options.fttechnologies){
+                vm.selected_method = "FtTechnologies";
+            } else if(vm.store.payment_options.twocheckout){
+                vm.selected_method = "TwoCheckout";
+            }
+        }
     }
 })();

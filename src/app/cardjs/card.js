@@ -22,7 +22,7 @@ var hasRequire = typeof require === 'function';
                 link: function (scope, element, attributes, cardCtrl) {
                     var defaultPlaceholders = {
                         number: '•••• •••• •••• ••••',
-                        name: 'Full Name',
+                        name: '',
                         expiry: '••/••',
                         cvc: '•••'
                     };

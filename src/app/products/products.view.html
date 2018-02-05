@@ -1,7 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top:50px;">
       <div class="row products-header">
         <div class="col-md-6 col-md-offset-3">
-          <h2 class="text-center black toop">Productos</h2>
+         
           <div class="form-group" layout="row">
             <md-input-container>
               <label>Categorías</label>
@@ -31,14 +31,20 @@
           </svg>
         </div>
       </div>
-      <div ng-repeat="product in catalog | filter:selectedCategory | filter:criteria" class="col-md-3 col-sm-6 no-padding">
-        <md-card class="card-animation card-h">
+
+<div class="row">
+
+  <div ng-repeat="product in catalog | filter:selectedCategory | filter:criteria" class="col-md-3 col-sm-6 no-padding">
+        <md-card class="card-h">
            <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{ product.cover_image}}) no-repeat center; background-size:contain;" class="md-card-image img-card" alt="{{ ::product.title}}">
             <span ng-if="product.sale_percentage > 0">
               <div style="position:absolute;top:40px;right:52px;z-index:1">
                 <strong style="color:white">- {{product.sale_percentage}}%</strong>
               </div>
               <img style="position:absolute;top:15px;right:30px;" src="assets/images/discount-tag.png" />
+            </span>
+            <span ng-if="product.variant_quantity == 0">
+              <img ng-if="product.variant_name == 'default'" style="position:absolute;top:20%;left:15%;" src="assets/images/sold-out.png" />
             </span>
            </div>
            <md-card-title class="less-p">
@@ -71,5 +77,12 @@
            </md-card-actions>
          </md-card>
       </div>
+</div>
+<br />
+<div class="center-block text-center">
+  <div ng-show="vm.busy"><i class="fa fa-spinner fa-spin"></i> Cargando más productos...</div>
+</div>
+
+
     </div>
 

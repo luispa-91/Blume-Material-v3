@@ -2,11 +2,17 @@
  <md-card-title>
 	 <md-card-title-text>
 		 <span class="upper-text">2. Datos de Compra
-		 	<div class="pull-right">
-		 		<img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/visa.svg" class="card-logo" />
-		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/mastercard.svg" class="card-logo" />
-		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/discover.svg" class="card-logo" />
-		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/amex.svg" class="card-logo" />
+		 	<div class="pull-right" style="margin-bottom:5px">
+		 		<div ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose">
+		 			<img src="assets/images/visa.svg" class="card-logo" />
+			        <img src="assets/images/mastercard.svg" class="card-logo" />
+			        <img src="assets/images/discover.svg" class="card-logo" />
+			        <img src="assets/images/amex.svg" class="card-logo" />
+		 		</div>
+		 		<div ng-if="vm.store.payment_options.fttechnologies || vm.store.payment_options.banconacional">
+		 			<img src="assets/images/visa.svg" class="card-logo" />
+			        <img src="assets/images/mastercard.svg" class="card-logo" />
+		 		</div>
 	 		</div>
 		 </span> 
 		 <md-divider></md-divider>
@@ -40,17 +46,17 @@
 	 </div> 
 	 <!--Delivery Information-->
 	 <div class="center-block text-center">
-	 	<md-checkbox id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
+	 	<md-checkbox ng-if="vm.store_fares.length > 0" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
 			International Shipping
 		 </md-checkbox>
-	 	<md-checkbox ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.pickup_in_store" ng-change="vm.toggleDelivery(vm.pickup_in_store)" aria-label="Checkbox 1">
+	 	<md-checkbox ng-disabled="vm.store_fares.length == 0" ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.pickup_in_store" ng-change="vm.toggleDelivery(vm.pickup_in_store)" aria-label="Checkbox 1">
 			Recoger en la tienda 
 		 </md-checkbox>
 	 </div>
 	 <div class="row" ng-show="!vm.pickup_in_store && !vm.export">
 		 <div class="col-md-12">
-			 <h4>Punto de referencia &nbsp;
-			 	<i ng-click="vm.currentLocation()" class="material-icons my-location">my_location</i>
+			 <h4>Punto de entrega &nbsp;
+			 	<i ng-click="vm.currentLocation()" class="material-icons my-location" style="color:green">my_location</i>
 			 	<small ng-show="!vm.loading_location"> (Mostrar mi ubicación)</small>
 			 	<small ng-show="vm.loading_location"> Buscando su ubicación, un momento por favor...</small>
 			 </h4>
@@ -80,39 +86,33 @@
           			<textarea ng-model="vm.address.note" placeholder="Escriba la dirección y detalles del lugar de entrega"  md-maxlength="150" rows="5" ></textarea>
 				</md-input-container>
 			</div>
-			<h4>Transporte 
-				<!-- &nbsp;<small>Distancia aproximada: {{vm.destination_coords.distance}} Kms | {{cart.getTotalWeight()}} Kgs</small> -->
-			</h4><br />
-			 <div class="form-group">
-		 		<md-radio-group ng-model="vm.destination_coords.delivery_type" ng-change="vm.calculateShipping()">
-			      <md-radio-button value="multidomicilio">
-			      	Multidomicilio 
-			      	<span ng-show="vm.destination_coords.delivery_type == 'multidomicilio'">
-			      		<small class="text-muted" ng-if="vm.store.currency == 'USD'">
-				      		{{ cart.getShipping() | currency }} | Tiempo de entrega 1 día (approx)
-				      	</small>
-				      	<small class="text-muted" ng-if="vm.store.currency == 'CRC'">
-				      		{{ cart.getShipping() | currency:'₡' }} | Tiempo de entrega 1 día (approx)
-				      	</small>
-			      	</span>
-			      </md-radio-button>
-			      <md-radio-button value="correosdecostarica">
-			      	Correos de Costa Rica 
-			      	<span ng-show="vm.destination_coords.delivery_type == 'correosdecostarica'">
-			      		<small class="text-muted" ng-if="vm.store.currency == 'USD'">
-				      		{{ cart.getShipping() | currency }} | Tiempo de entrega 1 a 5 días (approx)
-				      	</small>
-				      	<small class="text-muted" ng-if="vm.store.currency == 'CRC'">
-				      		{{ cart.getShipping() | currency:'₡' }} | Tiempo de entrega 1 a 5 días (approx)
-				      	</small>
-			      	</span>
-		      	  </md-radio-button>
-			    </md-radio-group>
-			</div>
+			
+			<!-- START fares section -->
+			<section ng-if="vm.destination_coords.lat">
+				<h4>Transporte 
+					&nbsp;<small>Distancia aproximada: {{vm.destination_coords.distance}} Kms | {{cart.getTotalWeight()}} Kgs</small>
+				</h4><br />
+				 <div class="form-group">
+			 		<md-radio-group ng-model="vm.destination_coords.selected_fare" ng-change="vm.changeDeliveryCompany()">
+				      <md-radio-button ng-repeat="fare in vm.store_fares" value="{{fare.id}}">
+				      	{{fare.delivery_company_name}} 
+				      	<span ng-show="vm.destination_coords.selected_fare == fare.id">
+				      		<small class="text-muted" ng-if="vm.store.currency == 'USD'">
+					      		{{ cart.getShipping() | currency }} | Tiempo de entrega {{fare.eta}} (approx)
+					      	</small>
+					      	<small class="text-muted" ng-if="vm.store.currency == 'CRC'">
+					      		{{ cart.getShipping() | currency:'₡' }} | Tiempo de entrega {{fare.eta}} (approx)
+					      	</small>
+				      	</span>
+				      </md-radio-button>
+				    </md-radio-group>
+				</div>
+			</section>
+
 			<br />
 		 </div>
 	 </div>
-	 <div class="row" ng-show="vm.pickup_in_store">
+	 <div class="row" ng-show="vm.pickup_in_store && vm.store.payment_gateways.twocheckout">
 		 <div class="col-md-12">
 			 <h4>Dirección de cobro</h4>
 			 <br />
@@ -136,6 +136,18 @@
 					<input ng-model="vm.billing_address.zip_code">
 				</md-input-container>
 		 	</div>
+
+		 	<div class="form-group">
+				<md-input-container class="md-block" flex-gt-sm>
+          			<textarea ng-model="vm.billing_address.address" placeholder="Comentarios"  md-maxlength="150" rows="5" ></textarea>
+				</md-input-container>
+			</div>
+		 </div>
+	 </div>
+
+	 <div class="row" ng-show="vm.pickup_in_store && !vm.store.payment_gateways.twocheckout">
+		 <div class="col-md-12">
+			 <h4>Detalle</h4>
 
 		 	<div class="form-group">
 				<md-input-container class="md-block" flex-gt-sm>
@@ -187,7 +199,7 @@
 	 </div>
  </md-card-content>
  <md-card-actions layout="row" layout-align="center center">
-	 <md-button class="pull-left sm-margin-left" ui-sref="checkout.shops.summary">Volver</md-button>
-	 <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.verifyData(vm.pickup_in_store, vm.export)">Continuar</md-button>
+	 <md-button class="pull-left sm-margin-left" ui-sref="checkout.summary">Volver</md-button>
+	 <md-button analytics-on="click" analytics-event="CompleteRegistration" class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.verifyData(vm.pickup_in_store, vm.export)">Continuar</md-button>
  </md-card-actions>
 </md-card>

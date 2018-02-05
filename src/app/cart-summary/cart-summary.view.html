@@ -2,11 +2,17 @@
  <md-card-title>
 	 <md-card-title-text>
 		 <span class="upper-text">1. Resumen de Compra
-		 	<div class="pull-right">
-		 		<img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/visa.svg" class="card-logo" />
-		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/mastercard.svg" class="card-logo" />
-		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/discover.svg" class="card-logo" />
-		        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/amex.svg" class="card-logo" />
+		 	<div class="pull-right" style="margin-bottom:5px">
+		 		<div ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose">
+		 			<img src="assets/images/visa.svg" class="card-logo" />
+			        <img src="assets/images/mastercard.svg" class="card-logo" />
+			        <img src="assets/images/discover.svg" class="card-logo" />
+			        <img src="assets/images/amex.svg" class="card-logo" />
+		 		</div>
+		 		<div ng-if="vm.store.payment_options.fttechnologies || vm.store.payment_options.banconacional">
+		 			<img src="assets/images/visa.svg" class="card-logo" />
+			        <img src="assets/images/mastercard.svg" class="card-logo" />
+		 		</div>
 	 		</div>
 		 </span> 
 		 <md-divider></md-divider>
@@ -28,6 +34,6 @@
  </md-card-content>
  <md-card-actions layout="row" layout-align="center center">
 	 <md-button class="pull-left sm-margin-left md-raised" ui-sref="products">Volver</md-button> &nbsp;&nbsp;
-	 <md-button class="sm-margin-right md-raised md-primary custom" ng-click="vm.checkStock()" ng-if="cart.$cart.items.length > 0">Continuar</md-button>
+	 <md-button analytics-on="click" analytics-event="ViewContent" class="sm-margin-right md-raised md-primary custom" ng-click="vm.checkStock()" ng-if="cart.$cart.items.length > 0">Continuar</md-button>
  </md-card-actions>
 </md-card>

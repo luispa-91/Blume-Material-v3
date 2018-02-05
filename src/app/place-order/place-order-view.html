@@ -2,21 +2,27 @@
   <md-card-title>
       <md-card-title-text>
      <span class="upper-text">3. Método de Pago
-      <div class="pull-right">
-        <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/visa.svg" class="card-logo" />
-            <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose || vm.store.payment_options.banconacional" src="assets/images/mastercard.svg" class="card-logo" />
-            <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/discover.svg" class="card-logo" />
-            <img ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose" src="assets/images/amex.svg" class="card-logo" />
+      <div class="pull-right" style="margin-bottom:5px">
+        <div ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose">
+          <img src="assets/images/visa.svg" class="card-logo" />
+              <img src="assets/images/mastercard.svg" class="card-logo" />
+              <img src="assets/images/discover.svg" class="card-logo" />
+              <img src="assets/images/amex.svg" class="card-logo" />
+        </div>
+        <div ng-if="vm.store.payment_options.fttechnologies || vm.store.payment_options.banconacional">
+          <img src="assets/images/visa.svg" class="card-logo" />
+              <img src="assets/images/mastercard.svg" class="card-logo" />
+        </div>
       </div>
      </span> 
      <md-divider></md-divider>
    </md-card-title-text>
   </md-card-title>
   <!-- Show enabled payment methods-->
-    <div ng-show="vm.store.payment_options.twocheckout" style="background-color:#ccc;padding-top:10px;padding-bottom:10px;" ng-click="vm.selected_method = 'TwoCheckout'">
+    <div ng-show="vm.store.payment_options.twocheckout || vm.store.payment_options.fttechnologies" style="background-color:#ccc;padding-top:10px;padding-bottom:10px;" ng-click="vm.selectCardAsPaymentMethod()">
       <span style="margin-left:15px;">Tarjeta de crédito</span>
     </div>
-      <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.twocheckout == true && vm.selected_method=='TwoCheckout'">
+      <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.twocheckout && vm.selected_method=='TwoCheckout' || vm.store.payment_options.fttechnologies && vm.selected_method =='FtTechnologies'">
       
             <div class="col-md-6 hidden-xs hidden-sm">
                 <div id="card-container"></div>
@@ -81,7 +87,7 @@
         </md-card-content>
 
     <div ng-show="vm.store.payment_options.paypal" class="list-title" ng-click="vm.selected_method = 'Paypal'">
-      <span style="margin-left:15px;">Paypal</span>
+      <span style="margin-left:15px;">PayPal</span>
     </div>
         <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.paypal && vm.selected_method=='Paypal'">
               
@@ -114,26 +120,46 @@
     </div>
         <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.bacsanjose && vm.selected_method=='BACSanJose'">
 
-              <form id="CredomaticPost" name="CredomaticPost" action="https://credomatic.compassmerchantsolutions.com/api/transact.php" method="post">
+              <div class="col-md-6 hidden-xs hidden-sm">
+                  <div id="card-container-2"></div>
+                  <br />
+                  <div class="center-block text-center">
+                    <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
+                      <span ng-show="!vm.discount_code.valid">Cupón</span>
+                      <span ng-show="vm.discount_code.valid">Gracias!</span>
+                    </md-button>
+                  </div>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <form data-card
+                    data-width="285"
+                    data-card-container="#card-container-2"
+                    data-placeholders="cardPlaceholders"
+                    data-options="vm.card_options_2" 
+                    id="CredomaticPost" 
+                    name="CredomaticPost" 
+                    action="https://credomatic.compassmerchantsolutions.com/api/transact.php" 
+                    method="post">
 
-                <div class="center-block" style="width:50%;margin-top:2.5em">
+                <div>
                   <div class="form-group c-c">
                       <md-input-container class="md-block">
                           <label>Número de tarjeta</label>
-                          <input placeholder="Ej: 4242414142424141" style="margin-top:10px" type="text" name="ccnumber" ng-model="vm.card.number" />
+                          <input style="margin-top:10px" type="text" name="ccnumber" card-number ng-model="vm.card.number" />
                       </md-input-container>
                   </div>
                   <div class="form-group c-c">
                       <md-input-container class="md-block">
                           <label>Fecha de expriración</label>
-                          <input placeholder="Ej: 0219" style="margin-top:10px" type="text" name="ccexp" ng-model="vm.card.expiry" />
+                          <input style="margin-top:10px" type="text" name="ccexp" card-expiry ng-model="vm.card.expiry" />
                       </md-input-container>
                   </div>
 
                   <div class="form-group c-c">
                       <md-input-container class="md-block">
                           <label>CVC</label>
-                          <input placeholder="Ej: 750" style="margin-top:10px" type="text" name="cvv" ng-model="vm.card.cvc" />
+                          <input style="margin-top:10px" type="text" name="cvv" card-cvc ng-model="vm.card.cvc" />
                       </md-input-container>
                   </div>
                 </div>
@@ -142,19 +168,18 @@
                 <input type="hidden" name="amount" value="{{vm.total}}" />
                 <input type="hidden" name="type" value="sale" />
                 <input type="hidden" name="orderid" value="{{vm.temp.purchase.order_id}}" />
-                <input type="hidden" name="key_id" value="" />
-                <input type="hidden" name="processor_id" value="" />
+                <input type="hidden" name="key_id" value="{{vm.bac.key_id}}" />
+                <input type="hidden" name="processor_id" value="{{vm.bac.processor_id}}" />
                 <input type="hidden" name="address" value="{{vm.address.state}}" />
-                <input type="hidden" name="redirect" value="{{vm.website_url}}#!/checkout/confirmed" />
-              </form>
-              <!-- Display the payment button. -->
+                <input type="hidden" name="redirect" value="{{vm.website_url}}/checkout/confirmed" />
+
+                <!-- Display the payment button. -->
                 <div layout="row" layout-align="center center">
-                  <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
-                    <span ng-show="!vm.discount_code.valid">Cupón</span>
-                    <span ng-show="vm.discount_code.valid">Gracias!</span>
-                  </md-button>
-                  <md-button ng-click="vm.setPaymentMethod()" class="md-raised md-primary custom">Pagar</md-button>
+                  <md-button ng-click="vm.submitBAC()" class="md-raised md-primary custom">Pagar</md-button>
                 </div>
+              </form>
+              </div>
+                
         </md-card-content>
 
         <div ng-show="vm.store.payment_options.bankaccount" class="list-title" ng-click="vm.selected_method = 'BankAccount'">
@@ -191,7 +216,7 @@
 
         <md-card-actions layout="row" layout-align="center center">
             <md-button class="pull-left sm-margin-left" ui-sref="checkout.address" ng-disabled="vm.temp.loading">Volver</md-button> &nbsp;
-            <md-button ng-show="vm.selected_method=='TwoCheckout'" class="pull-left sm-margin-left md-raised md-primary custom" ng-click="vm.setPaymentMethod()" ng-disabled="vm.temp.loading">Pagar</md-button>
+            <md-button ng-if="vm.store.payment_options.twocheckout && vm.selected_method=='TwoCheckout' || vm.store.payment_options.fttechnologies && vm.selected_method =='FtTechnologies'" class="pull-left sm-margin-left md-raised md-primary custom" ng-click="vm.setPaymentMethod()" ng-disabled="vm.temp.loading">Pagar</md-button>
         </md-card-actions>
 
     <!-- CREDIT CARD FORM ENDS HERE -->

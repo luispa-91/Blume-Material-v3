@@ -47,7 +47,7 @@
                 </select>
           </div>
           <br />
-          <div ng-repeat="variant in product.variants | filter:{name: vm.option1+vm.option2+vm.option3} : true | limitTo:1">
+          <div ng-if="product.options.length > 0" ng-repeat="variant in product.variants | filter:{name: vm.option1+vm.option2+vm.option3} | limitTo:1">
               <div class="product-price" ng-if="currency == 'USD'">
                 <span ng-if="product.sale_percentage == 0">
                   {{ variant.price | currency }}
@@ -68,7 +68,32 @@
                 </span>
                 <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay disponible en este momento</small></span>
               </div>
-              <ngcart-addtocart ng-show="variant.quantity != 0" id="{{ variant.id }}" name="{{ product.title }}" price="{{ variant.price * ((100 - product.sale_percentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.images[0].relative_url,product_id:product.id,weight:variant.weight,selectedVariant:variant.name,stock:variant.quantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-addtocart>
+              <ngcart-detail ng-show="variant.quantity != 0" id="{{ variant.id }}" name="{{ product.title }}" price="{{ variant.price * ((100 - product.sale_percentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.images[0].relative_url,product_id:product.id,weight:variant.weight,selectedVariant:variant.name,stock:variant.quantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
+          </div>
+
+          <div ng-if="product.options.length == 0" ng-repeat="variant in product.variants">
+
+              <div class="product-price" ng-if="currency == 'USD'">
+                <span ng-if="product.sale_percentage == 0">
+                  {{ variant.price | currency }}
+                </span>
+                <span ng-if="product.sale_percentage > 0">
+                  <small style="color:black"><strike>{{ variant.price | currency }}</strike></small><br />
+                  {{ variant.price * ((100 - product.sale_percentage) / 100) | currency }}
+                </span>
+                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay disponible en este momento</small></span>
+              </div>
+              <div class="product-price" ng-if="currency == 'CRC'">
+                <span ng-if="product.sale_percentage == 0">
+                  {{ variant.price | currency:'₡' }}
+                </span>
+                <span ng-if="product.sale_percentage > 0">
+                  <small style="color:black"><strike>{{ variant.price | currency:'₡' }}</strike></small><br />
+                  {{ variant.price * ((100 - product.sale_percentage) / 100) | currency:'₡' }}
+                </span>
+                <span ng-if="variant.quantity == 0" class="dgrey"><small> - No hay disponible en este momento</small></span>
+              </div>
+              <ngcart-detail ng-show="variant.quantity != 0" id="{{ variant.id }}" name="{{ product.title }}" price="{{ variant.price * ((100 - product.sale_percentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.images[0].relative_url,product_id:product.id,weight:variant.weight,selectedVariant:variant.name,stock:variant.quantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
           </div>
         </div>
       </div>

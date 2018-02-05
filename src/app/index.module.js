@@ -11,8 +11,6 @@
     'ui.select', 
     'ngSanitize',
     'toastr',
-    'cloudinary',
-    'ngFileUpload',
     'ngMaterial',
     'ui.event',
     'ngMap',
@@ -22,7 +20,10 @@
     'gavruk.card',
     'angular-md5',
     'textAngular',
-    'slick']).config(function($mdThemingProvider) {
+    'slick',
+    'infinite-scroll',
+    'angulartics', 
+    'angulartics.facebook.pixel']).config(function($mdThemingProvider) {
     $mdThemingProvider.theme("custom").primaryPalette("teal").accentPalette("deep-orange");
-  });;
+  });
 })();

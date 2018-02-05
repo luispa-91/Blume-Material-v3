@@ -4,7 +4,7 @@
     angular
         .module('angular')
         .controller('LocatorController', LocatorController);
-        function LocatorController(Website, NgMap) {
+        function LocatorController(Website, NgMap, Personalization) {
         var vm = this;
         vm.map = null;
 
@@ -15,6 +15,7 @@
             //Get store locations settings
             vm.selected_store = {};
             vm.getStoreSettings = Website.getStoreSettings;
+            vm.styles = Personalization.styles;
             vm.getStoreSettings().then(function(results){
                 vm.store_locations = results.locations;
                 vm.location = results.location;

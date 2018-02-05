@@ -14,7 +14,7 @@
         function init(){
             //Get store locations settings
             vm.temp = Checkout.temp;
-
+            vm.response_text = "";
             Website.getStoreSettings().then(function(results){
                 vm.store = results;
                     if(vm.store.payment_options.bacsanjose){
@@ -41,7 +41,14 @@
                             }
                         });
                     } else {
-                        Order.saveAsDraft(vm.order_id).then(function(results){});
+                        if(vm.order_id == 0){
+                          vm.response_text = "No se pudo crear la orden, por favor inténtelo de nuevo.";
+                        } else {
+                          vm.response_text = $location.search().responsetext;
+                          Order.saveAsDraft(vm.order_id).then(function(results){});
+                          Checkout.addOrderNote(vm.order_id,true,vm.response_text,vm.response_code);
+                          Checkout.errorDebugBAC(vm.order_id);
+                        }
                     }
                 }
             });

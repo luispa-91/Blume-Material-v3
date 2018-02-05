@@ -41,7 +41,6 @@
               if($scope.product.options.length > 2){
                   vm.option3 = $scope.product.options[2].values[0];
               }
-
           })
 
     }

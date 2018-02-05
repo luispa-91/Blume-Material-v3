@@ -64,41 +64,57 @@
               ngCart.setShipping(0);
               destination_coords.delivery_type = '';
             } else {
-              destination_coords.delivery_type = 'multidomicilio';
+              destination_coords.delivery_type = 'express';
               calculateShipping();
             }
           }
 
+          var changeDeliveryCompany = function(){
+            if(destination_coords.delivery_type == ''){
+              destination_coords.delivery_type = 'express';
+            }
+            calculateShipping();
+          }
+
           var calculateShipping = function(){
             
+            
+            var current_fare = {};
             //Get delivery distance
-            getDistance();
+            if(destination_coords.delivery_type != ''){
+              getDistance();
 
-            //Calculate shipping price based on distance and weight
-            if(destination_coords.delivery_type == 'multidomicilio'){
-              distanceBasedPricing();
-            } else if(destination_coords.delivery_type == 'correosdecostarica'){
-              weightBasedPricing();
+              //Calculate shipping price based on distance and weight
+              if(destination_coords.delivery_type == 'express'){
+                //Get current fare
+                for (var i = 0; i < store_fares.length; i++) {
+                   if(store_fares[i].id == destination_coords.selected_fare){
+                      current_fare = store_fares[i];
+                   }
+                }
+                //Calculate shipping price
+                if(current_fare.fare_type == 'distance'){
+                  distanceBasedPricing(current_fare);
+                } else if(current_fare.fare_type == 'weight'){
+                  weightBasedPricing(current_fare);
+                } else if(current_fare.fare_type == 'flat'){
+                  ngCart.setShipping(current_fare.base_price);
+                }
+              } 
+            } else {
+              destination_coords.distance = 0;
             }
 
           }
 
-          var distanceBasedPricing = function(){
+          var distanceBasedPricing = function(fare){
             //Initialize variables
-            var base_price = 0;
-            var base_km = 2.5; 
-            var additional_km = 0;
-            var additional_km_price = 0;
+            var base_price = fare.base_price;
+            var base_km = fare.base_metric; 
+            var additional_km = fare.additional_metric;
+            var additional_km_price = fare.additional_metric_price;
             var price = 0;
 
-            //Set base price and additional distance price
-            if(settings.currency == 'USD'){
-              base_price = 5;
-              additional_km_price = 0.2;
-            } else {
-              base_price = 2250;
-              additional_km_price = 100;
-            }
             //Calculate additional distance
             if(destination_coords.distance > base_km){
               additional_km = Math.ceil(destination_coords.distance - base_km);
@@ -111,34 +127,25 @@
 
           }
 
-          var weightBasedPricing = function(){
+          var weightBasedPricing = function(fare){
 
             //Initialize variables
-            var base_price = 0;
-            var base_weight = 2; 
-            var additional_weight = 0;
-            var additional_weight_price = 0;
+            var base_price = fare.base_price;
+            var base_weight = fare.base_metric; 
+            var additional_weight = fare.additional_metric;
+            var additional_weight_price = fare.additional_metric_price;
             var price = 0;
-
-            //Set base price and additional weight price
-            if(settings.currency == 'USD'){
-              base_price = 5;
-              additional_weight_price = 2;
-            } else {
-              base_price = 2250;
-              additional_weight_price = 1100;
-            }
 
             //Get package weight
             var weight = ngCart.getTotalWeight();
 
             //Calculate additional weight
             if(weight > base_weight){
-              additional_weight = Math.ceil(weight - base_weight);
+              additional_weight = weight - base_weight;
             }
 
             //Calculate price
-            price = base_price + (additional_weight * additional_weight_price);
+            price = base_price + (Math.ceil(additional_weight) * additional_weight_price);
 
             //Set cart shipping
             ngCart.setShipping(price);
@@ -149,7 +156,8 @@
             var origin = new google.maps.LatLng(settings.latitude, settings.longitude);
             var destination = new google.maps.LatLng(destination_coords.lat, destination_coords.lng);
             var service = new google.maps.DistanceMatrixService();
-            service.getDistanceMatrix(
+            if(destination_coords.lat){
+              service.getDistanceMatrix(
               {
                 origins: [origin],
                 destinations: [destination],
@@ -160,6 +168,7 @@
 
             function callback(response, status) {
               destination_coords.distance = response.rows[0].elements[0].distance.value / 1000;
+            }
             }
           }
 
@@ -212,6 +221,16 @@
                 return $http.get('https://central-api.madebyblume.com/v1/website/settings/delivery?company_id=' + APP_INFO.ID).then(function (results) {
                     
                     settings = results.data;
+                    return results.data;
+                });
+            };
+
+          var getDeliveryFares = function () {
+                return $http.get('https://central-api.madebyblume.com/v1/website/deliveryFares?company_id=' + APP_INFO.ID).then(function (results) {
+                    store_fares = results.data;
+                    if(store_fares.length == 0){
+                      destination_coords.delivery_type = '';
+                    }
                     return results.data;
                 });
             };
@@ -275,11 +294,11 @@
 
             //Calculate additional weight
             if(weight > base_weight){
-              additional_weight = Math.ceil(weight - base_weight);
+              additional_weight = weight - base_weight;
             }
 
             //Calculate price
-            price = base_price + (additional_weight * additional_weight_price);
+            price = base_price + ((additional_weight / 0.1) * additional_weight_price);
               if(settings.currency == 'USD'){
                 price += 1.6;
               } else {
@@ -297,7 +316,8 @@
             lat: '',
             lng: '',
             distance: 0,
-            delivery_type: 'multidomicilio'
+            delivery_type: 'express',
+            selected_fare: 0
           }
 
           var billing_address = {
@@ -359,6 +379,8 @@
             note: ''
           }
 
+          var store_fares = [];
+
             return {
               mapClick: mapClick,
               placeLookup: placeLookup,
@@ -380,7 +402,10 @@
               weightBasedPricing: weightBasedPricing,
               currentLocation: currentLocation,
               calculateExportShipping: calculateExportShipping,
-              pickup_in_store: pickup_in_store
+              pickup_in_store: pickup_in_store,
+              store_fares: store_fares,
+              getDeliveryFares: getDeliveryFares,
+              changeDeliveryCompany: changeDeliveryCompany
             }
         }
 })();

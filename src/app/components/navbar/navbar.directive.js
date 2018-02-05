@@ -21,22 +21,19 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController($scope, $timeout, $mdSidenav, $log, $mdDialog, $cookies, $rootScope, Catalog, APP_INFO, Website) {
+    function NavbarController($scope, $timeout, $mdSidenav, $log, $mdDialog, $rootScope, Catalog, APP_INFO, Website) {
       var vm = this;
 
       function init(){
+
+        //Initialize variables
+        vm.companyId = APP_INFO.ID;
         
         //Get Catalog collection titles
-        Catalog.getCollections(APP_INFO.ID)
-            .then(function (data) {
-                $scope.collections = data;
-            });
+        Catalog.getCollections(APP_INFO.ID).then(function (data) { vm.collections = data; });
 
-        //Get Website settings
-        vm.getWebsiteSettings = Website.getWebsiteSettings;
-        vm.getWebsiteSettings().then(function(results){
-          vm.settings = results;
-        })
+        //Get navbar tabs
+        Website.navbar().then(function(results){ vm.navbar = results; },function(err){console.log(err)});
 
         //Get total cart items
         vm.items = $rootScope.cart.getTotalItems();

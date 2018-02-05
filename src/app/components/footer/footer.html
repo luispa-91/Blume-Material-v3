@@ -1,16 +1,23 @@
 <md-divider class="max-top"></md-divider>
+
+<div layout="row">
+        <!-- WhatsHelp.io widget -->
+   
+    <!-- /WhatsHelp.io widget -->
+    </div>
+
 <div class="footer-bottom footer-color special-font-color">
     <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <h4 class="sub">{{vm.settings.footer.title}}</h4>
-            <p>{{vm.settings.footer.description}}</p>
+            <h4 class="sub">{{vm.footer.title}}</h4>
+            <p>{{vm.footer.description}}</p>
           </div>
           <div class="col-md-4">
           </div>
           <div class="col-md-4">
             <h4 class="sub">Contáctenos</h4>
-            <p ng-repeat="info in vm.settings.footer.contact_info">
+            <p ng-repeat="info in vm.footer.contactInfo">
 
               <!-- Email -->
               <a ng-if="info.type == 'email'" href="mailTo:{{info.value}}" class="special-font-color"><i class="fa fa-envelope" aria-hidden="true"></i> {{info.value}}</a>

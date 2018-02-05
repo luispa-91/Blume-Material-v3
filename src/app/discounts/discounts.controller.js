@@ -4,7 +4,7 @@
     angular
         .module('angular')
         .controller('DiscountController', DiscountController);
-        function DiscountController($scope, Catalog, APP_INFO) {
+        function DiscountController($scope, Catalog, APP_INFO, Personalization) {
         var vm = this;
 
         $scope.setCategoryFilter = setCategoryFilter;
@@ -15,6 +15,7 @@
           $scope.selectedCategory = "";
 
           vm.loader = true;
+          vm.styles = Personalization.styles;
           Catalog.getDiscountProducts(APP_INFO.ID)
               .then(function (data) {
                   $scope.catalog = data;

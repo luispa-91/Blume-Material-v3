@@ -6,7 +6,7 @@
     .config(routerConfig);
 
   /** @ngInject */
-  function routerConfig($stateProvider, $urlRouterProvider) {
+  function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
       .state('home', {
         url: '/',
@@ -32,11 +32,7 @@
         controller: 'ProductController',
         controllerAs: 'vm'
       })
-      .state('checkout.shops', {
-        url: '/shop',
-        templateUrl: 'app/shop-nesting-view/shop.view.html'
-      })
-      .state('checkout.shops.summary', {
+      .state('checkout.summary', {
         url: '/summary',
         templateUrl: 'app/cart-summary/cart-summary.view.html'
       })
@@ -61,7 +57,7 @@
         controller: 'ConfirmationController',
         controllerAs: 'vm'
       })
-        .state('about', {
+        .state('about_us', {
           url: '/about-us',
           title: 'About',
           templateUrl: 'app/about/about.view.html',
@@ -86,18 +82,30 @@
           controller: 'BlogPostController',
           controllerAs: 'vm'
         })
-        .state('locator', {
+        .state('store_locator', {
           url: '/puntos-de-venta',
           title: 'Locator',
           templateUrl: 'app/locator/locator.view.html',
           controller: 'LocatorController',
           controllerAs: 'vm'
         })
-        .state('faq', {
-          url: '/Faq',
-          title: 'FAQ',
+        .state('cremacion', {
+          url: '/cremacion',
+          title: 'Cremacion',
+          templateUrl: 'app/cremacion/cremacion.view.html'
+        })
+        .state('preguntas', {
+          url: '/preguntas',
+          title: 'Preguntas',
           templateUrl: 'app/faq/faq.view.html',
           controller: 'FAQController',
+          controllerAs: 'vm'
+        })
+        .state('proveedor', {
+          url: '/proveedor',
+          title: 'Proveedor',
+          templateUrl: 'app/proveedor/proveedor.view.html',
+          controller: 'ContactController',
           controllerAs: 'vm'
         })
         .state('external', {
@@ -112,5 +120,6 @@
           controllerAs: 'vm'
         });
     $urlRouterProvider.otherwise('/');
+    $locationProvider.html5Mode(true);
   }
 })();

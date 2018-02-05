@@ -6,8 +6,16 @@
         Catalog.$inject = ['$http', '$localStorage', 'ngCart', '$state', 'APP_INFO'];
         function Catalog($http, $localStorage, ngCart, $state, APP_INFO){
 
+          var baseUrl = "";
+
           var getProducts = function (company_id) {
               return $http.get("https://central-api.madebyblume.com/v1/website/products?company_id=" + company_id).then(function (results) {
+                  return results.data;
+              });
+          }
+
+          var getMoreProducts = function (company_id, load_count) {
+              return $http.get("https://central-api.madebyblume.com/v1/website/products/loadMore?company_id=" + company_id + '&load_count=' + load_count + '&page_size=' + APP_INFO.page_size).then(function (results) {
                   return results.data;
               });
           }
@@ -42,8 +50,8 @@
               });
           }
 
-          var getSliderPhotos = function (company_name) {
-              return $http.get("https://central-api.madebyblume.com/v1/files/images?company_name=" + company_name + "&image_dir=website/slider").then(function (results) {
+          var getProductTypesByCollection = function(company_id, collection){
+              return $http.get("https://central-api.madebyblume.com/v1/website/collection/product-types?company_id=" + company_id + "&collection=" + collection).then(function (results) {
                   return results.data;
               });
           }
@@ -62,13 +70,14 @@
 
             return {
               getProducts: getProducts,
+              getMoreProducts: getMoreProducts,
               getDiscountProducts: getDiscountProducts,
               getFeaturedProducts: getFeaturedProducts,
               getCategories: getCategories,
               productExpand: productExpand,
               getCollections: getCollections,
-              getSliderPhotos: getSliderPhotos,
-              setStoreData: setStoreData
+              setStoreData: setStoreData,
+              getProductTypesByCollection: getProductTypesByCollection
             }
         }
 })();

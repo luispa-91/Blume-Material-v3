@@ -1,0 +1,42 @@
+html{
+  background-color: #fff;
+}
+
+body{
+  background-color: #fff;
+  color: #000; 
+}
+
+.footer-color{
+  background-color: #fff;
+  color: #000;
+}
+
+md-card.md-default-theme, md-card {
+  background-color: #fff;
+  color: #000; 
+}
+
+.special-font-color{
+  color: #000;
+}
+
+.logo-bg-color{
+  background-color: #fff;
+}
+
+.navbar-color{
+  background-color: #fff;
+}
+
+.social-color{
+  background-color: #fff;
+}
+
+.md-button.md-default-theme.md-warn, .md-button.md-warn {
+  color: #000;
+}
+
+.icon-color{
+  color: #000;
+}

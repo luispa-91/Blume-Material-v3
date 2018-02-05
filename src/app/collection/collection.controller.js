@@ -2,7 +2,7 @@
   angular
     .module('angular')
     .controller('CollectionController',CollectionController);
-    function CollectionController($stateParams, Catalog, APP_INFO, $scope){
+    function CollectionController($stateParams, Catalog, APP_INFO, $scope, Personalization){
       var vm = this;
       vm.collection = $stateParams.name;
 
@@ -11,15 +11,16 @@
 
 	    function init() {
 	      vm.loader = true;
+	      vm.styles = Personalization.styles;
 	      Catalog.getProducts(APP_INFO.ID)
 	          .then(function (data) {
 	              $scope.catalog = data;
 	              vm.loader = false;
 	          });
 
-	      Catalog.getCategories(APP_INFO.ID)
+	      Catalog.getProductTypesByCollection(APP_INFO.ID,vm.collection)
 	          .then(function (data) {
-	              $scope.categories = data;
+	              vm.categories = data;
 	          });
 
           //Set store configuration
@@ -31,7 +32,7 @@
 	    }
 
 	    function setCategoryFilter(category){
-	        $scope.selectedCategory = category.title;
+	        vm.selectedCategory = category.title;
 	    }
 
     }

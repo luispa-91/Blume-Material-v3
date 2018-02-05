@@ -1,7 +1,7 @@
 
 <carousel interval="5000" pause="false">
-    <slide ng-repeat="photo in vm.sliderPhotos">
-      <img class="img-responsive" ng-src="https://cms.blumewebsites.com/{{vm.company_name}}/{{photo.name}}" style="margin:auto;" />
+    <slide ng-repeat="photo in vm.home.sliderPhotos">
+      <img class="img-responsive" ng-src="https://cms.blumewebsites.com/{{vm.companyName}}/{{photo.relativeUrl}}" style="margin:auto;" />
     </slide>
 </carousel>
 
@@ -19,17 +19,21 @@
 
 
     <br />
-    <h2 class="text-center special-font-color">Productos Destacados</h2>
+    <h2 class="text-center" ng-style="vm.styles.titles" ng-if="vm.catalog.length > 0">Productos Destacados</h2>
     <br />
 
-    <div class="col-md-3 col-sm-6 no-padding" ng-repeat="product in vm.catalog">
-      <md-card class="card-animation card-h">
-         <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{ ::product.cover_image}}) no-repeat center; background-size:contain;" class="md-card-image img-card" alt="{{ ::product.title}}">
-          <span ng-if="product.sale_percentage > 0">
+    <div class="col-md-3 col-sm-6 no-padding" ng-repeat="product in vm.featuredProducts">
+      
+      <md-card class="card-h">
+         <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{ ::product.coverImage}}) no-repeat center; background-size:contain;" class="md-card-image img-card" alt="{{ ::product.title}}">
+          <span ng-if="product.salePercentage > 0">
             <div style="position:absolute;top:40px;right:52px;z-index:1">
-              <strong style="color:white">- {{product.sale_percentage}}%</strong>
+              <strong style="color:white">- {{product.salePercentage}}%</strong>
             </div>
             <img style="position:absolute;top:15px;right:30px;" src="assets/images/discount-tag.png" />
+          </span>
+          <span ng-if="product.variantQuantity == 0">
+            <img ng-if="product.variantName == 'default'" style="position:absolute;top:20%;left:15%;" src="assets/images/sold-out.png" />
           </span>
          </div>
          <md-card-title class="less-p">
@@ -39,51 +43,59 @@
          </md-card-title>
          <md-card-content class="less-p">
            <h5 class="text-center gray no-mar" ng-if="vm.currency == 'USD'">
-            <span ng-if="product.sale_percentage == 0">
-              {{ ::product.variant_price | currency }}
+            <span ng-if="product.salePercentage == 0">
+              {{ ::product.variantPrice | currency }}
             </span>
-            <span ng-if="product.sale_percentage > 0">
-              <small style="color:black"><strike>{{ ::product.variant_price | currency }}</strike></small><br />
-              {{ ::product.variant_price * ((100 - product.sale_percentage) / 100) | currency }}
+            <span ng-if="product.salePercentage > 0">
+              <small style="color:black"><strike>{{ ::product.variantPrice | currency }}</strike></small><br />
+              {{ ::product.variantPrice * ((100 - product.salePercentage) / 100) | currency }}
             </span>
           </h5>
            <h5 class="text-center gray no-mar" ng-if="vm.currency == 'CRC'">
-            <span ng-if="product.sale_percentage == 0">
-              {{ ::product.variant_price | currency:'₡' }}
+            <span ng-if="product.salePercentage == 0">
+              {{ ::product.variantPrice | currency:'₡' }}
             </span>
-            <span ng-if="product.sale_percentage > 0">
-              <small style="color:black"><strike>{{ ::product.variant_price | currency:'₡' }}</strike></small><br />
-              {{ ::product.variant_price * ((100 - product.sale_percentage) / 100) | currency:'₡' }}
+            <span ng-if="product.salePercentage > 0">
+              <small style="color:black"><strike>{{ ::product.variantPrice | currency:'₡' }}</strike></small><br />
+              {{ ::product.variantPrice * ((100 - product.salePercentage) / 100) | currency:'₡' }}
             </span>
            </h5>
          </md-card-content>
          <md-card-actions layout="row" layout-align="center center">
-           <ngcart-addtocart id="{{ product.variant_id }}" name="{{ product.title }}" price="{{ product.variant_price * ((100 - product.sale_percentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.cover_image,product_id:product.id,weight:product.variant_weight,selectedVariant:product.variant_name,stock:product.variant_quantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-addtocart>
+           <ngcart-addtocart id="{{ product.variantId }}" name="{{ product.title }}" price="{{ product.variantPrice * ((100 - product.salePercentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.coverImage,product_id:product.id,weight:product.variantWeight,selectedVariant:product.variantName,stock:product.variantQuantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-addtocart>
          </md-card-actions>
        </md-card>
     </div>
   </div>
 
-  <div class="row content-margin" ng-if="vm.settings.home.text != ''">
+  <div class="row content-margin" ng-if="vm.instagram.mode == 'half'">
       <div class="col-sm-12 text-center ct-u-padding-top-25">
-          <div class="col-md-6">
+          <div class="col-md-6" ng-if="vm.home.bodyDescription != ''">
             <br />
-            <h2>{{vm.settings.home.title}}</h2>
+            <h2 ng-style="vm.styles.titles">{{vm.home.bodyTitle}}</h2>
             <br />
-              <p style="line-height:2em;">{{vm.settings.home.text}}</p>
+              <p style="line-height:2em;">{{vm.home.bodyDescription}}</p>
               <br />
               <p><md-button class="md-raised md-primary custom" ui-sref="products">&nbsp;Ver todos los productos&nbsp;</md-button></p>
           </div>
-          <div class="col-md-6" ng-if="vm.settings.home.has_instagram">
+          <div class="col-md-6" ng-if="vm.home.hasInstagram">
             
-              <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/6a4dc78dfa2356b382000d81d3175946.html" id="lightwidget_6a4dc78dfa" name="lightwidget_6a4dc78dfa"  scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
+              <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe ng-src="{{vm.widgetApprovedUrl}}" id="lightwidget_6a4dc78dfa" name="lightwidget_6a4dc78dfa"  scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
 
-              <a href="https://www.instagram.com/blumeapps" style="text-decoration:none;" class="special-font-color" target="_blank"><h3><img src="assets/images/instagram.png" style="max-width:35px"/> Síguenos en Instagram</h3></a>
+              <a href="https://www.instagram.com/{{vm.instagram.account}}" style="text-decoration:none;" class="special-font-color" target="_blank"><h3><img src="assets/images/instagram.png" style="max-width:35px"/> Síguenos en Instagram</h3></a>
           </div>
-          <div class="col-md-6" ng-if="!vm.settings.home.has_instagram">
-              <p style="line-height:2em;">{{vm.settings.home.secondary_text}}</p>
+          <div class="col-md-6" ng-if="!vm.home.hasInstagram">
+              <p style="line-height:2em;">{{vm.home.secondaryBodyDescription}}</p>
               <br />
           </div>
+      </div>
+  </div>
+
+  <div class="row content-margin" ng-if="vm.instagram.mode == 'full'">
+      <div class="col-sm-12 text-center ct-u-padding-top-25">
+          <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe ng-src="{{vm.widgetApprovedUrl}}" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
+
+          <a href="https://www.instagram.com/{{vm.instagram.account}}" style="text-decoration:none;" class="special-font-color" target="_blank"><h3><img src="assets/images/instagram.png" style="max-width:35px"/> Síguenos en Instagram</h3></a>
       </div>
   </div>
 
