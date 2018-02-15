@@ -46,7 +46,7 @@
 	 </div> 
 	 <!--Delivery Information-->
 	 <div class="center-block text-center">
-	 	<md-checkbox ng-if="vm.store_fares.length > 0" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
+	 	<md-checkbox ng-if="vm.store_fares.length > 0 && vm.has_international_shipping" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
 			International Shipping
 		 </md-checkbox>
 	 	<md-checkbox ng-disabled="vm.store_fares.length == 0" ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.pickup_in_store" ng-change="vm.toggleDelivery(vm.pickup_in_store)" aria-label="Checkbox 1">
@@ -95,7 +95,8 @@
 				 <div class="form-group">
 			 		<md-radio-group ng-model="vm.destination_coords.selected_fare" ng-change="vm.changeDeliveryCompany()">
 				      <md-radio-button ng-repeat="fare in vm.store_fares" value="{{fare.id}}">
-				      	{{fare.delivery_company_name}} 
+				      	<span ng-if="fare.delivery_company">{{fare.delivery_company}} <img ng-if="fare.delivery_company_name=='correosdecostarica'" src="assets/images/correos.png" style="width:50px" /> </span> 
+				      	<span ng-if="!fare.delivery_company">{{fare.delivery_company_name}} </span>
 				      	<span ng-show="vm.destination_coords.selected_fare == fare.id">
 				      		<small class="text-muted" ng-if="vm.store.currency == 'USD'">
 					      		{{ cart.getShipping() | currency }} | Tiempo de entrega {{fare.eta}} (approx)

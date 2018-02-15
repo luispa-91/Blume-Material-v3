@@ -4,7 +4,7 @@
     angular
         .module('angular')
         .controller('LocatorController', LocatorController);
-        function LocatorController(Website, NgMap, Personalization) {
+        function LocatorController(Website, NgMap, Personalization, Mail) {
         var vm = this;
         vm.map = null;
 
@@ -22,7 +22,7 @@
                 NgMap.getMap().then(function(map) { 
                     vm.map = map;
                   });
-            });
+            },function(err){ Mail.errorLog(err) });
 
             //Bind functions
             vm.showInfo = showInfo;

@@ -2,7 +2,7 @@
   angular
     .module('angular')
     .controller('CollectionController',CollectionController);
-    function CollectionController($stateParams, Catalog, APP_INFO, $scope, Personalization){
+    function CollectionController($stateParams, Catalog, APP_INFO, $scope, Personalization, Mail){
       var vm = this;
       vm.collection = $stateParams.name;
 
@@ -16,18 +16,18 @@
 	          .then(function (data) {
 	              $scope.catalog = data;
 	              vm.loader = false;
-	          });
+	          },function(err){ Mail.errorLog(err) });
 
 	      Catalog.getProductTypesByCollection(APP_INFO.ID,vm.collection)
 	          .then(function (data) {
 	              vm.categories = data;
-	          });
+	          },function(err){ Mail.errorLog(err) });
 
           //Set store configuration
           Catalog.setStoreData(APP_INFO.ID)
             .then(function (response) {
               vm.currency = response.data.currency;
-            });
+            },function(err){ Mail.errorLog(err) });
 
 	    }
 

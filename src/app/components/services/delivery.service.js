@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .factory('Delivery', Delivery);
-        Delivery.$inject = ['$http', '$state', 'NgMap', 'ngCart', '$rootScope', 'APP_INFO'];
-        function Delivery($http, $state, NgMap, ngCart, $rootScope, APP_INFO){
+        Delivery.$inject = ['$http', '$state', 'NgMap', 'ngCart', '$rootScope', 'APP_INFO','$localStorage'];
+        function Delivery($http, $state, NgMap, ngCart, $rootScope, APP_INFO,$localStorage){
 
           var clickedMap = false;
           var settings = {};
@@ -226,11 +226,15 @@
             };
 
           var getDeliveryFares = function () {
-                return $http.get('https://central-api.madebyblume.com/v1/website/deliveryFares?company_id=' + APP_INFO.ID).then(function (results) {
+
+                var currency = $localStorage.storeData.currency;
+
+                return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestDeliveryFares?code=j/4fE4nNqfef27maYTVOcMkVw6CLQ4sWGgtskCIW4nISthad3IuZZg==&companyId=' + APP_INFO.ID + '&currency=' + currency).then(function (results) {
                     store_fares = results.data;
                     if(store_fares.length == 0){
                       destination_coords.delivery_type = '';
                     }
+                    console.log(results.data);
                     return results.data;
                 });
             };

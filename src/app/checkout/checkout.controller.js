@@ -5,8 +5,8 @@
         .module('angular')
         .controller('CheckoutController', CheckoutController);
 
-    CheckoutController.$inject = ['ngCart', 'Checkout', 'Delivery', 'Website', '$scope', 'md5', 'APP_INFO', '$timeout', 'Countries'];
-    function CheckoutController(ngCart, Checkout, Delivery, Website, $scope, md5, APP_INFO, $timeout, Countries) {
+    CheckoutController.$inject = ['ngCart', 'Checkout', 'Delivery', 'Website', '$scope', 'md5', 'APP_INFO', '$timeout', 'Countries', 'Mail'];
+    function CheckoutController(ngCart, Checkout, Delivery, Website, $scope, md5, APP_INFO, $timeout, Countries, Mail) {
         var vm = this;
 
         init();
@@ -25,6 +25,7 @@
                 Checkout.discount_code.value = '';
                 Checkout.discount_code.amount = 0;
             }
+            vm.has_international_shipping = APP_INFO.international_shipping;
             vm.discount_code = Checkout.discount_code;
             vm.website_url = APP_INFO.website_url;
             vm.loading_location = false;
@@ -46,7 +47,7 @@
                 if(vm.store_fares.length == 0){
                     vm.pickup_in_store = true;
                 }
-            });
+            },function(err){ Mail.errorLog(err) });
             
 
             vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
@@ -59,12 +60,12 @@
                 vm.store = results;
                 setTaxRate();
                 setDefaultPaymentMethod();
-            });
+            },function(err){ Mail.errorLog(err) });
             //Get Website settings
             vm.getSettings = Delivery.getSettings;
             vm.getSettings().then(function(results){
                 vm.settings = results;
-            })
+            },function(err){ Mail.errorLog(err) })
 
             TCO.loadPubKey('production');
 
@@ -202,7 +203,13 @@
                 verificationValue: vm.card.cvc
             };
 
-            Checkout.chargeCardUsingFtTechnologies(args);
+            Mail.ftPurchaseParameterLog(args).then(function (response) { console.log("Call logged")} );
+
+            Checkout.chargeCardUsingFtTechnologies(args).then(function (response) {
+                //Send parameter log
+
+
+            },function(err){ Mail.errorLog(err) });
 
         }
 

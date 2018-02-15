@@ -7,7 +7,7 @@
     .controller('LeftCtrl',LeftCtrl);
 
   /** @ngInject */
-  function MainController(APP_INFO, Website, Products, Personalization, $sce, Catalog) {
+  function MainController(APP_INFO, Website, Products, Personalization, $sce, Catalog, Mail) {
     var vm = this;
 
     function init(){
@@ -19,22 +19,22 @@
       vm.companyName = APP_INFO.directory;
 
       //Get featured products
-      Products.featured().then(function (data) { vm.featuredProducts = data; vm.loader = false; });
+      Products.featured().then(function (data) { vm.featuredProducts = data; vm.loader = false; },function(err){ Mail.errorLog(err) });
 
       //Get currency
-      Website.settings().then(function (data) { vm.currency = data.currency; });
+      Website.settings().then(function (data) { vm.currency = data.currency; },function(err){ Mail.errorLog(err) });
 
       //Build home page
       Website.home().then(function (data){ 
         vm.home = data; 
         vm.widgetApprovedUrl = $sce.trustAsResourceUrl("//lightwidget.com/widgets/"+vm.home.secondaryBodyDescription+".html"); 
-      });
+      },function(err){ Mail.errorLog(err) });
     }
 
     init();
   }
 
-  function LeftCtrl($scope, $timeout, $mdSidenav, $log, $state, $cookies, $rootScope, Catalog, APP_INFO, Website){
+  function LeftCtrl($scope, $timeout, $mdSidenav, $log, $state, $cookies, $rootScope, Catalog, APP_INFO, Website, Mail){
     var vm = this;
 
     function init(){
@@ -43,10 +43,10 @@
       vm.companyId = APP_INFO.ID;
 
       //Get Catalog collection titles
-      Catalog.getCollections(APP_INFO.ID).then(function (data) { vm.collections = data; });
+      Catalog.getCollections(APP_INFO.ID).then(function (data) { vm.collections = data; },function(err){ Mail.errorLog(err) });
 
       //Get navbar tabs
-      Website.navbar().then(function (data){ vm.navbar = data; });
+      Website.navbar().then(function (data){ vm.navbar = data; },function(err){ Mail.errorLog(err) });
 
     }
     init();

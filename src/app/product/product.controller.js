@@ -6,7 +6,7 @@
     .controller('ProductController', ProductController);
 
   /** @ngInject */
-  function ProductController(Catalog,APP_INFO,$scope,$stateParams) {
+  function ProductController(Catalog,APP_INFO,$scope,$stateParams, Mail) {
     var vm = this;
     $scope.active = 0;
     init();
@@ -24,7 +24,7 @@
       Catalog.setStoreData(APP_INFO.ID)
         .then(function (response) {
           $scope.currency = response.data.currency;
-        });
+        },function(err){ Mail.errorLog(err) });
 
       Catalog.productExpand(product_id)
           .then(function (data) {
@@ -41,7 +41,7 @@
               if($scope.product.options.length > 2){
                   vm.option3 = $scope.product.options[2].values[0];
               }
-          })
+          },function(err){ Mail.errorLog(err) })
 
     }
 

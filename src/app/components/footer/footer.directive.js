@@ -21,7 +21,7 @@
         return directive;
 
         /** @ngInject */
-        function FooterController(Website, APP_INFO) {
+        function FooterController(Website, APP_INFO, Mail) {
             var vm = this;
 
             Website.footer().then(function(results){
@@ -46,7 +46,7 @@
                     var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
               }
 
-            })
+            },function(err){ Mail.errorLog(err) })
             vm.selectedMode = 'md-fling';
             vm.selectedDirection = 'right';
             vm.isOpen = false;

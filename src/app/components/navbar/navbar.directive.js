@@ -21,7 +21,7 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController($scope, $timeout, $mdSidenav, $log, $mdDialog, $rootScope, Catalog, APP_INFO, Website) {
+    function NavbarController($scope, $timeout, $mdSidenav, $log, $mdDialog, $rootScope, Catalog, APP_INFO, Website, Mail) {
       var vm = this;
 
       function init(){
@@ -30,10 +30,10 @@
         vm.companyId = APP_INFO.ID;
         
         //Get Catalog collection titles
-        Catalog.getCollections(APP_INFO.ID).then(function (data) { vm.collections = data; });
+        Catalog.getCollections(APP_INFO.ID).then(function (data) { vm.collections = data; },function(err){ Mail.errorLog(err) });
 
         //Get navbar tabs
-        Website.navbar().then(function(results){ vm.navbar = results; },function(err){console.log(err)});
+        Website.navbar().then(function(results){ vm.navbar = results; },function(err){ Mail.errorLog(err) });
 
         //Get total cart items
         vm.items = $rootScope.cart.getTotalItems();

@@ -11,6 +11,7 @@
         'name': 'Blume Demo',
         'directory': 'demoshop',
         'website_url': 'https://demo.madebyblume.com/',
+        'international_shipping': true,
         'gateway': {
             'url': 'http://www.fttserver.com:4217',
             'applicationName': 'SHOPS_TEST',
