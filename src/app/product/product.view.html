@@ -19,16 +19,20 @@
               </div>
               <img style="position:absolute;top:15px;right:30px;z-index:1" src="assets/images/discount-tag.png" />
             </span>
-            <carousel interval="3000" style="cursor:pointer">
-               <slide ng-repeat="image in product.images">
+            <carousel style="cursor:pointer">
+               <slide ng-repeat="image in product.images" active="image.active">
                  <img class="img-responsive" ng-src="https://cms.blumewebsites.com/{{image.relative_url}}" style="margin:auto;">
                </slide>
              </carousel>
            </div>
         </div>
         <div class="col-md-6">
-          <div class="product-title"><h2>{{ product.title }} <small ng-click="share(product)" style="color:#3b5998"><i class="fa fa-facebook-square"></i></small></h2> <span ng-if="product.sku != null">- {{product.sku}}</span></div>
-          <br />
+          <div class="product-title"><h2>{{ product.title }} <small ng-click="share(product)" style="color:#3b5998"><i class="fa fa-facebook-square"></i></small></h2> <span ng-if="product.sku != null">- {{product.sku}}</span></div> <br>
+          <div class="row">
+            <div class="col-xs-2 col-sm-2 col-md-2" ng-repeat="image in product.images">
+              <img ng-src="https://cms.blumewebsites.com/{{image.relative_url}}" style="width:100%" ng-click="setActive($index)">
+            </div>
+          </div>
           <div ta-bind ng-model="product.long_description"></div>
           <br />
           <div ng-if="product.options.length > 0">
@@ -99,3 +103,5 @@
       </div>
       <br />
   </div>
+
+

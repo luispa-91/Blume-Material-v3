@@ -20,6 +20,12 @@
         controller: 'CatalogController',
         controllerAs: 'vm'
       })
+      .state('productsAlt', {
+        url: '/products/:productType',
+        templateUrl: 'app/products/products.view.html',
+        controller: 'CatalogController',
+        controllerAs: 'vm'
+      })
       .state('discounts', {
         url: '/discounts',
         templateUrl: 'app/discounts/discounts.view.html',
@@ -108,6 +114,12 @@
           controller: 'ContactController',
           controllerAs: 'vm'
         })
+        .state('privacyPolicy', {
+          url: '/politicas-de-privacidad',
+          title: 'Politicas de Privacidad',
+          templateUrl: 'app/components/footer/privacyPolicy.html'
+        })
+        
         .state('external', {
             url: '/admin',
             externalUrl: 'https://shops.madebyblume.com'

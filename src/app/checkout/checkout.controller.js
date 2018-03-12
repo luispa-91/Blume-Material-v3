@@ -16,6 +16,7 @@
         function init(){
 
             //Initialize variables
+            vm.loader = false;
             vm.customer = Delivery.customer;
             vm.address = Delivery.address;
             vm.billing_address = Delivery.billing_address;
@@ -46,6 +47,9 @@
                 vm.store_fares = results;
                 if(vm.store_fares.length == 0){
                     vm.pickup_in_store = true;
+                } else {
+                    vm.destination_coords.selected_fare = vm.store_fares[0].id;
+                    vm.changeDeliveryCompany();
                 }
             },function(err){ Mail.errorLog(err) });
             
@@ -72,6 +76,7 @@
 
             //Cart summary functions
             vm.checkStock = Checkout.checkStock;
+            Checkout.verifyStock();
 
             //Cart address functions
             vm.mapClick = Delivery.mapClick;
@@ -158,6 +163,9 @@
         }
 
         function submitBAC(){
+            vm.loader = true;
+            vm.temp = Checkout.temp;
+            vm.discount_code = Checkout.discount_code;
             vm.card.exp_month = vm.card.expiry.substring(0, 2);
             if(vm.card.expiry.length > 7){
               vm.card.exp_year = vm.card.expiry.substring(7, 9);
@@ -167,10 +175,17 @@
 
             vm.card.expiry = vm.card.exp_month + vm.card.exp_year;
             
+            Mail.bacPurchaseParameterLog(vm.temp,vm.total,vm.address, vm.card.exp_month, vm.card.exp_year).then(function (response) { console.log("API call logged")} );
+
+            vm.temp.timestamp = Math.round((new Date()).getTime() / 1000);
+            var total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
+            vm.temp.prehash = vm.temp.purchase.order_id + "|" + total + "|" + vm.temp.timestamp + "|" + APP_INFO.bac.applicationPassword;
+            vm.temp.hash = md5.createHash(vm.temp.prehash);
+            console.log(vm.temp);
 
             setTimeout(function(){
                 document.getElementById("CredomaticPost").submit();
-                }, 1500);
+                }, 2000);
         }
 
         function submitPaypal(){
@@ -207,8 +222,7 @@
 
             Checkout.chargeCardUsingFtTechnologies(args).then(function (response) {
                 //Send parameter log
-
-
+                
             },function(err){ Mail.errorLog(err) });
 
         }

@@ -23,7 +23,8 @@
     'slick',
     'infinite-scroll',
     'angulartics', 
-    'angulartics.facebook.pixel']).config(function($mdThemingProvider) {
+    'angulartics.facebook.pixel',
+    'ui.scrollpoint']).config(function($mdThemingProvider) {
     $mdThemingProvider.theme("custom").primaryPalette("teal").accentPalette("deep-orange");
   });
 })();

@@ -14,6 +14,7 @@
         function init(){
             //Get store locations settings
             vm.selected_store = {};
+            vm.center = "San José, Costa Rica";
             vm.getStoreSettings = Website.getStoreSettings;
             vm.styles = Personalization.styles;
             vm.getStoreSettings().then(function(results){
@@ -26,6 +27,7 @@
 
             //Bind functions
             vm.showInfo = showInfo;
+            vm.centerMap = centerMap;
         }
 
         function showInfo(event, store){
@@ -33,6 +35,9 @@
             vm.map.showInfoWindow('foo', this);
         }
 
+        function centerMap(location){
+            vm.center = location.coordinates;
+        }
         
 
     }

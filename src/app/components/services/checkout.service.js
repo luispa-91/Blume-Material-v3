@@ -107,6 +107,23 @@
 
           }
 
+          var verifyStock = function(){
+            var cartItems = ngCart.$cart.items;
+
+            for (var i = cartItems.length - 1; i >= 0; i--) {
+              console.log(i);
+                requestProductVariantStock(cartItems[i]._id).then(function (results){ 
+                    itemStock = results;
+                    cartItems[i]._stock = itemStock;
+                    console.log(itemStock);
+                    if(cartItems[i]._quantity > cartItems[i]._stock){
+                        outOfStockVariants += 1;
+                    }
+                 });
+
+            }
+          }
+
           //Data validation before submitting card information
           var verifyData = function(pickup_in_store, international_shipping){
              
@@ -448,6 +465,12 @@
               });
           }
 
+          var requestProductVariantStock = function(productVariantId){
+            return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestProductVariantStock?code=Y3IElQAmnPgSz0DCzTWUYkDflK6EQRkyMMavCbBOog1Ztxg51I9fuA==&productVariantId' + productVariantId).then(function (results) {
+                return results.data;
+              });
+          }
+
           var addOrderNote = function(order_id, hasRefId, refId, comments){
             var temp = {
               order_id: order_id,
@@ -536,6 +559,7 @@
 
             return {
               checkStock: checkStock,
+              verifyStock: verifyStock,
               showPrompt: showPrompt,
               verifyData: verifyData,
               discount_code: discount_code,

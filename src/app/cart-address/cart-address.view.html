@@ -1,7 +1,7 @@
 <md-card class="card-simple top-shadow card-decoration" md-theme="custom">
  <md-card-title>
 	 <md-card-title-text>
-		 <span class="upper-text">2. Datos de Compra
+		 <span class="upper-text">2. Datos del Envío
 		 	<div class="pull-right" style="margin-bottom:5px">
 		 		<div ng-if="vm.store.payment_options.twocheckout || vm.store.payment_options.bacsanjose">
 		 			<img src="assets/images/visa.svg" class="card-logo" />
@@ -20,7 +20,7 @@
  </md-card-title>
  <md-card-content>
 	 <!--Customer information-->
-	 <h4 class="dgrey">Información del Cliente</h4>
+	 <h4 class="dgrey">Información Básica</h4>
 	 <br />
 	 <div class="row">
 		 <div class="col-md-12">
@@ -46,18 +46,19 @@
 	 </div> 
 	 <!--Delivery Information-->
 	 <div class="center-block text-center">
-	 	<md-checkbox ng-if="vm.store_fares.length > 0 && vm.has_international_shipping" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
-			International Shipping
-		 </md-checkbox>
-	 	<md-checkbox ng-disabled="vm.store_fares.length == 0" ng-if="vm.store.has_pickup_in_store && !vm.export" id="chkPickup" ng-model="vm.pickup_in_store" ng-change="vm.toggleDelivery(vm.pickup_in_store)" aria-label="Checkbox 1">
+	 	
+	 	<md-checkbox ng-disabled="vm.store_fares.length == 0 || vm.export" ng-if="vm.store.has_pickup_in_store" id="chkPickup" ng-model="vm.pickup_in_store" ng-change="vm.toggleDelivery(vm.pickup_in_store)" aria-label="Checkbox 1">
 			Recoger en la tienda 
+		 </md-checkbox>
+		 <md-checkbox ng-disabled="vm.pickup_in_store" ng-if="vm.store_fares.length > 0 && vm.has_international_shipping" id="chkPickup" ng-model="vm.export" ng-change="vm.toggleDelivery(vm.settings.pickup_in_store)" aria-label="Checkbox 1">
+			Envío internacional
 		 </md-checkbox>
 	 </div>
 	 <div class="row" ng-show="!vm.pickup_in_store && !vm.export">
 		 <div class="col-md-12">
-			 <h4>Punto de entrega &nbsp;
+			 <h4>Punto de Entrega &nbsp;
 			 	<i ng-click="vm.currentLocation()" class="material-icons my-location" style="color:green">my_location</i>
-			 	<small ng-show="!vm.loading_location"> (Mostrar mi ubicación)</small>
+			 	<small ng-show="!vm.loading_location"> (Enviar a mi ubicación actual)</small>
 			 	<small ng-show="vm.loading_location"> Buscando su ubicación, un momento por favor...</small>
 			 </h4>
 				 <br>
@@ -69,10 +70,10 @@
 				 ng-model="vm.address.address"
 				 component-restrictions="{country:'cr'}"
 				 on-place-changed="vm.placeLookup()"
-				 placeholder="Busque un punto cercano al lugar de entrega"/>
+				 placeholder="o busque aquí su ubicación con Google maps"/>
 			 </md-input-container>
 			</div>
-				<label>Haz click en el mapa para elegir el punto de entrega</label>
+				<label>o haga click en el mapa para elegir el punto de entrega</label>
 			 <div>
 				 <ng-map center="San Jose, Costa Rica" zoom="12" on-click="vm.mapClick()">
 				 	<marker draggable="true" on-dragend="vm.dragDestination()" position="[{{vm.destination_coords.lat}},{{vm.destination_coords.lng}}]" title="Punto de entrega">
@@ -83,19 +84,19 @@
 			<h4>Comentarios</h4>
 			 <div class="form-group">
 				<md-input-container class="md-block" flex-gt-sm>
-          			<textarea ng-model="vm.address.note" placeholder="Escriba la dirección y detalles del lugar de entrega"  md-maxlength="150" rows="5" ></textarea>
+          			<textarea ng-model="vm.address.note" placeholder="Escriba un comentario o detalles para encontrar el punto de entrega"  md-maxlength="150" rows="5" ></textarea>
 				</md-input-container>
 			</div>
 			
 			<!-- START fares section -->
-			<section ng-if="vm.destination_coords.lat">
+			<section>
 				<h4>Transporte 
 					&nbsp;<small>Distancia aproximada: {{vm.destination_coords.distance}} Kms | {{cart.getTotalWeight()}} Kgs</small>
 				</h4><br />
 				 <div class="form-group">
 			 		<md-radio-group ng-model="vm.destination_coords.selected_fare" ng-change="vm.changeDeliveryCompany()">
 				      <md-radio-button ng-repeat="fare in vm.store_fares" value="{{fare.id}}">
-				      	<span ng-if="fare.delivery_company">{{fare.delivery_company}} <img ng-if="fare.delivery_company_name=='correosdecostarica'" src="assets/images/correos.png" style="width:50px" /> </span> 
+				      	<span ng-if="fare.delivery_company">{{fare.delivery_company}} <img ng-if="fare.delivery_company_name=='correosdecostarica'" src="assets/images/correos.png" style="width:auto;height:30px;" /> </span> 
 				      	<span ng-if="!fare.delivery_company">{{fare.delivery_company_name}} </span>
 				      	<span ng-show="vm.destination_coords.selected_fare == fare.id">
 				      		<small class="text-muted" ng-if="vm.store.currency == 'USD'">
@@ -199,6 +200,16 @@
 		 </div>
 	 </div>
  </md-card-content>
+
+ <!-- <div class="center-block text-center">
+
+ 	<md-checkbox id="PrivacyPolicy" ng-model="vm.acceptedPrivacyPolicy" aria-label="Privacy Policy">
+			
+	 </md-checkbox>
+	 Leí y acepto las <a href="#" onClick="window.open('politicas-de-privacidad','pagename','resizable,height=600,width=400,left=200,top=50'); return false;">Políticas de Privacidad</a>
+
+ </div> -->
+ 
  <md-card-actions layout="row" layout-align="center center">
 	 <md-button class="pull-left sm-margin-left" ui-sref="checkout.summary">Volver</md-button>
 	 <md-button analytics-on="click" analytics-event="CompleteRegistration" class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.verifyData(vm.pickup_in_store, vm.export)">Continuar</md-button>

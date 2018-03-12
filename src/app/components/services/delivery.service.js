@@ -140,13 +140,13 @@
             var weight = ngCart.getTotalWeight();
 
             //Calculate additional weight
-            if(weight > base_weight){
-              additional_weight = weight - base_weight;
+            additional_weight = weight - base_weight;
+            if(0 > additional_weight){
+              additional_weight = 0;
             }
 
             //Calculate price
             price = base_price + (Math.ceil(additional_weight) * additional_weight_price);
-
             //Set cart shipping
             ngCart.setShipping(price);
 
@@ -234,7 +234,6 @@
                     if(store_fares.length == 0){
                       destination_coords.delivery_type = '';
                     }
-                    console.log(results.data);
                     return results.data;
                 });
             };

@@ -1,7 +1,7 @@
 
 <carousel interval="5000" pause="false">
     <slide ng-repeat="photo in vm.home.sliderPhotos">
-      <img class="img-responsive" ng-src="https://cms.blumewebsites.com/{{vm.companyName}}/{{photo.relativeUrl}}" style="margin:auto;" />
+      <img class="img-responsive main-slider" ng-src="https://cms.blumewebsites.com/{{vm.companyName}}/{{photo.relativeUrl}}" />
     </slide>
 </carousel>
 
@@ -24,7 +24,7 @@
 
     <div class="col-md-3 col-sm-6 no-padding" ng-repeat="product in vm.featuredProducts">
       
-      <md-card class="card-h">
+      <md-card class="center-block card-h">
          <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{ ::product.coverImage}}) no-repeat center; background-size:contain;" class="md-card-image img-card" alt="{{ ::product.title}}">
           <span ng-if="product.salePercentage > 0">
             <div style="position:absolute;top:40px;right:52px;z-index:1">

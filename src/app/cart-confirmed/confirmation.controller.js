@@ -28,8 +28,8 @@
                             if(temp.shipment_id != 0){
                               Order.mailReceiptWithTracking(vm.order_id).then(function (results) {
                               },function(err){ Mail.errorLog(err) });
-                              Order.createShippingInvoice(vm.order_id, temp.shipment_id).then(function (results) {
-                              },function(err){ Mail.errorLog(err) });
+                              // Order.createShippingInvoice(vm.order_id, temp.shipment_id).then(function (results) {
+                              // },function(err){ Mail.errorLog(err) });
                               Checkout.updateStoreStock(vm.order_id).then(function (results) {
                               },function(err){ Mail.errorLog(err) });
                             } else {

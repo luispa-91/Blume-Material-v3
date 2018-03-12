@@ -34,8 +34,8 @@
                         facebook: APP_INFO.chat.facebook, // Facebook page ID
                         whatsapp: APP_INFO.chat.whatsapp, // WhatsApp number
                         company_logo_url: logo_url, // URL of company logo (png, jpg, gif)
-                        greeting_message: "Necesita ayuda? Escríbanos y estaremos en contacto pronto", // Text of greeting message
-                        call_to_action: "Envíenos un mensaje", // Call to action
+                        greeting_message: APP_INFO.chat.longMessage, // Text of greeting message
+                        call_to_action: APP_INFO.chat.shortMessage, // Call to action
                         button_color: "#129BF4", // Color of button
                         position: "right", // Position may be 'right' or 'left'
                         order: APP_INFO.chat.order // Order of buttons

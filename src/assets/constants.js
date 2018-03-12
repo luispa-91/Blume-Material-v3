@@ -8,7 +8,7 @@
     .constant('moment', moment)
     .constant('APP_INFO',{
         'ID': 74,
-        'name': 'Blume Demo',
+        'name': 'Demo Tienda',
         'directory': 'demoshop',
         'website_url': 'https://demo.madebyblume.com/',
         'international_shipping': true,
@@ -25,7 +25,9 @@
         'chat': {
             'order': 'facebook,whatsapp',
             'facebook': '754771351335371',
-            'whatsapp': '+50670125006'
+            'whatsapp': '+50670125006',
+            'shortMessage': 'Envíenos un mensaje',
+            'longMessage': 'Necesita ayuda? Escríbanos y estaremos en contacto pronto'
         },
         'instagram': {
             'account': 'blumeapps',

@@ -4,15 +4,17 @@
     angular
         .module('angular')
         .controller('CatalogController', CatalogController);
-        function CatalogController($scope, Catalog, APP_INFO, Personalization, Mail) {
+        function CatalogController($scope, Catalog, APP_INFO, Personalization, Mail, $stateParams, $state) {
         var vm = this;
 
         $scope.setCategoryFilter = setCategoryFilter;
         init();
 
         function init() {
-
           $scope.selectedCategory = "";
+          if($stateParams.productType){
+            $scope.selectedCategory = $stateParams.productType;
+          }
           $scope.catalog = [];
           vm.load_count = 0;
           vm.busy = false;
@@ -66,8 +68,10 @@
 
         }
 
-        function setCategoryFilter(category){
-            $scope.selectedCategory = category.title;
+        function setCategoryFilter(){
+          console.log($scope.selectedCategory);
+            $state.go('productsAlt',{'productType':$scope.selectedCategory});
+
         }
     }
 })();
