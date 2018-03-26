@@ -8,14 +8,21 @@
 
 <div class="footer-bottom footer-color special-font-color">
     <div class="container">
-        <div class="row">
-          <div class="col-md-4">
+        <div layout="row">
+          <div layout="column" flex>
             <h4 class="sub">{{vm.footer.title}}</h4>
             <p>{{vm.footer.description}}</p>
+            <span>
+              <img ng-if="vm.footer.fttechApplicationName" src="assets/images/bancoNacional.png" class="card-logo" />
+              <img ng-if="vm.footer.bacKeyId" src="assets/images/bacSanJose.png" class="card-logo" />
+              <img src="assets/images/correosDeCostaRica.png" class="card-logo" />
+              <img src="assets/images/visa.svg" class="card-logo" />
+              <img src="assets/images/mastercard.svg" class="card-logo" />
+            </span>
           </div>
-          <div class="col-md-4">
+          <div layout="column" flex>
           </div>
-          <div class="col-md-4">
+          <div layout="column" flex>
             <h4 class="sub">Contáctenos</h4>
             <p ng-repeat="info in vm.footer.contactInfo">
 
@@ -31,6 +38,6 @@
             </p>
           </div>
         </div>
-        <br />
     </div>
+    <br />
 </div>

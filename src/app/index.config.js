@@ -6,7 +6,12 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastrConfig, $qProvider) {
+  function config($logProvider, toastrConfig, $qProvider, AnalyticsProvider) {
+    
+    AnalyticsProvider.setAccount('UA-62919114-3');
+    AnalyticsProvider.trackPages(true);
+    AnalyticsProvider.trackUrlParams(true);
+    AnalyticsProvider.setPageEvent('$stateChangeSuccess');
     // Enable log
     $logProvider.debugEnabled(true);
 

@@ -4,13 +4,14 @@
     angular
         .module('angular')
         .controller('CatalogController', CatalogController);
-        function CatalogController($scope, Catalog, APP_INFO, Personalization, Mail, $stateParams, $state) {
+        function CatalogController($scope, Catalog, APP_INFO, Personalization, Mail, $stateParams, $state, Analytics) {
         var vm = this;
 
         $scope.setCategoryFilter = setCategoryFilter;
         init();
 
         function init() {
+
           $scope.selectedCategory = "";
           if($stateParams.productType){
             $scope.selectedCategory = $stateParams.productType;

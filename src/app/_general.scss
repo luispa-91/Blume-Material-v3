@@ -271,3 +271,21 @@ md-divider.md-default-theme, md-divider {
   position: fixed;
   top: 0;
 }
+
+.dot {
+  height: 55px;
+  width: 55px;
+  background-color: #c62e13;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.no-margin {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.less-margin {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

@@ -24,7 +24,8 @@
     'infinite-scroll',
     'angulartics', 
     'angulartics.facebook.pixel',
-    'ui.scrollpoint']).config(function($mdThemingProvider) {
+    'ui.scrollpoint',
+    'angular-google-analytics']).config(function($mdThemingProvider) {
     $mdThemingProvider.theme("custom").primaryPalette("teal").accentPalette("deep-orange");
   });
 })();

@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, $rootScope, APP_INFO, ngCart, $window) {
+  function runBlock($log, $rootScope, APP_INFO, ngCart, $window, Analytics) {
     $rootScope.app = APP_INFO;
     $rootScope.cart = ngCart;
 

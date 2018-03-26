@@ -9,7 +9,7 @@
 
     <br/>
 
-    <div class="container double-space-top special-font-color" ng-init="index=2">
+    <div class="container double-space-top" ng-init="index=2">
       <div class="row">
         <div class="col-md-6">
           <div>
@@ -33,6 +33,7 @@
               <img ng-src="https://cms.blumewebsites.com/{{image.relative_url}}" style="width:100%" ng-click="setActive($index)">
             </div>
           </div>
+          <br />
           <div ta-bind ng-model="product.long_description"></div>
           <br />
           <div ng-if="product.options.length > 0">

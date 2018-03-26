@@ -31,7 +31,7 @@
               $scope.product = data;
 
               for (var i = $scope.product.variants.length - 1; i >= 0; i--) {
-                $scope.product.variants[i].name = $scope.product.variants[i].name.replace(/ /g,'');
+                $scope.product.variants[i].name = $scope.product.variants[i].name.trim();
               };
 
               $scope.price = $scope.product.variants[0].price;

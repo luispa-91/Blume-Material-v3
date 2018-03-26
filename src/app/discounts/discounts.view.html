@@ -43,11 +43,11 @@
            </div>
            <md-card-title class="less-p">
              <md-card-title-text>
-               <h4 class="text-center">{{ ::product.title }}</h4>
+               <h4 class="text-center less-margin">{{ ::product.title }}</h4>
              </md-card-title-text>
            </md-card-title>
            <md-card-content class="less-p">
-              <h5 class="text-center gray no-mar" ng-if="vm.currency == 'USD'">
+              <h5 class="text-center gray no-margin" ng-if="vm.currency == 'USD'">
                 <span ng-if="product.sale_percentage == 0">
                   {{ ::product.variant_price | currency }}
                 </span>
@@ -56,7 +56,7 @@
                   {{ ::product.variant_price * ((100 - product.sale_percentage) / 100) | currency }}
                 </span>
               </h5>
-               <h5 class="text-center gray no-mar" ng-if="vm.currency == 'CRC'">
+               <h5 class="text-center gray no-margin" ng-if="vm.currency == 'CRC'">
                 <span ng-if="product.sale_percentage == 0">
                   {{ ::product.variant_price | currency:'₡' }}
                 </span>

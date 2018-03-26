@@ -38,11 +38,11 @@
          </div>
          <md-card-title class="less-p">
            <md-card-title-text>
-             <h4 class="text-center">{{ ::product.title}}</h4>
+             <h4 class="text-center less-margin">{{ ::product.title}}</h4>
            </md-card-title-text>
          </md-card-title>
          <md-card-content class="less-p">
-           <h5 class="text-center gray no-mar" ng-if="vm.currency == 'USD'">
+           <h5 class="text-center gray no-margin" ng-if="vm.currency == 'USD'">
             <span ng-if="product.salePercentage == 0">
               {{ ::product.variantPrice | currency }}
             </span>
@@ -51,7 +51,7 @@
               {{ ::product.variantPrice * ((100 - product.salePercentage) / 100) | currency }}
             </span>
           </h5>
-           <h5 class="text-center gray no-mar" ng-if="vm.currency == 'CRC'">
+           <h5 class="text-center gray no-margin" ng-if="vm.currency == 'CRC'">
             <span ng-if="product.salePercentage == 0">
               {{ ::product.variantPrice | currency:'₡' }}
             </span>
@@ -95,7 +95,7 @@
       <div class="col-sm-12 text-center ct-u-padding-top-25">
           <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe ng-src="{{vm.widgetApprovedUrl}}" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
 
-          <a href="https://www.instagram.com/{{vm.instagram.account}}" style="text-decoration:none;" class="special-font-color" target="_blank"><h3><img src="assets/images/instagram.png" style="max-width:35px"/> Síguenos en Instagram</h3></a>
+          <a href="https://www.instagram.com/{{vm.instagram.account}}" style="text-decoration:none;" target="_blank"><h3><img src="assets/images/instagram.png" style="max-width:35px"/> Síguenos en Instagram</h3></a>
       </div>
   </div>
 
