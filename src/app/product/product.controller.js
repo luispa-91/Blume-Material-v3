@@ -17,6 +17,7 @@
       vm.option1 = "";
       vm.option2 = "";
       vm.option3 = "";
+      vm.outOfStock = [];
 
       var product_id = $stateParams.product_id;
 
@@ -32,6 +33,10 @@
 
               for (var i = $scope.product.variants.length - 1; i >= 0; i--) {
                 $scope.product.variants[i].name = $scope.product.variants[i].name.trim();
+                if($scope.product.variants[i].quantity == 0){
+                  vm.outOfStock.push($scope.product.variants[i].name);
+                  $scope.product.variants.splice(i, 1);
+                }
               };
 
               $scope.price = $scope.product.variants[0].price;
@@ -45,6 +50,17 @@
               if($scope.product.options.length > 2){
                   vm.option3 = $scope.product.options[2].values[0];
               }
+
+              if(vm.option2 == "" && vm.option3 == ""){
+                for (var k = 0; k < vm.outOfStock.length; k++) {
+                  for (var j = 0; j < $scope.product.options[0].values.length; j++) {
+                    if(vm.outOfStock[k] == $scope.product.options[0].values[j]){
+                      $scope.product.options[0].values.splice(j,1);
+                    }
+                  };
+                };
+              }
+
           },function(err){ Mail.errorLog(err) })
 
     }

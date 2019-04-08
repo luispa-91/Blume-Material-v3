@@ -5,18 +5,34 @@
         .module('angular')
         .controller('CheckoutController', CheckoutController);
 
-    CheckoutController.$inject = ['ngCart', 'Checkout', 'Delivery', 'Website', '$scope', 'md5', 'APP_INFO', '$timeout', 'Countries', 'Mail'];
-    function CheckoutController(ngCart, Checkout, Delivery, Website, $scope, md5, APP_INFO, $timeout, Countries, Mail) {
+    CheckoutController.$inject = ['ngCart', 'Checkout', 'Delivery', 'Website', '$scope', 'md5', 'APP_INFO', 'Countries', 'Mail', '$state', '$localStorage'];
+    function CheckoutController(ngCart, Checkout, Delivery, Website, $scope, md5, APP_INFO, Countries, Mail, $state, $localStorage) {
         var vm = this;
 
         init();
-        //Initialize token on checkout start
-        vm.getToken();
 
         function init(){
-
+            vm.temp = Checkout.temp;
+            vm.companyId = APP_INFO.ID;
+            vm.useMap = APP_INFO.use_map;
+            vm.showTotals = true;
+            if($state.current.name == 'checkout.confirmed' || $state.current.name == 'checkout.confirmedPayPal' || $state.current.name == 'checkout.confirmedCredix'){
+                vm.showTotals = false;
+            } else if($state.current.name == 'checkout.placeOrder') {
+                if(vm.temp.purchase.order_id==0 && $localStorage.orderId){
+                    vm.temp.purchase.order_id=$localStorage.orderId;
+                    if($localStorage.shipmentId){
+                        vm.temp.purchase.shipment_id=$localStorage.shipmentId;
+                    }
+                    if($localStorage.customerId){
+                        vm.temp.customer_id=$localStorage.customerId;
+                    }
+                }
+            }
+            
             //Initialize variables
             vm.loader = false;
+            // vm.documentId = "";
             vm.customer = Delivery.customer;
             vm.address = Delivery.address;
             vm.billing_address = Delivery.billing_address;
@@ -34,14 +50,21 @@
             vm.card_options = Checkout.card_options;
             vm.card_options_2 = Checkout.card_options_2;
             vm.two_co = Checkout.two_co;
-            vm.temp = Checkout.temp;
             vm.selected_method = "TwoCheckout";
             vm.use_ft_payment = false;
             vm.countries = Countries.list;
+            vm.provinces = Countries.costaRicaProvinces;
+            vm.states = Countries.costaRicaStates;
+            vm.cities = Countries.costaRicaCities;
             vm.country_selected = "";
+            vm.selectedProvince = "";
+            vm.selectedState = "";
+            vm.selectedCity = "";
             vm.pickup_in_store = false;
             vm.bac = APP_INFO.bac;
             vm.getDeliveryFares = Delivery.getDeliveryFares;
+            vm.months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+            vm.years = ["2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"];
             vm.changeDeliveryCompany = Delivery.changeDeliveryCompany;
             vm.getDeliveryFares().then(function(results){
                 vm.store_fares = results;
@@ -71,14 +94,14 @@
                 vm.settings = results;
             },function(err){ Mail.errorLog(err) })
 
-            TCO.loadPubKey('production');
-
-
             //Cart summary functions
             vm.checkStock = Checkout.checkStock;
             Checkout.verifyStock();
 
             //Cart address functions
+            vm.selectProvince = selectProvince;
+            vm.selectState = selectState;
+            vm.selectCity = selectCity;
             vm.mapClick = Delivery.mapClick;
             vm.placeLookup = Delivery.placeLookup;
             vm.dragDestination = Delivery.dragDestination;
@@ -87,13 +110,14 @@
             vm.syncCustomerAddress = Delivery.syncCustomerAddress;
             vm.syncBillingAddress = Delivery.syncBillingAddress;
             vm.toggleDelivery = Delivery.toggleDelivery;
+            vm.toggleDeliveryAlt = toggleDeliveryAlt;
             vm.distanceBasedPricing = Delivery.distanceBasedPricing;
             vm.weightBasedPricing = Delivery.weightBasedPricing;
             vm.currentLocation = currentLocation;
             vm.calculateExportShipping = Delivery.calculateExportShipping;
+            vm.toggleExport = toggleExport;
 
             //Cart checkout functions
-            vm.getToken = Checkout.getToken;
             vm.showPrompt = Checkout.showPrompt;
             vm.makePayment = Checkout.makePayment;
             vm.createCustomer = Checkout.createCustomer;
@@ -111,7 +135,9 @@
         Delivery.broadcastShippingCost($scope, function broadcastUpdate() {
             // Handle notification
             setTimeout(function(){
-                vm.calculateShipping();
+                if(!vm.export){
+                    vm.calculateShipping();
+                } 
                 vm.syncCustomerAddress();
                 vm.syncBillingAddress();
                 vm.total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
@@ -126,20 +152,51 @@
             } 
         }
 
+        function selectProvince(province){
+            vm.address.country = province.name;
+        }
+
+        function selectState(state){
+            vm.address.state = state.name;
+        }
+
+        function selectCity(city){
+            vm.address.city = city.name;
+        }
+
+        function toggleDeliveryAlt(pickup_in_store){
+            if(pickup_in_store){
+                vm.pickup_in_store = false;
+                Delivery.toggleDelivery(pickup_in_store);
+            } else {
+                Delivery.toggleDelivery(pickup_in_store);
+            }
+        }
+
+        function toggleExport(){
+            if(vm.country_selected!=''){
+                vm.calculateExportShipping(vm.country_selected);
+            }
+        }
+
         function setPaymentMethod(){
             vm.syncCustomerAddress();
-            if(vm.selected_method == 'TwoCheckout'){
-                Checkout.order.payment_method = 'Credit Card';
-                vm.makePayment();
-            } else if(vm.selected_method == 'FtTechnologies'){
-                Checkout.order.payment_method = 'Credit Card';
-                payWithFtTechnologies();
-            } else if(vm.selected_method == 'BankAccount'){
-                Checkout.order.payment_method = 'Bank Transfer';
-                vm.createCustomer();
-            } else if(vm.selected_method =='Paypal'){
-                Checkout.order.payment_method = 'Paypal';
-                submitPaypal();
+            if(Delivery.customer.full_name!=''){
+                if(vm.selected_method == 'TwoCheckout'){
+                    Checkout.order.payment_method = 'Credit Card';
+                    vm.makePayment();
+                } else if(vm.selected_method == 'FtTechnologies'){
+                    Checkout.order.payment_method = 'Credit Card';
+                    payWithFtTechnologies();
+                } else if(vm.selected_method == 'BankAccount'){
+                    Checkout.order.payment_method = 'Bank Transfer';
+                    vm.createCustomer();
+                } else if(vm.selected_method =='Paypal'){
+                    Checkout.order.payment_method = 'Paypal';
+                    submitPaypal();
+                }
+            } else {
+                swal('Atención','Haga click en volver y verifique sus datos de envío.','warning');
             }
         }
 
@@ -166,26 +223,36 @@
             vm.loader = true;
             vm.temp = Checkout.temp;
             vm.discount_code = Checkout.discount_code;
-            vm.card.exp_month = vm.card.expiry.substring(0, 2);
-            if(vm.card.expiry.length > 7){
-              vm.card.exp_year = vm.card.expiry.substring(7, 9);
-            } else {
-              vm.card.exp_year = vm.card.expiry.substring(5, 7);
+            
+            if(!vm.card.exp_month){
+                vm.card.exp_month = vm.card.expiry.substring(0, 2);
+                if(vm.card.expiry.length > 7){
+                  vm.card.exp_year = vm.card.expiry.substring(7, 9);
+                } else {
+                  vm.card.exp_year = vm.card.expiry.substring(5, 7);
+                }
             }
 
             vm.card.expiry = vm.card.exp_month + vm.card.exp_year;
             
-            Mail.bacPurchaseParameterLog(vm.temp,vm.total,vm.address, vm.card.exp_month, vm.card.exp_year).then(function (response) { console.log("API call logged")} );
+            if(vm.temp.purchase.order_id != 0 && vm.temp.purchase.order_id != null){
+                
+                vm.temp.timestamp = Math.round((new Date()).getTime() / 1000);
+                var total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
+                vm.temp.prehash = vm.temp.purchase.order_id + "|" + total + "|" + vm.temp.timestamp + "|" + APP_INFO.bac.applicationPassword;
+                vm.temp.hash = md5.createHash(vm.temp.prehash);
+                
+                Mail.bacPurchaseParameterLog(vm.temp,vm.total,vm.address, vm.card.exp_month, vm.card.exp_year).then(function (response) { console.log("API call logged")} );
 
-            vm.temp.timestamp = Math.round((new Date()).getTime() / 1000);
-            var total = (ngCart.totalCost() - vm.discount_code.amount).toFixed(2);
-            vm.temp.prehash = vm.temp.purchase.order_id + "|" + total + "|" + vm.temp.timestamp + "|" + APP_INFO.bac.applicationPassword;
-            vm.temp.hash = md5.createHash(vm.temp.prehash);
-            console.log(vm.temp);
+                setTimeout(function(){
+                    document.getElementById("CredomaticPost").submit();
+                    }, 2000);
+            } else {
+                vm.loader = false;
+                vm.error_message = "Hubo un error al crear su orden, por favor haga click en volver, refresque la página y vuelva a intentarlo.";
+            }
 
-            setTimeout(function(){
-                document.getElementById("CredomaticPost").submit();
-                }, 2000);
+            
         }
 
         function submitPaypal(){
@@ -193,16 +260,6 @@
         }
 
         function payWithFtTechnologies(){
-
-            //split expiry date
-            vm.card.exp_month = parseInt(vm.card.expiry.substring(0, 2));
-            if(vm.card.expiry.length > 7){
-              vm.card.exp_year = parseInt('20' + vm.card.expiry.substring(7, 9));
-            } else {
-              vm.card.exp_year = parseInt('20' + vm.card.expiry.substring(5, 7));
-            }
-
-            var card_number = vm.card.number.replace(/\s/g, '');
             
             vm.temp = Checkout.temp;
             
@@ -212,7 +269,7 @@
                 chargeDescription: vm.temp.purchase.order_number,
                 transactionCurrency: vm.store.currency,
                 transactionAmount: vm.total,
-                primaryAccountNumber: card_number,
+                primaryAccountNumber: vm.card.number,
                 expirationMonth: vm.card.exp_month,
                 expirationYear: vm.card.exp_year,
                 verificationValue: vm.card.cvc

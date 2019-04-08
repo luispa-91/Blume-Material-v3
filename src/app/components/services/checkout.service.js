@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .factory('Checkout', Checkout);
-        Checkout.$inject = ['$http', 'ngCart', '$state', 'Delivery', '$mdDialog', '$rootScope', 'APP_INFO', '$timeout', 'md5'];
-        function Checkout($http, ngCart, $state, Delivery, $mdDialog, $rootScope, APP_INFO, $timeout, md5){
+        Checkout.$inject = ['$http', 'ngCart', '$state', 'Delivery', '$mdDialog', '$rootScope', 'APP_INFO', '$timeout', 'md5','Mail', '$localStorage'];
+        function Checkout($http, ngCart, $state, Delivery, $mdDialog, $rootScope, APP_INFO, $timeout, md5, Mail, $localStorage){
 
           var settings = {};
           var getSettings = Delivery.getSettings;
@@ -109,18 +109,18 @@
 
           var verifyStock = function(){
             var cartItems = ngCart.$cart.items;
-
-            for (var i = cartItems.length - 1; i >= 0; i--) {
-              console.log(i);
-                requestProductVariantStock(cartItems[i]._id).then(function (results){ 
-                    itemStock = results;
-                    cartItems[i]._stock = itemStock;
-                    console.log(itemStock);
-                    if(cartItems[i]._quantity > cartItems[i]._stock){
+            for (var i = 0;  i < cartItems.length; i++) {
+                requestProductVariantStock(cartItems[i]._id,i).then(function (results){ 
+                    var tempItem = results;
+                    if(tempItem.stock == 0){
+                      ngCart.removeItemById(tempItem.id);
+                    } else {
+                      ngCart.$cart.items[tempItem.iterator]._price = tempItem.price * ((100 - tempItem.sale_percentage) / 100);
+                    }
+                    if(cartItems[i]._quantity > cartItems[i]._data.stock){
                         outOfStockVariants += 1;
                     }
                  });
-
             }
           }
 
@@ -149,14 +149,32 @@
               if(pickup_in_store){
                   billing_address_complete = true;
               } else {
-                if(Delivery.address.address2 == "" && !international_shipping){
-                  swal('Atención','Por favor haga click en el mapa o ingrese un de referencia para la entrega.','warning');
-                } else if(Delivery.address.note == "" && !international_shipping){
+                if(APP_INFO.use_map == true){
+                  if(Delivery.address.address2 == "" && !international_shipping){
+                    swal('Atención','Por favor haga click en el mapa o ingrese un de referencia para la entrega.','warning');
+                  } else if(Delivery.address.note == "" && !international_shipping){
+                    swal('Atención','Por favor ingrese la dirección exacta para la entrega.','warning');
+                  } else if(!international_shipping) {
+                    address_complete = true;
+                  }
+                } else {
+                  if(Delivery.address.address == "" && !international_shipping){
+                    swal('Atención','Por favor ingrese la dirección exacta para la entrega.','warning');
+                  } else if(!international_shipping) {
+                    address_complete = true;
+                  }
+                }
+              }
+
+              if(international_shipping){
+                if(Delivery.address.country == ""){
+                  swal('Atención','Por favor seleccione el país de entrega','warning');
+                } else if(Delivery.address.address == ""){
                   swal('Atención','Por favor ingrese la dirección exacta para la entrega.','warning');
                 } else {
                   address_complete = true;
                 }
-              }
+              } 
             }
 
 
@@ -172,7 +190,7 @@
                        }, 2000, true);
                   $rootScope.$emit('notifying-service-event');
                   $state.go('checkout.placeOrder');
-              });
+              },function (err){ Mail.errorLog(err) });
               
             }
 
@@ -199,7 +217,7 @@
           var verifyDiscount = function () {
                 return $http.get('https://central-api.madebyblume.com/v1/company/promocode/apply?word=' + discount_code.value + '&order_id=' + temp.purchase.order_id).then(function (results) {
                     return results;
-                });
+                },function (err){ Mail.errorLog(err) });
             };
 
           var applyDiscount = function (){
@@ -239,7 +257,7 @@
                   }
                 }
                 $rootScope.$emit('notifying-service-event');
-            })
+            },function (err){ Mail.errorLog(err) })
           }
 
           var getToken = function () {
@@ -250,109 +268,33 @@
                 });
             };
 
-          var makePayment = function () {
-
-            //Clear error message
-            temp.error_message = '';
-
-            //Start progress bar
-            temp.loading = true;
-            temp.progress = 15;
-
-            //split expiry date
-            card.exp_month = parseInt(card.expiry.substring(0, 2));
-            if(card.expiry.length > 7){
-              card.exp_year = parseInt('20' + card.expiry.substring(7, 9));
-            } else {
-              card.exp_year = parseInt('20' + card.expiry.substring(5, 7));
-            }
-
-            //Setup token request arguments
-
-            var args = {
-              sellerId: two_co.seller_id,
-              publishableKey: two_co.publishable_key,
-              ccNo: card.number,
-              cvv: card.cvc,
-              expMonth: card.exp_month,
-              expYear: card.exp_year
-            };
-            // Make the token request
-            TCO.requestToken(successCallback, errorCallback, args);
-
-          }
-
-          var successCallback = function(data){
-            
-            //Set token value
-            temp.token = data.response.token.token;
-
-            //Create customer and order, then charge card
-            buildBillingInformation();
-
-          }
-
-          var errorCallback = function(data){
-            temp.loading = false;
-            // Retry the token request if ajax call fails
-            if (data.errorCode === 200) {
-               // This error code indicates that the ajax call failed. We recommend that you retry the token request.
-               swal('Error','Hubo en problema con su conexión, el pago no se pudo realizar. Por favor inténtelo de nuevo.','error');
-               getToken();
-            } else {
-              swal('Error', 'Por favor ingrese los datos de la tarjeta o inténtelo de nuevo en otro buscador.','error');
-            }
-          }
-
           var createCustomer = function(){
 
             return $http.post('https://central-api.madebyblume.com/v1/website/customer', customer).then(function (results) {
                 temp.customer_id = results.data;
+                $localStorage.customerId = temp.customer_id;
                 temp.progress = 33;
                 //Build order with current cart information and store settings
                 customer_address.id = temp.customer_id;
                 customer_address.note = address.note;
                 createCustomerAddress();
-            });
+            },function (err){ Mail.errorLog(err) });
           }
 
           var createCustomerAddress = function(){
-            return $http.post('https://central-api.madebyblume.com/v1/website/customer/address', customer_address).then(function (results) {
-                      temp.progress = 33;
-                      //Build order with current cart information and store settings
-                      buildOrder();
-                  });
+            $timeout(function () { 
+              return $http.post('https://central-api.madebyblume.com/v1/website/customer/address', customer_address).then(function (results) {
+                        temp.progress = 33;
+                        //Build order with current cart information and store settings
+                        buildOrder();
+                    },function (err){ Mail.errorLog(err) });
+               }, 1500, true);
           }
-
-          var chargeCard = function (token, billingInfo) {
-            
-            return $http.post('https://central-api.madebyblume.com/v1/payments/2co/invoice?token=' + token, billingInfo).then(function (results) {
-                //Verify if payment is approved
-                if(results.data[0] == "A"){
-                  temp.progress = 100;
-                  //Verify if order is to be picked up at the store
-                  if(Delivery.pickup_in_store){
-                    sendConfirmationEmail();
-                    updateStoreStock(billingInfo.order_id);
-                  } else {
-                    createShippingInvoice();
-                    sendConfirmationEmailWithTracking();
-                    updateStoreStock(billingInfo.order_id);
-                  }
-                } else {
-                  temp.progress = 1;
-                  temp.loading = false;
-                  temp.error_message = results.data.Message;
-                  getToken();
-                }
-
-            });
-          };
 
           var createShippingInvoice = function(){
             return $http.post('https://central-api.madebyblume.com/v1/website/shipping/gopato?order_id=' + temp.purchase.order_id + '&shipment_id=' + temp.purchase.shipment_id).then(function (results) {
                     return results;
-                });
+                },function (err){ Mail.errorLog(err) });
           }
 
           var sendConfirmationEmail = function(){
@@ -363,7 +305,7 @@
                       amount: 0
                     };
                     ngCart.empty();
-                });
+                },function (err){ Mail.errorLog(err) });
           }
 
           var sendConfirmationEmailWithTracking = function(){
@@ -374,7 +316,7 @@
                       amount: 0
                     };
                     ngCart.empty();
-                });
+                },function (err){ Mail.errorLog(err) });
           }
 
           var buildOrder = function(){
@@ -410,65 +352,39 @@
             }
           }
 
-          var buildBillingInformation = function(){
-            temp.progress = 85
-
-            var temp_total = ngCart.totalCost() - discount_code.amount;
-            //Verify if order needs delivery
-            if(Delivery.pickup_in_store){
-              billing_information.address = billing_address.address;
-              billing_information.city = billing_address.city;
-              billing_information.zipCode = billing_address.zip_code;
-              billing_information.state = billing_address.state;
-              billing_information.country = billing_address.country;
-              billing_information.name = customer.full_name;
-              billing_information.email = customer.email;
-              billing_information.phoneNumber = customer.phone;
-              billing_information.total = Math.round((temp_total + 0.00001) * 100) / 100;
-              billing_information.order_id = temp.purchase.order_id;
-              billing_information.currency = settings.currency;
-            } else {
-              billing_information.name = customer.full_name;
-              billing_information.email = customer.email;
-              billing_information.phoneNumber = customer.phone;
-              billing_information.total = Math.round((temp_total + 0.00001) * 100) / 100;
-              billing_information.order_id = temp.purchase.order_id;
-              billing_information.currency = settings.currency;
-            }
-            //Charge card
-            chargeCard(temp.token, billing_information);
-          }
-
           var createOrder = function(){
             return $http.post('https://central-api.madebyblume.com/v1/website/order/pickup', order).then(function (results) {
                   temp.purchase = results.data;
+                  $localStorage.orderId = temp.purchase.order_id;
                   //Build billing information
                   if(order.payment_method == 'Credit Card'){
                     buildBillingInformation();
                   }
-              });
+              },function (err){ Mail.errorLog(err) });
           }
 
           var createOrderWithDelivery = function(){
             return $http.post('https://central-api.madebyblume.com/v1/website/order/express?fare_id=' + Delivery.destination_coords.selected_fare, order).then(function (results) {
                   temp.purchase = results.data;
+                  $localStorage.orderId = temp.purchase.order_id;
+                  $localStorage.shipmentId = temp.purchase.shipment_id;
                   //Build billing information
                   if(order.payment_method == 'Credit Card'){
                     buildBillingInformation();
                   }
-              });
+              },function (err){ Mail.errorLog(err) });
           }
 
           var updateStoreStock = function(order_id){
             return $http.post('https://central-api.madebyblume.com/v1/orders/stock-update?order_id=' + order_id).then(function (results) {
                 return results;
-              });
+              },function (err){ Mail.errorLog(err) });
           }
 
-          var requestProductVariantStock = function(productVariantId){
-            return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestProductVariantStock?code=Y3IElQAmnPgSz0DCzTWUYkDflK6EQRkyMMavCbBOog1Ztxg51I9fuA==&productVariantId' + productVariantId).then(function (results) {
-                return results.data;
-              });
+          var requestProductVariantStock = function(productVariantId, iterator){
+            return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestProductVariantStock?code=Y3IElQAmnPgSz0DCzTWUYkDflK6EQRkyMMavCbBOog1Ztxg51I9fuA==&productVariantId=' + productVariantId + '&iterator=' + iterator).then(function (results) {    
+            return results.data;
+              },function (err){ Mail.errorLog(err) });
           }
 
           var addOrderNote = function(order_id, hasRefId, refId, comments){
@@ -483,7 +399,7 @@
             }
             return $http.post('https://central-api.madebyblume.com/v1/orders/addNote', temp).then(function (results) {
                 return results;
-              });
+              },function (err){ Mail.errorLog(err) });
           }
 
           var chargeCardUsingFtTechnologies = function(billingInfo){
@@ -528,14 +444,14 @@
 
               return $http.post('https://central-api.madebyblume.com/v1/orders/pay?order_id=' + order_id).then(function (results) {
                   $state.go('checkout.confirmed');
-              });
+              },function (err){ Mail.errorLog(err) });
           };
 
           var saveAsDraft = function (order_id) {
 
               return $http.post('https://central-api.madebyblume.com/v1/orders/save-draft?order_id=' + order_id).then(function (results) {
                   
-              });
+              },function (err){ Mail.errorLog(err) });
           };
 
           var errorDebugBAC = function (order_id) {
@@ -568,9 +484,6 @@
               card_options_2: card_options_2,
               two_co: two_co,
               temp: temp,
-              getToken: getToken,
-              chargeCard: chargeCard,
-              makePayment: makePayment,
               order: order,
               createCustomer: createCustomer,
               updateStoreStock: updateStoreStock,

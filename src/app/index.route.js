@@ -21,6 +21,12 @@
         controller: 'CatalogController',
         controllerAs: 'vm'
       })
+      .state('productVariantsByName', {
+        url: '/products/size/:variantName',
+        templateUrl: 'app/products/products.view.html',
+        controller: 'CatalogController',
+        controllerAs: 'vm'
+      })
       .state('productsAlt', {
         url: '/products/:productType',
         templateUrl: 'app/products/products.view.html',
@@ -52,6 +58,11 @@
         title: 'Cart Billing & Shipping Address',
         templateUrl: 'app/cart-address/cart-address.view.html'
       })
+      .state('checkout.altAddress', {
+        url: '/shipping',
+        title: 'Shipping Address',
+        templateUrl: 'app/cart-address/cart-address-alt.view.html'
+      })
       .state('checkout.placeOrder', {
         url: '/place-order',
         title: 'Place order',
@@ -75,6 +86,11 @@
           url: '/contact',
           title: 'Contact',
           templateUrl: 'app/contact/contact.view.html'
+        })
+        .state('coming-soon', {
+          url: '/coming-soon',
+          title: 'Coming Soon',
+          templateUrl: 'app/main/coming-soon.html'
         })
         .state('blog', {
           url: '/blog',
@@ -116,17 +132,28 @@
           controllerAs: 'vm'
         })
         .state('privacyPolicy', {
-          url: '/politicas-de-privacidad',
+          url: '/politica-de-privacidad',
           title: 'Politicas de Privacidad',
           templateUrl: 'app/components/footer/privacyPolicy.html'
         })
-        
+        .state('termsAndConditions', {
+          url: '/terminos-y-condiciones',
+          title: 'Términos y Condiciones',
+          templateUrl: 'app/components/footer/termsAndConditions.html'
+        })
         .state('external', {
             url: '/admin',
             externalUrl: 'https://shops.madebyblume.com'
         })
         .state('collection', {
           url: '/collection/:name',
+          title: 'Collection',
+          templateUrl: 'app/collection/collection.view.html',
+          controller : 'CollectionController',
+          controllerAs: 'vm'
+        })
+        .state('collectionByVariantName', {
+          url: '/collection/:name/:variantName',
           title: 'Collection',
           templateUrl: 'app/collection/collection.view.html',
           controller : 'CollectionController',

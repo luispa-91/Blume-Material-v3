@@ -60,7 +60,7 @@
           }
 
           var toggleDelivery = function(pickup_in_store){
-            if(pickup_in_store || destination_coords.lat == ''){
+            if(pickup_in_store){
               ngCart.setShipping(0);
               destination_coords.delivery_type = '';
             } else {
@@ -77,7 +77,6 @@
           }
 
           var calculateShipping = function(){
-            
             
             var current_fare = {};
             //Get delivery distance
@@ -227,7 +226,11 @@
 
           var getDeliveryFares = function () {
 
-                var currency = $localStorage.storeData.currency;
+            var currency = "";
+
+            if($localStorage.storeData){
+              currency = $localStorage.storeData.currency;
+            }
 
                 return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestDeliveryFares?code=j/4fE4nNqfef27maYTVOcMkVw6CLQ4sWGgtskCIW4nISthad3IuZZg==&companyId=' + APP_INFO.ID + '&currency=' + currency).then(function (results) {
                     store_fares = results.data;

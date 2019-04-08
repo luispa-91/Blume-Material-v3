@@ -4,7 +4,7 @@
     angular
         .module('angular')
         .controller('DiscountController', DiscountController);
-        function DiscountController($scope, Catalog, APP_INFO, Personalization, Mail) {
+        function DiscountController($scope, Catalog, APP_INFO, Personalization, Mail, $state) {
         var vm = this;
 
         $scope.setCategoryFilter = setCategoryFilter;
@@ -16,6 +16,11 @@
 
           vm.loader = true;
           vm.styles = Personalization.styles;
+          vm.itemsDisplayed = 8;
+          vm.addMoreItems = addMoreItems;
+          vm.companyId = APP_INFO.ID;
+          vm.setSizeFilter = setSizeFilter;
+
           Catalog.getDiscountProducts(APP_INFO.ID)
               .then(function (data) {
                   $scope.catalog = data;
@@ -33,6 +38,18 @@
               vm.currency = response.data.currency;
             },function(err){ Mail.errorLog(err) });
 
+        }
+
+        function setSizeFilter(sizeFilter){
+            if(sizeFilter != ''){
+                $state.go('productVariantsByName' ,{variantName: sizeFilter});
+            } else {
+                $state.go('products');
+            }
+        }
+
+        function addMoreItems(){
+            vm.itemsDisplayed += 4;
         }
 
         function setCategoryFilter(category){

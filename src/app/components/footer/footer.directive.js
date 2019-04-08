@@ -23,6 +23,7 @@
         /** @ngInject */
         function FooterController(Website, APP_INFO, Mail) {
             var vm = this;
+            vm.companyId = APP_INFO.ID;
 
             Website.footer().then(function(results){
               vm.footer = results;

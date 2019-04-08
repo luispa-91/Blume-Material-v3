@@ -1,6 +1,5 @@
 (function() {
   'use strict';
-
   angular
     .module('angular', ['ngAnimate',
     'ngCookies',
@@ -17,7 +16,6 @@
     'ngCart',
     'ng-mfb',
     'ngStorage',
-    'gavruk.card',
     'angular-md5',
     'textAngular',
     'slick',
@@ -25,7 +23,8 @@
     'angulartics', 
     'angulartics.facebook.pixel',
     'ui.scrollpoint',
-    'angular-google-analytics']).config(function($mdThemingProvider) {
-    $mdThemingProvider.theme("custom").primaryPalette("teal").accentPalette("deep-orange");
-  });
+    'angular-google-analytics',
+    'angular.filter']).config(function($mdThemingProvider) {
+      $mdThemingProvider.theme("custom").primaryPalette("teal").accentPalette("deep-orange");
+    });
 })();

@@ -4,7 +4,8 @@
     angular
         .module('angular')
         .controller('ConfirmationController', ConfirmationController);
-        function ConfirmationController($location, Order, Checkout, Website, Mail) {
+        ConfirmationController.$inject = ['$location', 'Order', 'Checkout', 'Website', 'Mail', '$localStorage'];
+        function ConfirmationController($location, Order, Checkout, Website, Mail, $localStorage) {
         var vm = this;
         vm.map = null;
 
@@ -52,9 +53,9 @@
                     }
                 }
             },function(err){ Mail.errorLog(err) });
-
-             
-            
+            delete $localStorage.customerId;
+            delete $localStorage.orderId;
+            delete $localStorage.shipmentId;
         }
 
     }

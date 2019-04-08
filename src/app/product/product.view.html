@@ -55,7 +55,7 @@
           <div ng-if="product.options.length > 0" ng-repeat="variant in product.variants | filter:{name: vm.option1+vm.option2+vm.option3} | limitTo:1">
               <div class="product-price" ng-if="currency == 'USD'">
                 <span ng-if="product.sale_percentage == 0">
-                  {{ variant.price | currency }}
+                  {{ variant.price | currency }} 
                 </span>
                 <span ng-if="product.sale_percentage > 0">
                   <small style="color:black"><strike>{{ variant.price | currency }}</strike></small><br />
@@ -80,7 +80,7 @@
 
               <div class="product-price" ng-if="currency == 'USD'">
                 <span ng-if="product.sale_percentage == 0">
-                  {{ variant.price | currency }}
+                  {{ variant.price | currency }} 
                 </span>
                 <span ng-if="product.sale_percentage > 0">
                   <small style="color:black"><strike>{{ variant.price | currency }}</strike></small><br />

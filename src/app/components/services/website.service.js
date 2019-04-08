@@ -43,13 +43,20 @@
                 });
             }
 
+            var createCustomerSimple = function (customer) {
+                return $http.post('https://central-api.madebyblume.com/v1/company/customers/submit', customer).then(function (results) {
+                    return results;
+                });
+            };
+
             return {
               getAbout: getAbout,
               getStoreSettings: getStoreSettings,
               navbar: navbar,
               footer: footer,
               home: home,
-              settings: settings
+              settings: settings,
+              createCustomerSimple: createCustomerSimple
             }
         }
 })();

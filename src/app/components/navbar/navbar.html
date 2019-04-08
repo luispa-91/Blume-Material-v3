@@ -1,5 +1,5 @@
 <!--navbar-static-top-->
-<div class="logo-bg-color" layout="row" layout-align="center center">
+<div ng-if="vm.companyId!=402" class="logo-bg-color" layout="row" layout-align="center center">
     <img ui-sref="home" style="cursor: pointer" class="principal-img" ng-src="https://cms.blumewebsites.com/{{vm.navbar.logoUrl}}">
 </div>
 <div ng-cloak>
@@ -11,30 +11,22 @@
           <i class="material-icons">menu</i>
         </md-button>
           <span flex></span>
-          <!-- <md-button hide-xs ui-sref="home" class="md-warn"><img ui-sref="home" class="principal-img" ng-src="https://cms.blumewebsites.com/{{vm.settings.logo_url}}" alt="Logo"></md-button> -->
+          <md-button hide-xs ng-if="vm.companyId==402" ui-sref="home" class="md-warn"><img ui-sref="home" style="max-height:60px;" ng-src="https://cms.blumewebsites.com/{{vm.navbar.logoUrl}}" alt="Logo"></md-button>
           <div hide-xs ng-repeat="tab in vm.navbar.tabs"> 
-            <md-button ng-if="tab.name != 'collections'" ui-sref="{{tab.name}}">{{tab.title}}</md-button>
-            <md-menu ng-if="tab.name == 'collections'" class="menu-bar">
+            <md-button ng-class="::tab.name=='discounts' ? 'discount-button' : ''" ng-if="::tab.name != 'collections'" ui-sref="{{::tab.name}}">{{::tab.title}}</md-button>
+            <md-menu ng-if="::tab.name == 'collections'" class="menu-bar">
              <md-button ng-click="openMenu($mdOpenMenu, $event)">
-               {{tab.title}} <md-icon style="color:black"class="material-icons  principal-color md-48">arrow_drop_down</md-icon>
+               {{::tab.title}} <md-icon style="color:black"class="material-icons  principal-color md-48">arrow_drop_down</md-icon>
              </md-button>
              <md-menu-content width="4">
-               <md-menu-item ng-if="collection.title != ''" ng-repeat="collection in vm.collections">
-                 <md-button ui-sref="collection({name: collection.title })">
-                   {{collection.title}}
+               <md-menu-item ng-if="::collection.title!=''" ng-repeat="collection in vm.collections">
+                 <md-button ui-sref="collection(::{name:collection.title})">
+                   {{::collection.title}}
                  </md-button>
                </md-menu-item>
              </md-menu-content>
            </md-menu>
           </div>
-
-          <!-- GoldenPet CMS -->
-          <md-button hide-xs ng-if="vm.companyId==94" ui-sref="cremacion">Cremación de Mascotas</md-button>
-          <md-button hide-xs ng-if="vm.companyId==94" ui-sref="preguntas">Preguntas Frecuentes</md-button>
-          <md-button hide-xs ng-if="vm.companyId==94" ui-sref="proveedor">Querés ser proveedor?</md-button>
-
-          <!-- <md-button hide-xs ui-sref="discounts" style="background-color:#e11000;color:white;">Descuentos</md-button> -->
-        <!-- <md-button hide-xs ui-sref="contact" class="md-warn" ng-if="vm.settings.tabs.contact_us.visible">{{vm.settings.tabs.contact_us.title}}</md-button> -->
           <md-button ui-sref="checkout.summary" class="md-icon-button" aria-label="More">
               <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
           </md-button>
@@ -42,15 +34,6 @@
           <span flex></span>
     </div>
     </md-toolbar>
-      <!-- <div class="social-color" layout="row" layout-align="center center">
-          <div class="socials">
-            <ul class="social-network" style="padding-left:0px;">
-              <li><a class="i-sociala facebook" href="https://www.facebook.com/blumeapps" target="_blank"><i class="i-color fa fa-facebook"></i></a></li>
-              <li><a class="i-sociala instagram" href="https://www.instagram.com/blumeapps" target="_blank"><i class=" i-color fa fa-instagram"></i></a></li>
-              <li><a class="i-sociala youtube" href="https://www.pinterest.com/blumeapps" target="_blank"><i class=" i-color fa fa-pinterest"></i></a></li>
-            </ul>
-          </div>
-      </div> -->
   </md-content>
 
   <!-- Start Left Menu bar -->
@@ -62,37 +45,25 @@
      <md-content>
        <md-list ng-controller="LeftCtrl as vm">
          <div ng-repeat="tab in vm.navbar.tabs">
-           <md-list-item ng-if="tab.name != 'collections'" ng-click="vm.goTo(tab.name)">
-             <p class="upper-text">{{tab.title}}</p>
+           <md-list-item ng-if="::tab.name != 'collections'" ng-click="vm.goTo(tab.name)">
+             <p class="upper-text">{{::tab.title}}</p>
            </md-list-item>
-           <md-list-item ng-if="tab.name == 'collections'">
-            <p class="upper-text">{{tab.title}}</p>
+           <md-list-item ng-if="::tab.name == 'collections'">
+            <p class="upper-text">{{::tab.title}}</p>
             <md-menu class="md-secondary">
               <md-button class="md-icon-button">
                 <md-icon><i class="material-icons icon-color">keyboard_arrow_down</i></md-icon>
               </md-button>
               <md-menu-content width="4">
-                <md-menu-item ng-if="collection.title != ''" ng-repeat="collection in vm.collections">
+                <md-menu-item ng-if="::collection.title != ''" ng-repeat="collection in vm.collections">
                   <md-button ng-click="vm.collection(collection.title)">
-                    {{ collection.title }}
+                    {{::collection.title}}
                   </md-button>
                 </md-menu-item>
               </md-menu-content>
             </md-menu>
           </md-list-item>
          </div>
-         <md-list-item ng-if="vm.companyId==94" ng-click="vm.cremacion()" style="background-color:#e11000;color:white;">
-           <p class="upper-text">Cremación de Mascotas</p>
-         </md-list-item>
-         <md-list-item ng-if="vm.companyId==94" ng-click="vm.preguntas()" style="background-color:#e11000;color:white;">
-           <p class="upper-text">Preguntas Frecuentes</p>
-         </md-list-item>
-         <md-list-item ng-if="vm.companyId==94" ng-click="vm.proveedor()" style="background-color:#e11000;color:white;">
-           <p class="upper-text">Querés ser Proveedor?</p>
-         </md-list-item>
-         <md-list-item ng-click="vm.discounts()" style="background-color:#e11000;color:white;">
-           <p class="upper-text">Descuentos</p>
-         </md-list-item>
        </md-list>
      </md-content>
    </md-sidenav>

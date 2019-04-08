@@ -23,7 +23,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-3" ng-repeat="location in vm.store_locations">
+    <div class="col-md-3 col-sm-6" ng-repeat="location in vm.store_locations">
       <a href="" ng-click="vm.centerMap(location)"><h3 ng-style="vm.styles.titles">{{location.title}}</h3></a>
       <small ng-if="vm.selected_store.phone !=''"><i class="fa fa-phone"></i> {{location.phone}}</small><br />
       <small ng-if="vm.selected_store.schedule !=''"><i class="fa fa-calendar"></i> {{location.schedule}}</small>

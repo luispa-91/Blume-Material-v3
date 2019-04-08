@@ -178,7 +178,7 @@ angular.module('ngCart', ['ngCart.directives'])
             var item;
             var cart = this.getCart();
             angular.forEach(cart.items, function (item, index) {
-                if(item.getId() === id) {
+                if(item.getId() === id.toString()) {
                     item = cart.items.splice(index, 1)[0] || {};
                 }
             });

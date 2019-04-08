@@ -10,8 +10,10 @@
               <img src="assets/images/amex.svg" class="card-logo" />
         </div>
         <div ng-if="vm.store.payment_options.fttechnologies || vm.store.payment_options.banconacional">
+          <img src="assets/images/bancoNacional.png" class="card-logo" />
+          <img src="assets/images/correosDeCostaRica.png" class="card-logo" />
           <img src="assets/images/visa.svg" class="card-logo" />
-              <img src="assets/images/mastercard.svg" class="card-logo" />
+          <img src="assets/images/mastercard.svg" class="card-logo" />
         </div>
       </div>
      </span> 
@@ -24,61 +26,53 @@
     </div>
       <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.twocheckout && vm.selected_method=='TwoCheckout' || vm.store.payment_options.fttechnologies && vm.selected_method =='FtTechnologies'">
       
-            <div class="col-md-6 hidden-xs hidden-sm">
-                <div id="card-container"></div>
-                <br />
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div style="margin-top:2.5em">
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <label>Número de tarjeta</label>
+                          <input style="margin-top:10px" type="text" name="CardNumber" data-ng-model="vm.card.number" />
+                      </md-input-container>
+                  </div>
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <md-select ng-model="vm.card.exp_month">
+                          <label>Mes</label>
+                            <md-option ng-repeat="month in vm.months" ng-value="month">
+                              {{month}}
+                            </md-option>
+                          </md-select>
+                      </md-input-container>
+                      <br>
+                  </div>
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <md-select ng-model="vm.card.exp_year">
+                          <label>Año</label>
+                            <md-option ng-repeat="year in vm.years" ng-value="year">
+                              {{year}}
+                            </md-option>
+                          </md-select>
+                      </md-input-container>
+                      <br>
+                  </div>
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <label>CVC</label>
+                          <input  style="margin-top:10px" type="text" name="CardCvc" data-ng-model="vm.card.cvc" />
+                      </md-input-container>
+                  </div>
+                </div>
                 <div class="center-block text-center">
                   <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
                     <span ng-show="!vm.discount_code.valid">Cupón</span>
                     <span ng-show="vm.discount_code.valid">Gracias!</span>
                   </md-button>
+                   <md-button ng-if="vm.store.payment_options.twocheckout && vm.selected_method=='TwoCheckout' || vm.store.payment_options.fttechnologies && vm.selected_method =='FtTechnologies'" class="md-raised md-primary custom" ng-click="vm.setPaymentMethod()" ng-disabled="vm.temp.loading">Pagar</md-button>
                 </div>
             </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-5">
-                <form action="#"
-                      name="cardForm"
-                      data-card
-                      data-width="285"
-                      data-card-container="#card-container"
-                      data-placeholders="cardPlaceholders"
-                      data-options="vm.card_options">
-
-                    <div style="margin-top:2.5em">
-                      <div class="form-group c-c">
-                          <md-input-container class="md-block">
-                              <label>Número de tarjeta</label>
-                              <input style="margin-top:10px" type="text" name="CardNumber" card-number data-ng-model="vm.card.number" />
-                          </md-input-container>
-                      </div>
-                      <div class="form-group c-c">
-                          <md-input-container class="md-block">
-                              <label>Nombre de la tarjeta</label>
-                              <input style="margin-top:10px"  type="text" name="CardName" card-name data-ng-model="vm.card.name" />
-                          </md-input-container>
-                      </div>
-                      <div class="form-group c-c">
-                          <md-input-container class="md-block">
-                              <label>MM / YY</label>
-                              <input   style="margin-top:10px" type="text" name="CardExpiry" card-expiry data-ng-model="vm.card.expiry" />
-                          </md-input-container>
-                      </div>
-
-                      <div class="form-group c-c">
-                          <md-input-container class="md-block">
-                              <label>CVC</label>
-                              <input  style="margin-top:10px" type="text" name="CardCvc" card-cvc data-ng-model="vm.card.cvc" />
-                          </md-input-container>
-                      </div>
-                    </div>
-                </form>
-                <div class="center-block text-center hidden-md hidden-lg hidden-xl">
-                  <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
-                    <span ng-show="!vm.discount_code.valid">Cupón</span>
-                    <span ng-show="vm.discount_code.valid">Gracias!</span>
-                  </md-button>
-                </div>
-            </div>
+            <div class="col-md-3"></div>
             <div ng-show="vm.temp.loading">
               <md-progress-linear md-mode="determinate" value="{{vm.temp.progress}}"></md-progress-linear>
               <span class="center-block text-center">Por favor espere mientras procesamos su pago...</span>
@@ -120,18 +114,8 @@
     </div>
         <md-card-content style="background-color:#efefef;" ng-show="vm.store.payment_options.bacsanjose && vm.selected_method=='BACSanJose'">
 
-              <div class="col-md-6 hidden-xs hidden-sm">
-                  <div id="card-container-2"></div>
-                  <br />
-                  <div class="center-block text-center">
-                    <md-button class="md-raised" ng-disabled="vm.discount_code.valid" ng-click="vm.showPrompt($event)">
-                      <span ng-show="!vm.discount_code.valid">Cupón</span>
-                      <span ng-show="vm.discount_code.valid">Gracias!</span>
-                    </md-button>
-                  </div>
-              </div>
-              <div class="col-md-1"></div>
-              <div class="col-md-5">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
                 <form data-card
                     data-width="285"
                     data-card-container="#card-container-2"
@@ -151,9 +135,25 @@
                   </div>
                   <div class="form-group c-c">
                       <md-input-container class="md-block">
-                          <label>Fecha de expriración</label>
-                          <input style="margin-top:10px" type="text" name="ccexp" card-expiry ng-model="vm.card.expiry" />
+                          <md-select ng-model="vm.card.exp_month">
+                          <label>Mes</label>
+                            <md-option ng-repeat="month in vm.months" ng-value="month">
+                              {{month}}
+                            </md-option>
+                          </md-select>
                       </md-input-container>
+                      <br>
+                  </div>
+                  <div class="form-group c-c">
+                      <md-input-container class="md-block">
+                          <md-select ng-model="vm.card.exp_year">
+                          <label>Año</label>
+                            <md-option ng-repeat="year in vm.years" ng-value="year">
+                              {{year}}
+                            </md-option>
+                          </md-select>
+                      </md-input-container>
+                      <br>
                   </div>
 
                   <div class="form-group c-c">
@@ -166,22 +166,29 @@
                 <input type="hidden" name="hash" value="{{vm.temp.hash}}" />
                 <input type="hidden" name="time" value="{{vm.temp.timestamp}}" />
                 <input type="hidden" name="amount" value="{{vm.total}}" />
+                <input type="hidden" name="ccexp" value="{{vm.card.expiry}}" />
                 <input type="hidden" name="type" value="sale" />
                 <input type="hidden" name="orderid" value="{{vm.temp.purchase.order_id}}" />
                 <input type="hidden" name="key_id" value="{{vm.bac.key_id}}" />
                 <input type="hidden" name="processor_id" value="{{vm.bac.processor_id}}" />
                 <input type="hidden" name="address" value="{{vm.address.state}}" />
-                <input type="hidden" name="redirect" value="{{vm.website_url}}/checkout/confirmed" />
+                <input type="hidden" name="redirect" value="{{vm.website_url}}" />
 
                 <!-- Display the payment button. -->
                 <div layout="row" layout-align="center center">
-                  <md-button ng-click="vm.submitBAC()" class="md-raised md-primary custom">
-                    <span ng-if="!vm.loader">Pagar</span>
-                    <span ng-if="vm.loader"><i class="fa fa-spinner fa-spin"></i></span>
-                  </md-button>
-                </div>
+                    <md-button class="md-raised" ng-disabled="vm.discount_code.valid || vm.useTasaCero" ng-click="vm.showPrompt($event)">
+                        <span ng-show="!vm.discount_code.valid">Cupón</span>
+                        <span ng-show="vm.discount_code.valid">Gracias!</span>
+                      </md-button>
+                    <md-button ng-click="vm.submitBAC()" class="md-raised md-primary custom">
+                      <span ng-if="!vm.loader">Pagar</span>
+                      <span ng-if="vm.loader"><i class="fa fa-spinner fa-spin"></i></span>
+                    </md-button>
+                  </div>
               </form>
+              <div class="center-block text-center"><span style="color:darkred">{{vm.error_message}}</span></div>
               </div>
+              <div class="col-md-3"></div>
                 
         </md-card-content>
 
@@ -219,7 +226,6 @@
 
         <md-card-actions layout="row" layout-align="center center">
             <md-button class="pull-left sm-margin-left" ui-sref="checkout.address" ng-disabled="vm.temp.loading">Volver</md-button> &nbsp;
-            <md-button ng-if="vm.store.payment_options.twocheckout && vm.selected_method=='TwoCheckout' || vm.store.payment_options.fttechnologies && vm.selected_method =='FtTechnologies'" class="pull-left sm-margin-left md-raised md-primary custom" ng-click="vm.setPaymentMethod()" ng-disabled="vm.temp.loading">Pagar</md-button>
         </md-card-actions>
 
     <!-- CREDIT CARD FORM ENDS HERE -->

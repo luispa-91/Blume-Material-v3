@@ -8,36 +8,36 @@
 
 <div class="footer-bottom footer-color special-font-color">
     <div class="container">
-        <div layout="row">
-          <div layout="column" flex>
-            <h4 class="sub">{{vm.footer.title}}</h4>
-            <p>{{vm.footer.description}}</p>
-            <span>
-              <img ng-if="vm.footer.fttechApplicationName" src="assets/images/bancoNacional.png" class="card-logo" />
-              <img ng-if="vm.footer.bacKeyId" src="assets/images/bacSanJose.png" class="card-logo" />
-              <img src="assets/images/correosDeCostaRica.png" class="card-logo" />
-              <img src="assets/images/visa.svg" class="card-logo" />
-              <img src="assets/images/mastercard.svg" class="card-logo" />
-            </span>
-          </div>
-          <div layout="column" flex>
-          </div>
-          <div layout="column" flex>
-            <h4 class="sub">Contáctenos</h4>
-            <p ng-repeat="info in vm.footer.contactInfo">
+      <div class="col-md-4">
+        <h4 class="sub">{{vm.footer.title}}</h4>
+        <p>{{vm.footer.description}}</p>
+        <span>
+          <img ng-if="vm.footer.fttechApplicationName" src="assets/images/bancoNacional.png" class="card-logo" />
+          <img ng-if="vm.footer.bacKeyId" src="assets/images/bacSanJose.png" class="card-logo" />
+          <img src="assets/images/correosDeCostaRica.png" class="card-logo" />
+          <img src="assets/images/visa.svg" class="card-logo" />
+          <img src="assets/images/mastercard.svg" class="card-logo" />
+        </span>
+      </div>
+      <div class="col-md-4">
+        
+      </div>
+      <div class="col-md-4">
+        <h4 class="sub" style="overflow-wrap: break-word;">Contáctenos</h4>
+        <p ng-repeat="info in vm.footer.contactInfo">
 
-              <!-- Email -->
-              <a ng-if="info.type == 'email'" href="mailTo:{{info.value}}" class="special-font-color"><i class="fa fa-envelope" aria-hidden="true"></i> {{info.value}}</a>
+          <!-- Email -->
+          <a ng-if="::info.type == 'email'" href="mailTo:{{::info.value}}" class="special-font-color" style="overflow-wrap: break-word;"><i class="fa fa-envelope" aria-hidden="true"></i> {{::info.value}}</a>
 
-              <!-- Phone -->
-              <a ng-if="info.type == 'phone'" href="tel:{{info.value}}" class="special-font-color"><i class="fa fa-phone" aria-hidden="true"></i> {{info.value}}</a>
+          <!-- Phone -->
+          <a ng-if="::info.type == 'phone'" href="tel:{{::info.value}}" class="special-font-color"><i class="fa fa-phone" aria-hidden="true"></i> {{::info.value}}</a>
 
-              <!-- Address -->
-              <a ng-if="info.type == 'address'" href="http://maps.google.com/?q={{info.value}}" target="_blank" class="special-font-color"><i class="fa fa-map-marker" aria-hidden="true"></i> {{info.value}}</a>
+          <!-- Address -->
+          <a ng-if="::info.type == 'address'" href="http://maps.google.com/?q={{info.value}}" target="_blank" class="special-font-color"><i class="fa fa-map-marker" aria-hidden="true"></i> {{::info.value}}</a>
 
-            </p>
-          </div>
-        </div>
+        </p>
+        <p ng-if="vm.companyId==402"><a href="" ui-sref="termsAndConditions">Términos y Condiciones</a> / <a href="" ui-sref="privacyPolicy">Política de Privacidad</a></p>
+      </div>
     </div>
     <br />
 </div>

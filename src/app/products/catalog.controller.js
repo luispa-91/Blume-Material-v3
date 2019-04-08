@@ -4,7 +4,7 @@
     angular
         .module('angular')
         .controller('CatalogController', CatalogController);
-        function CatalogController($scope, Catalog, APP_INFO, Personalization, Mail, $stateParams, $state, Analytics) {
+        function CatalogController($scope, Catalog, Products, APP_INFO, Personalization, Mail, $stateParams, $state) {
         var vm = this;
 
         $scope.setCategoryFilter = setCategoryFilter;
@@ -21,40 +21,25 @@
           vm.busy = false;
           vm.styles = Personalization.styles;
           // vm.stop_loading = false;
+          vm.itemsDisplayed = 8;
+          vm.addMoreItems = addMoreItems;
+          vm.companyId = APP_INFO.ID;
+          vm.setSizeFilter = setSizeFilter;
 
           vm.loader = true;
-          Catalog.getProducts(APP_INFO.ID)
+          if($stateParams.variantName){
+            Products.allByVariantName($stateParams.variantName)
               .then(function (data) {
-                  $scope.catalog = data;
-
-                  //Uncomment for infinite scroll + lazy load
-                  // vm.loadMore = function() {
-                  //   vm.busy = true;
-                  //   //Call api to get more products
-                  //   if(vm.stop_loading == false){
-                  //     vm.load_count += 1;
-                  //     Catalog.getMoreProducts(APP_INFO.ID, vm.load_count).then(function(results){
-                  //     var new_products = results;
-                  //     if (new_products.length > 0){
-                  //       for(var i = 1; i <= new_products.length; i++) {
-                  //         $scope.catalog.push(new_products[i]);
-                  //       }
-                  //       vm.busy = false;
-                  //     } else {
-                  //       vm.stop_loading = true;
-                  //       vm.busy = false;
-                  //     }
-                      
-                  //   });
-                  //   } else {
-                  //     vm.busy = false;
-                  //   }
-                    
-                    
-                  // }.bind(vm);
-                  
+                  vm.catalog = data;
                   vm.loader = false;
               },function(err){ Mail.errorLog(err) });
+          } else {
+            Products.all()
+              .then(function (data) {
+                  vm.catalog = data;
+                  vm.loader = false;
+              },function(err){ Mail.errorLog(err) });
+          }
 
           Catalog.getCategories(APP_INFO.ID)
               .then(function (data) {
@@ -67,6 +52,18 @@
               vm.currency = response.data.currency;
             },function(err){ Mail.errorLog(err) });
 
+        }
+
+        function setSizeFilter(sizeFilter){
+            if(sizeFilter != ''){
+                $state.go('productVariantsByName' ,{variantName: sizeFilter});
+            } else {
+                $state.go('products');
+            }
+        }
+
+        function addMoreItems(){
+            vm.itemsDisplayed += 4;
         }
 
         function setCategoryFilter(){

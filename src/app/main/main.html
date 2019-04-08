@@ -1,7 +1,7 @@
 
 <carousel interval="5000" pause="false">
     <slide ng-repeat="photo in vm.home.sliderPhotos">
-      <img class="img-responsive main-slider" ng-src="https://cms.blumewebsites.com/{{vm.companyName}}/{{photo.relativeUrl}}" />
+      <img class="img-responsive main-slider" ng-src="https://cms.blumewebsites.com/{{::vm.companyName}}/{{::photo.relativeUrl}}" />
     </slide>
 </carousel>
 
@@ -16,19 +16,13 @@
   </div>
   <div class="row min-top">
 
-
-
-    <br />
-    <h2 class="text-center" ng-style="vm.styles.titles" ng-if="vm.catalog.length > 0">Productos Destacados</h2>
-    <br />
-
     <div class="col-md-3 col-sm-6 no-padding" ng-repeat="product in vm.featuredProducts">
       
       <md-card class="center-block card-h">
-         <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{ ::product.coverImage}}) no-repeat center; background-size:contain;" class="md-card-image img-card" alt="{{ ::product.title}}">
+         <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{::product.coverImage}})no-repeat center;background-size:contain;" class="md-card-image img-card" alt="{{::product.title}}">
           <span ng-if="product.salePercentage > 0">
             <div style="position:absolute;top:40px;right:52px;z-index:1">
-              <strong style="color:white">- {{product.salePercentage}}%</strong>
+              <strong style="color:white">{{product.salePercentage}}%</strong>
             </div>
             <img style="position:absolute;top:15px;right:30px;" src="assets/images/discount-tag.png" />
           </span>
@@ -68,7 +62,7 @@
     </div>
   </div>
 
-  <div class="row content-margin" ng-if="vm.instagram.mode == 'half'">
+  <div class="row" ng-if="vm.instagram.mode == 'half'">
       <div class="col-sm-12 text-center ct-u-padding-top-25">
           <div class="col-md-6" ng-if="vm.home.bodyDescription != ''">
             <br />
@@ -76,7 +70,7 @@
             <br />
               <p style="line-height:2em;">{{vm.home.bodyDescription}}</p>
               <br />
-              <p><md-button class="md-raised md-primary custom" ui-sref="products">&nbsp;Ver todos los productos&nbsp;</md-button></p>
+              <p><md-button class="md-raised md-primary custom" ui-sref="products">&nbsp;Ver todos los productos&nbsp;</md-button></p> <br>
           </div>
           <div class="col-md-6" ng-if="vm.home.hasInstagram">
             
