@@ -1,8 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+@font-face {font-family: "Camphor";
+  src: url("../assets/fonts/camphor.eot"); /* IE9*/
+  src: url("../assets/fonts/camphor.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../assets/fonts/camphor.woff2") format("woff2"), /* chrome、firefox */
+  url("../assets/fonts/camphor.woff") format("woff"), /* chrome、firefox */
+  url("../assets/fonts/camphor.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url("../assets/fonts/camphor.svg#Camphor") format("svg"); /* iOS 4.1- */
+}
+
+@font-face {font-family: "Camphor Medium";
+  src: url("../assets/fonts/camphor-med.eot"); /* IE9*/
+  src: url("../assets/fonts/camphor-med.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../assets/fonts/camphor-med.woff2") format("woff2"), /* chrome、firefox */
+  url("../assets/fonts/camphor-med.woff") format("woff"), /* chrome、firefox */
+  url("../assets/fonts/camphor-med.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url("../assets/fonts/camphor-med.svg#Camphor Medium") format("svg"); /* iOS 4.1- */
+}
+
 html,body{
   background-color: #FFF;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Camphor', sans-serif;
 }
 
 
@@ -153,7 +171,6 @@ $width: 100px;
 }
 
 .messenger{
-
   background-color: rgb(0,132,255)!important;
 }
 
@@ -167,6 +184,11 @@ $width: 100px;
 
 .card-h{
   height: 500px;
+  max-width: 400px;
+}
+
+.card-h-3{
+  height: 450px;
   max-width: 400px;
 }
 
@@ -231,7 +253,6 @@ no-mar{
 }
 
 .list-title {
-  background-color:#ccc;
   padding-top:10px;
   padding-bottom:10px;
 }
@@ -251,7 +272,7 @@ no-mar{
 }
 
 .card-logo {
-    width: 3em;
+    width: 4em;
 }
 
 md-card{
@@ -288,4 +309,207 @@ md-divider.md-default-theme, md-divider {
 .less-margin {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.md-button {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.fixed-navbar-margin {
+  margin-top:64px;
+}
+
+md-radio-button.md-checked .md-off {
+  border-color: rgb(76,175,80);
+}
+
+md-radio-button .md-on {
+  background-color: rgb(76,175,80);
+}
+
+md-radio-button.md-custom-theme.md-checked .md-off {
+  border-color: rgb(76,175,80);
+}
+
+md-radio-button.md-custom-theme .md-on {
+  background-color: rgb(76,175,80);
+}
+
+.btn-default{
+  border:none !important;
+}
+
+.success-green{
+  color:#35C25F;
+}
+
+.dropdown-large {
+  position: static !important;
+}
+.dropdown-menu-large {
+  margin-left: 16px;
+  margin-right: 16px;
+  padding: 20px 0px;
+}
+.dropdown-menu-large > li > ul {
+  padding: 0;
+  margin: 0;
+}
+.dropdown-menu-large > li > ul > li {
+  list-style: none;
+}
+.dropdown-menu-large > li > ul > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: normal;
+}
+.dropdown-menu-large > li ul > li > a:hover,
+.dropdown-menu-large > li ul > li > a:focus {
+  text-decoration: none;
+  color: #262626;
+  background-color: #f5f5f5;
+}
+.dropdown-menu-large .disabled > a,
+.dropdown-menu-large .disabled > a:hover,
+.dropdown-menu-large .disabled > a:focus {
+  color: #999999;
+}
+.dropdown-menu-large .disabled > a:hover,
+.dropdown-menu-large .disabled > a:focus {
+  text-decoration: none;
+  background-color: transparent;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  cursor: not-allowed;
+}
+.dropdown-menu-large .dropdown-header {
+  color: #428bca;
+  font-size: 18px;
+}
+@media (max-width: 768px) {
+  .dropdown-menu-large {
+    margin-left: 0 ;
+    margin-right: 0 ;
+  }
+  .dropdown-menu-large > li {
+    margin-bottom: 30px;
+  }
+  .dropdown-menu-large > li:last-child {
+    margin-bottom: 0;
+  }
+  .dropdown-menu-large .dropdown-header {
+    padding: 3px 15px !important;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+}
+
+.imageCard {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: rgba(0, 140, 186, 0.5);
+}
+
+.imageContainer:hover .imageOverlay {
+  opacity: 1;
+}
+
+.imageOverlayText {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.soldOutTag {
+  position:absolute;
+  top:20%;
+  left:15%;
+}
+
+.salesTag {
+  position:absolute;
+  top:5%;
+  right:5%;
+  width:65px;
+}
+
+.soldOutSmall {
+  position:absolute;
+  top:20%;
+  left:15%;
+}
+
+.salesTagSmall {
+  position:absolute;
+  top:5%;
+  right:5%;
+  width:50px;
+}
+
+.md-select-value{
+  min-height:36px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.filter-list {
+  list-style-type:none;
+  margin-top:10px;
+}
+
+.fadeIn.ng-hide-add,
+.fadeIn.ng-hide-remove {
+    -webkit-transition : 0.3s ease-in-out opacity;
+    -moz-transition    : 0.3s ease-in-out opacity;
+    -ms-transition     : 0.3s ease-in-out opacity;
+    -o-transition      : 0.3s ease-in-out opacity;
+    transition         : 0.3s ease-in-out opacity;
+    opacity            : 1;
+}
+
+.fadeIn.ng-hide {
+    opacity : 0;
+}
+
+.filter-list-height {
+  min-height:25px;
+}
+
+.info-blue {
+  color: #18a0ef;
+}
+
+.title-margin {
+  margin-bottom: 20px;
+}
+
+.darkred{
+  color: #d42626;
 }

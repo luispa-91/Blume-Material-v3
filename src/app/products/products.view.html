@@ -1,107 +1,28 @@
-<div class="container-fluid" style="margin-top:50px;">
-      <div class="row products-header">
-        <div class="col-md-6 col-md-offset-3">
-         
-          <div class="form-group" layout="row">
-            <md-input-container>
-              <label>Categorías</label>
-              <md-select ng-model="selectedCategory" ng-change="setCategoryFilter()">
-                <md-option ng-value=""><em>Todas</em></md-option>
-                <md-option ng-repeat="category in categories" ng-value="category.title" ng-if="category.title!=''">
-                  {{ category.title }}
-                </md-option>
-              </md-select>
-            </md-input-container>
-            <md-input-container flex-gt-sm>
-              <label><md-icon><i class="material-icons icon-color">search</i></md-icon> Buscar </label>
-              <input ng-model="criteria" ng-model-options="{debounce: 750}" />
-            </md-input-container>
-          </div>
-        </div>
-      </div>
-</div>
-    <!-- Page Content -->
-    <div class="container-fluid">
-        <br />
-        <!-- Page Features -->
-      <div layout="row" layout-align="center center">
-        <div ng-show="vm.loader" class="loader">
-          <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="10" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="row" ng-if="vm.companyId==240">
-        <div class="center-block text-center">
-          <md-button class="md-raised md-default" ng-click="vm.setSizeFilter('')">Todas</md-button>
-          <md-button class="md-raised md-primary custom" ng-if="key=='X-Small' || key=='Small' || key=='Medium' || key=='Large' || key=='X-Large'" ng-repeat="(key, value) in vm.catalog | groupBy: 'variantName'" ng-click="vm.setSizeFilter(key)">
-            {{ key }}
-          </md-button>
-        </div>
-      </div>
-
-      <div class="row" ng-if="vm.companyId==268">
-        <div class="center-block text-center">
-          <md-button class="md-raised md-default" ng-click="vm.setSizeFilter('')">Todas</md-button>
-          <md-button class="md-raised md-primary custom" ng-if="key!='default'" ng-repeat="(key, value) in vm.catalog | groupBy: 'variantName'" ng-click="vm.setSizeFilter(key)">
-            {{ key }}
-          </md-button>
-        </div>
-      </div>
-
-<div class="row" infinite-scroll="vm.addMoreItems()" infinite-scroll-distance="1">
-
-  <div ng-repeat="product in vm.catalog | filter:selectedCategory | filter:criteria | limitTo:vm.itemsDisplayed" class="col-md-3 col-sm-6 no-padding">
-        <md-card class="card-h center-block">
-           <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{product.coverImage}}) no-repeat center; background-size:contain;" class="md-card-image img-card" alt="{{ ::product.title}}">
-            <span ng-if="product.salePercentage > 0">
-              <div style="position:absolute;top:40px;right:52px;z-index:1">
-                <strong style="color:white">{{product.salePercentage}}%</strong>
-              </div>
-              <img ng-if="vm.companyId!=240" style="position:absolute;top:15px;right:30px;" src="assets/images/discount-tag.png" />
-              <img ng-if="vm.companyId===240" style="position:absolute;top:15px;right:30px;" src="assets/images/discount-tag-freaks.png" />
-            </span>
-            <span ng-if="product.variantQuantity == 0">
-              <img ng-if="product.variantName == 'default'" style="position:absolute;top:20%;left:15%;" src="assets/images/sold-out.png" />
-            </span>
-           </div>
-           <md-card-title class="less-p">
-             <md-card-title-text>
-               <h4 class="text-center less-margin">{{ ::product.title }}</h4>
-             </md-card-title-text>
-           </md-card-title>
-           <md-card-content class="less-p">
-              <h5 class="text-center gray no-margin" ng-if="vm.currency == 'USD'">
-                <span ng-if="product.salePercentage == 0">
-                  {{ ::product.variantPrice | currency }}
-                </span>
-                <span ng-if="product.salePercentage > 0">
-                  <small style="color:black"><strike>{{ ::product.variantPrice | currency }}</strike></small><br />
-                  {{ ::product.variantPrice * ((100 - product.salePercentage) / 100) | currency }}
-                </span>
-              </h5>
-               <h5 class="text-center gray no-margin" ng-if="vm.currency == 'CRC'">
-                <span ng-if="product.salePercentage == 0">
-                  {{ ::product.variantPrice | currency:'₡' }}
-                </span>
-                <span ng-if="product.salePercentage > 0">
-                  <small style="color:black"><strike>{{ ::product.variantPrice | currency:'₡' }}</strike></small><br />
-                  {{ ::product.variantPrice * ((100 - product.salePercentage) / 100) | currency:'₡' }}
-                </span>
-               </h5>
-           </md-card-content>
-           <md-card-actions layout="row" layout-align="center center">
-             <ngcart-addtocart id="{{ product.variantId }}" name="{{ product.title }}" price="{{ product.variantPrice * ((100 - product.salePercentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.coverImage,product_id:product.id,weight:product.variantWeight,selectedVariant:product.variantName,stock:product.variantQuantity}"></i> Agregar</ngcart-addtocart>
-           </md-card-actions>
-         </md-card>
-      </div>
-</div>
-<br />
-<div class="center-block text-center">
-  <div ng-show="vm.busy"><i class="fa fa-spinner fa-spin"></i> Cargando más productos...</div>
+<div ng-show="vm.loadingContent" class="text-center">
+  <i class="fas fa-2x fa-spinner fa-spin"></i>
 </div>
 
-
+<div ng-show="!vm.loadingContent">
+  <div class="container">
+    <div layout="row" md-theme="custom">
+        <md-input-container flex>
+            <label><md-icon><i class="material-icons icon-color">search</i></md-icon> Buscar </label>
+            <input ng-model="vm.criteria" />
+        </md-input-container>
     </div>
+    <div class="row" hide-md hide-lg hide-xl>
+        <div ng-include="'app/components/partials/filtersMobile.html'"></div>
+    </div>
+    <div class="row">
+      <!-- Product Filters -->
+      <div class="col-md-2" hide-xs hide-sm>
+          <div ng-include="'app/components/partials/filterSidebar.html'"></div>
+      </div>
+      <!-- Product Grid 3 -->
+      <div class="col-md-10" infinite-scroll="vm.addMoreItems()" infinite-scroll-distance="1">
+          <div ng-include="'app/components/partials/productsGrid3.html'"></div>
+      </div>
+    </div>
+  </div>
+</div>
 

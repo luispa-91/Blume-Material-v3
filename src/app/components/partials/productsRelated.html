@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Productos Relacionados</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-6 no-padding" ng-repeat="product in vm.relatedProducts"> 
+        <md-card class="center-block text-center">
+            <md-card-content>
+            <a href="" ui-sref="product(::{referenceCode:product.referenceCode,colorCode:product.colorCode})">
+                <div class="imageContainer">
+                    <img ng-src="{{::product.imageUrl}}" alt="{{::product.title}}" class="imageCard">
+                    <div class="imageOverlay">
+                        <div class="imageOverlayText"><i class="fa fa-2x fa-search"></i></div>
+                    </div>
+                    <span ng-if="::product.stock==0">
+                        <img class="soldOutTagSmall" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
+                    </span>
+                    <span ng-if="::product.discountPrice!=0">
+                        <img class="salesTagSmall" src="https://shops.blob.core.windows.net/demoshop/website/sales-tag.svg" />
+                    </span>
+                </div>
+            </a>
+            <h4>{{::product.title}}</h4>
+            <p class="no-margin">
+                <span ng-if="::product.discountPrice==0">
+                    {{::product.price | currency:'₡'}} 
+                    <!-- <small class="gray">({{::product.priceUsd|currency}})</small> -->
+                </span>
+                <span ng-if="::product.discountPrice!=0">
+                    <small class="gray"><strike>{{::product.price|currency:'₡'}}</strike></small><br />
+                    {{::product.discountPrice| currency:'₡'}} 
+                    <!-- <small class="gray">({{::product.discountPriceUsd|currency}})</small> -->
+                </span>
+            </p>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
+
+<br>
+    

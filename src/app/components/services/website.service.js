@@ -3,60 +3,93 @@
     angular
         .module('angular')
         .factory('Website', Website);
-        Website.$inject = ['$http', 'APP_INFO', '$localStorage'];
-        function Website($http, APP_INFO, $localStorage){
+        Website.$inject = ['$http','$location'];
+        function Website($http,$location){
 
-            var getAbout = function () {
-                return $http.get('https://central-api.madebyblume.com/v1/website/about?company_id=' + APP_INFO.ID).then(function (results) {
-                    return results.data;
-                });
-            };
-
-            var getStoreSettings = function () {
-                return $http.get('https://central-api.madebyblume.com/v1/website/store?company_id=' + APP_INFO.ID).then(function (results) {
-                    return results.data;
-                });
-            };
-
-            var navbar = function(){
-                return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestNavbar?code=a0J2AWiAMgVCbjRX3EYuEnuMXnRFWFVNFKjhwo0t4UfU4xWfeuSkBA==&companyId=' + APP_INFO.ID).then(function (results) {
-                    return results.data;
+            var mainPage = function () {
+                return $http.get("https://api2.madebyblume.com/v3/storeFront/mainPage").then(function (results) {
+                    return results.data.data;
                 });
             }
 
-            var footer = function(){
-                return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestFooter?code=9cRQwO3XSPsKxjor8SrV0YBF9Fwja2tfCWi23WdqR/yapQtUlJPnVQ==&companyId=' + APP_INFO.ID).then(function (results) {
-                    return results.data;
+            var getInstagramFeed = function(accessToken){
+                return $http.get('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + accessToken).then(function (results) {
+                    return results.data.data;
                 });
             }
 
-            var home = function(){
-                return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestHome?code=rbR5Dc4ySxhh58I2QVQO3zkEjQpdaNfEBmtc6slMjmC4FX5jR0pDyQ==&companyId=' + APP_INFO.ID + '&companyName=' + APP_INFO.directory).then(function (results) {
-                    return results.data;
+            var createChatBubble = function(footer){
+                var options = {
+                    facebook: footer.chatBubble.facebookPageId, // Facebook page ID
+                    whatsapp: footer.chatBubble.whatsapp, // WhatsApp number
+                    company_logo_url: footer.logoUrl, // URL of company logo (png, jpg, gif)
+                    greeting_message: footer.chatBubble.greetingMessage, // Text of greeting message
+                    call_to_action: footer.chatBubble.callToAction, // Call to action
+                    button_color: "#129BF4", // Color of button
+                    position: "right", // Position may be 'right' or 'left'
+                    order: footer.chatBubble.order // Order of buttons
+                };
+                var proto = document.location.protocol, host = "whatshelp.io", url = proto + "//static." + host;
+                var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+                s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+                var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+            }
+
+            var footer = function () {
+                return $http.get("https://api2.madebyblume.com/v3/storeFront/footer").then(function (results) {
+                    return results.data.data;
                 });
             }
 
-            var settings = function () {
-                return $http.get("https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestSettings?code=iGVGGgmLBYtRcMnQM1u/HBaQSmcav1gHpaffmSuRJKkNrWuTEMICnw==&companyId=" + APP_INFO.ID).then(function (results) {
-                  $localStorage.storeData = results.data;
-                  return results.data;
-                });
-            }
+            var setFilter = function(filter){
+                var newUrl = "";
+                var nextIsFilter = true; 
+                var isNewFilter = true;
+                var url = $location.url().substring(1);
+                url = url.replace("?","/");
+                url = url.replace(/=/g,"/");
+                url = url.replace(/&/g,"/");
+                var filterArray = url.split('/');
+                newUrl += "/" + filterArray[0];
+                filterArray.shift();
 
-            var createCustomerSimple = function (customer) {
-                return $http.post('https://central-api.madebyblume.com/v1/company/customers/submit', customer).then(function (results) {
-                    return results;
-                });
-            };
+                //Build Array
+                for (var i = 0; i < filterArray.length; i++) {
+                    if(filterArray[i]==filter.type){
+                        filterArray[i+1]=filter.criteria;
+                        isNewFilter = false;
+                    }
+                } 
+                if(isNewFilter){
+                    filterArray.push(filter.type);
+                    filterArray.push(filter.criteria);
+                }
+
+                //Build Url
+                for (var i = 0; i < filterArray.length; i++) {
+                    if(nextIsFilter){
+                        if(i==0){newUrl += "?" + filterArray[i];} 
+                        else {newUrl += "&" + filterArray[i];}
+                        nextIsFilter = false;
+                    } else {
+                        newUrl += "=" + filterArray[i];
+                        nextIsFilter = true;
+                    }
+                }
+                $location.url(newUrl);
+            }
+            
+            var removeFilter = function(filter){
+                $location.search(filter.type, null);
+            }
 
             return {
-              getAbout: getAbout,
-              getStoreSettings: getStoreSettings,
-              navbar: navbar,
-              footer: footer,
-              home: home,
-              settings: settings,
-              createCustomerSimple: createCustomerSimple
+                mainPage: mainPage,
+                getInstagramFeed: getInstagramFeed,
+                createChatBubble: createChatBubble,
+                footer: footer,
+                setFilter: setFilter,
+                removeFilter: removeFilter
             }
         }
 })();

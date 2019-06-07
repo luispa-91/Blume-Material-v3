@@ -1,0 +1,19 @@
+<br>
+<div class="container" md-theme="custom">
+    <h1>Puntos de Venta</h1>
+    <div class="form-group" layout="row">
+        <md-input-container flex>
+          <label><md-icon><i class="material-icons icon-color">search</i></md-icon> Buscar </label>
+          <input ng-model="vm.criteria" />
+        </md-input-container>
+      </div>
+  <div class="row">
+    <div class="col-md-6" ng-repeat="store in vm.storeLocations | filter:vm.criteria">
+        <h2>{{::store.title}}</h2>
+        <p ng-if="::store.description!=''"><i class="fas fa-store"></i> {{::store.description}}</p>
+        <a href=""><p ng-if="::store.waze!=''"><i class="fab fa-waze"></i> Abrir con Waze</p></a>
+        <a href=""><p ng-if="::store.phone!=''"><i class="fa fa-phone"></i> {{::store.phone}}</p></a>
+        <p ng-if="::store.schedule!=''"><i class="fa fa-calendar"></i> {{::store.schedule}}</p>
+    </div>
+  </div>
+</div>

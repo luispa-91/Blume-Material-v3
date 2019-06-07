@@ -1,96 +1,19 @@
+<!-- Carousel -->
+<div ng-include="'app/components/partials/carousel.html'"></div>
 
-<carousel interval="5000" pause="false">
-    <slide ng-repeat="photo in vm.home.sliderPhotos">
-      <img class="img-responsive main-slider" ng-src="https://cms.blumewebsites.com/{{::vm.companyName}}/{{::photo.relativeUrl}}" />
-    </slide>
-</carousel>
+<!-- Main container -->
+<div class="container-fluid no-padding">
+  
+  <!-- Instagram Feed -->
+  <div ng-include="'app/components/partials/instagramFeed.html'"></div>
 
-<div class="container-fluid">
+  <!-- Banners -->
+  <div ng-include="'app/components/partials/fullWidthBanners.html'"></div>
+  <br />
 
-  <div layout="row" layout-align="center center">
-    <div ng-show="vm.loader" class="loader">
-      <svg class="circular" viewBox="25 25 50 50">
-        <circle class="path" cx="50" cy="50" r="10" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-      </svg>
-    </div>
-  </div>
-  <div class="row min-top">
+  <!-- Featured collection links with images -->
+  <!-- <div ng-include="'app/components/partials/featuredCollectionLinks.html'"></div> -->
 
-    <div class="col-md-3 col-sm-6 no-padding" ng-repeat="product in vm.featuredProducts">
-      
-      <md-card class="center-block card-h">
-         <div ui-sref="product({ product_id: product.id })" style="cursor:pointer;background:url(https://cms.blumewebsites.com/{{::product.coverImage}})no-repeat center;background-size:contain;" class="md-card-image img-card" alt="{{::product.title}}">
-          <span ng-if="product.salePercentage > 0">
-            <div style="position:absolute;top:40px;right:52px;z-index:1">
-              <strong style="color:white">{{product.salePercentage}}%</strong>
-            </div>
-            <img style="position:absolute;top:15px;right:30px;" src="assets/images/discount-tag.png" />
-          </span>
-          <span ng-if="product.variantQuantity == 0">
-            <img ng-if="product.variantName == 'default'" style="position:absolute;top:20%;left:15%;" src="assets/images/sold-out.png" />
-          </span>
-         </div>
-         <md-card-title class="less-p">
-           <md-card-title-text>
-             <h4 class="text-center less-margin">{{ ::product.title}}</h4>
-           </md-card-title-text>
-         </md-card-title>
-         <md-card-content class="less-p">
-           <h5 class="text-center gray no-margin" ng-if="vm.currency == 'USD'">
-            <span ng-if="product.salePercentage == 0">
-              {{ ::product.variantPrice | currency }}
-            </span>
-            <span ng-if="product.salePercentage > 0">
-              <small style="color:black"><strike>{{ ::product.variantPrice | currency }}</strike></small><br />
-              {{ ::product.variantPrice * ((100 - product.salePercentage) / 100) | currency }}
-            </span>
-          </h5>
-           <h5 class="text-center gray no-margin" ng-if="vm.currency == 'CRC'">
-            <span ng-if="product.salePercentage == 0">
-              {{ ::product.variantPrice | currency:'₡' }}
-            </span>
-            <span ng-if="product.salePercentage > 0">
-              <small style="color:black"><strike>{{ ::product.variantPrice | currency:'₡' }}</strike></small><br />
-              {{ ::product.variantPrice * ((100 - product.salePercentage) / 100) | currency:'₡' }}
-            </span>
-           </h5>
-         </md-card-content>
-         <md-card-actions layout="row" layout-align="center center">
-           <ngcart-addtocart id="{{ product.variantId }}" name="{{ product.title }}" price="{{ product.variantPrice * ((100 - product.salePercentage) / 100) }}" quantity="1" quantity-max="10" data="{imagePath:product.coverImage,product_id:product.id,weight:product.variantWeight,selectedVariant:product.variantName,stock:product.variantQuantity}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-addtocart>
-         </md-card-actions>
-       </md-card>
-    </div>
-  </div>
-
-  <div class="row" ng-if="vm.instagram.mode == 'half'">
-      <div class="col-sm-12 text-center ct-u-padding-top-25">
-          <div class="col-md-6" ng-if="vm.home.bodyDescription != ''">
-            <br />
-            <h2 ng-style="vm.styles.titles">{{vm.home.bodyTitle}}</h2>
-            <br />
-              <p style="line-height:2em;">{{vm.home.bodyDescription}}</p>
-              <br />
-              <p><md-button class="md-raised md-primary custom" ui-sref="products">&nbsp;Ver todos los productos&nbsp;</md-button></p> <br>
-          </div>
-          <div class="col-md-6" ng-if="vm.home.hasInstagram">
-            
-              <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe ng-src="{{vm.widgetApprovedUrl}}" id="lightwidget_6a4dc78dfa" name="lightwidget_6a4dc78dfa"  scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
-
-              <a href="https://www.instagram.com/{{vm.instagram.account}}" style="text-decoration:none;" class="special-font-color" target="_blank"><h3><img src="assets/images/instagram.png" style="max-width:35px"/> Síguenos en Instagram</h3></a>
-          </div>
-          <div class="col-md-6" ng-if="!vm.home.hasInstagram">
-              <p style="line-height:2em;">{{vm.home.secondaryBodyDescription}}</p>
-              <br />
-          </div>
-      </div>
-  </div>
-
-  <div class="row content-margin" ng-if="vm.instagram.mode == 'full'">
-      <div class="col-sm-12 text-center ct-u-padding-top-25">
-          <!-- LightWidget WIDGET --><script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe ng-src="{{vm.widgetApprovedUrl}}" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
-
-          <a href="https://www.instagram.com/{{vm.instagram.account}}" style="text-decoration:none;" target="_blank"><h3><img src="assets/images/instagram.png" style="max-width:35px"/> Síguenos en Instagram</h3></a>
-      </div>
-  </div>
-
+  <!-- Featured Products -->
+  <div ng-include="'app/components/partials/productsFeatured.html'"></div>
 </div>

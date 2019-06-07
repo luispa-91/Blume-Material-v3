@@ -1,0 +1,45 @@
+<md-card class="card-simple top-shadow">
+    <md-card-content>
+        <h3>Resumen</h3>
+        <md-list>
+            <md-list-item>
+                <div class="row">
+                    <div class="col-md-6">Subtotal </div>
+                    <div class="col-md-6"><strong>{{ cart.getSubTotal() | currency:'₡' }}</strong></div>
+                </div>
+            </md-list-item>
+            <md-list-item>
+                <div class="row">
+                    <div class="col-md-6">Envío</div>
+                    <div class="col-md-6">
+                        <span ng-if="cart.getShipping()"><strong>{{ cart.getShipping() | currency:'₡' }}</strong></span>
+                        <span ng-if="!cart.getShipping()"><strong>₡0.00</strong></span>
+                    </div>
+                </div>
+            </md-list-item>
+            <md-list-item ng-show="vm.discount_code.valid">
+                <div class="row">
+                    <div class="col-md-6">Descuento</div>
+                    <div class="col-md-6">
+                        <span><strong>{{ vm.discount_code.amount | currency:'₡' }}</strong></span>
+                    </div>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="center center">
+        <div flex>
+            <div class="col-md-4">
+                <h4 class="pull-left upper-text">Total</h4>
+            </div>
+            <div class="col-md-8" ng-if="vm.store.currency == 'CRC'">
+                <h4 class="" ng-show="!vm.discount_code.valid"><strong>{{ cart.totalCost() | currency:'₡' }}</strong> <small>({{cart.totalCost() / 600 | currency}})</small></h4>
+                <h4 class="" ng-show="vm.discount_code.valid"><strong>{{ cart.totalCost() - vm.discount_code.amount | currency:'₡' }}</strong></h4>
+            </div>
+        </div>
+    </md-card-actions>
+</md-card>
+<div class="container-fluid">
+    <p>{{vm.store.delivery_terms}}</p>
+</div>
+    

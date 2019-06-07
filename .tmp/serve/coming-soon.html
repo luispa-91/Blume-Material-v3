@@ -13,12 +13,12 @@
     <link rel="stylesheet" href="../bower_components/angular-toastr/dist/angular-toastr.css" />
     <link rel="stylesheet" href="../bower_components/animate.css/animate.css" />
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css" />
-    <link rel="stylesheet" href="../bower_components/ng-material-floating-button/mfb/dist/mfb.css" />
     <link rel="stylesheet" href="../bower_components/sweetalert2/dist/sweetalert2.css" />
     <link rel="stylesheet" href="../bower_components/slick-carousel/slick/slick.css" />
     <link rel="stylesheet" href="../bower_components/slick-carousel/slick/slick-theme.css" />
     <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
     <link rel="stylesheet" href="../bower_components/textAngular/dist/textAngular.css" />
+    <link rel="stylesheet" href="../bower_components/AngularJS-Toaster/toaster.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -65,7 +65,6 @@
     <script src="../bower_components/angular-ui-event/dist/event.js"></script>
     <script src="../bower_components/ngmap/build/scripts/ng-map.js"></script>
     <script src="../bower_components/ngCart/dist/ngCart.js"></script>
-    <script src="../bower_components/ng-material-floating-button/src/mfb-directive.js"></script>
     <script src="../bower_components/ngstorage/ngStorage.js"></script>
     <script src="../bower_components/es6-promise/es6-promise.js"></script>
     <script src="../bower_components/sweetalert2/dist/sweetalert2.js"></script>
@@ -77,7 +76,6 @@
     <script src="../bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="../bower_components/SHA-1/sha1.js"></script>
     <script src="../bower_components/angulartics/src/angulartics.js"></script>
-    <script src="../bower_components/angulartics-facebook-pixel/dist/angulartics-facebook-pixel.min.js"></script>
     <script src="../bower_components/angular-ui-scrollpoint/dist/scrollpoint.js"></script>
     <script src="../bower_components/angular-google-analytics/dist/angular-google-analytics.min.js"></script>
     <script src="../bower_components/angular-filter/dist/angular-filter.js"></script>
@@ -91,6 +89,8 @@
     <script src="../bower_components/textAngular/dist/textAngular.js"></script>
     <script src="../bower_components/textAngular/dist/textAngular-sanitize.js"></script>
     <script src="../bower_components/textAngular/dist/textAngularSetup.js"></script>
+    <script src="../bower_components/AngularJS-Toaster/toaster.js"></script>
+    <script src="../bower_components/mdRangeSlider/dist/md-range-slider.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -99,39 +99,34 @@
     <script src="app/index.module.js"></script>
     <script src="app/components/services/website.service.js"></script>
     <script src="app/components/services/products.service.js"></script>
-    <script src="app/components/services/personalization.service.js"></script>
     <script src="app/components/services/order.service.js"></script>
+    <script src="app/components/services/navbar.service.js"></script>
     <script src="app/components/services/metatags.service.js"></script>
     <script src="app/components/services/mail.service.js"></script>
-    <script src="app/components/services/image.service.js"></script>
     <script src="app/components/services/delivery.service.js"></script>
+    <script src="app/components/services/dataCollection.service.js"></script>
     <script src="app/components/services/customer.service.js"></script>
     <script src="app/components/services/country.service.js"></script>
     <script src="app/components/services/checkout.service.js"></script>
-    <script src="app/components/services/catalog.service.js"></script>
+    <script src="app/components/services/cart.service.js"></script>
     <script src="app/components/services/blog.service.js"></script>
-    <script src="app/components/services/2co.service.js"></script>
+    <script src="app/components/services/analytics.service.js"></script>
     <script src="app/components/navbar/navbar.directive.js"></script>
-    <script src="app/components/malarkey/malarkey.directive.js"></script>
-    <script src="app/components/githubContributor/githubContributor.service.js"></script>
     <script src="app/components/footer/footer.directive.js"></script>
-    <script src="app/proveedor/proveedor.controller.js"></script>
-    <script src="app/products/catalog.controller.js"></script>
+    <script src="app/storeLocator/storeLocator.controller.js"></script>
+    <script src="app/products/products.controller.js"></script>
     <script src="app/product/product.controller.js"></script>
-    <script src="app/page-header/page-header.controller.js"></script>
-    <script src="app/main/main.controller.js"></script>
+    <script src="app/paymentNotification/paymentNotification.controller.js"></script>
     <script src="app/ngCart/ngCart.js"></script>
-    <script src="app/locator/locator.controller.js"></script>
-    <script src="app/faq/faq.controller.js"></script>
-    <script src="app/discounts/discounts.controller.js"></script>
-    <script src="app/collection/collection.controller.js"></script>
-    <script src="app/checkout/checkout.controller.js"></script>
-    <script src="app/cart-confirmed/confirmation.controller.js"></script>
+    <script src="app/main/main.controller.js"></script>
+    <script src="app/informationPage/informationPage.controller.js"></script>
+    <script src="app/checkout/paymentData.controller.js"></script>
+    <script src="app/checkout/deliveryData.controller.js"></script>
+    <script src="app/checkout/customerData.controller.js"></script>
+    <script src="app/checkout/cartTotals.controller.js"></script>
+    <script src="app/cartReview/cartReview.controller.js"></script>
     <script src="app/blog/blog.controller.js"></script>
     <script src="app/blog/blog-post.controller.js"></script>
-    <script src="app/cardjs/card2.js"></script>
-    <script src="app/cardjs/card.js"></script>
-    <script src="app/about/about.controller.js"></script>
     <script src="app/index.run.js"></script>
     <script src="app/index.route.js"></script>
     <script src="app/index.config.js"></script>

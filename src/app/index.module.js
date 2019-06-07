@@ -9,22 +9,20 @@
     'ui.bootstrap',
     'ui.select', 
     'ngSanitize',
-    'toastr',
+    'toaster',
     'ngMaterial',
     'ui.event',
-    'ngMap',
     'ngCart',
-    'ng-mfb',
     'ngStorage',
     'angular-md5',
     'textAngular',
     'slick',
     'infinite-scroll',
-    'angulartics', 
-    'angulartics.facebook.pixel',
+    'angulartics',
     'ui.scrollpoint',
     'angular-google-analytics',
-    'angular.filter']).config(function($mdThemingProvider) {
-      $mdThemingProvider.theme("custom").primaryPalette("teal").accentPalette("deep-orange");
+    'angular.filter',
+    'mdRangeSlider']).config(function($mdThemingProvider) {
+      $mdThemingProvider.theme("custom").primaryPalette("green").accentPalette("green");
     });
 })();

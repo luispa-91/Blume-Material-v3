@@ -22,21 +22,10 @@
 
 }
 
-.custom{
-  background-color: black!important;
-}
-
 .join{
   margin-top: 4.2em;
   border-radius: 0px;
   width: 361px;
-
-}
-
-
-.leyend{
-  padding-left: 15px!important;
-  padding-right: 15px;
 }
 
 .m-input{
@@ -44,10 +33,6 @@
   height:38px;
   margin-left: 1.4em;
 
-}
-
-.e{
-  margin-top: 6em;
 }
 
 .soc{
@@ -170,3 +155,51 @@
 {
     margin-right: 10px;
 }
+
+.dark-overlay {
+    position: absolute;
+    width: 60%;
+    color: #fff;
+    background-color: rgba(0,0,0,.4);
+    background: rgba(0,0,0,.4);
+    padding: 1em;
+}
+
+.light-overlay {
+    position: absolute;
+    width: 60%;
+    color: #000;
+    background-color: rgba(255,255,255,.4);
+    background: rgba(255,255,255,.4);
+    padding: 1em;
+}
+
+.slider-center-overlay {
+    transform: translateY(-50%);
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    border: 2px solid white;
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-transparent-light {
+    background-color: transparent;
+    border: 2px solid black;
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-transparent:hover {
+    opacity: 0.8;
+
+}
+

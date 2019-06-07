@@ -1,0 +1,17 @@
+<div class="container">
+    <md-card class="card-simple top-shadow" md-theme="custom">
+        <md-card-content class="text-center">
+            <div ng-if="vm.paymentData.paymentStatus=='approved'">
+                    <h2>Transacción aprobada </h2>
+                    <p> <small class="success-green"><i class="fas fa-check-circle"></i></small> Le enviamos un correo con todos los detalles de la orden. </p>
+                    <mb-button ng-click="vm.sendEmail()" class="md-button md-raised custom">
+                        <span ng-if="!vm.loading"><i class="fas fa-paper-plane"></i>&nbsp; Reenviar Correo</span>
+                    </mb-button>
+            </div>
+            <div ng-if="vm.paymentData.paymentStatus=='declined'">
+                <h2>Transacción denegada </h2>
+                <p><small style="color:darkred"><i class="fas fa-times-circle"></i></small> Razón: {{vm.paymentData.responseText}}</p>
+            </div>   
+        </md-card-content>
+    </md-card>
+</div>

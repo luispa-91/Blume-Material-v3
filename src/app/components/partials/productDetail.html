@@ -1,0 +1,97 @@
+<div class="row" ng-if="vm.product">
+        <div class="col-md-6">
+            <div class="imageContainer">
+                <carousel style="cursor:pointer">
+                <slide ng-repeat="image in vm.productImages" active="image.active">
+                    <img class="img-responsive" ng-src="{{::image.url}}" alt="{{::vm.product.description}}">
+                </slide>
+                </carousel>
+                <span ng-if="::vm.product.stock==0">
+                    <img class="soldOutTag" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
+                </span>
+                <span ng-if="::vm.product.discountPrice!=0">
+                    <img class="salesTag" src="https://shops.blob.core.windows.net/demoshop/website/sales-tag.svg" />
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <br hide-gt-xs>
+            <h1 class="no-margin">{{::vm.product.title}} </h1> 
+            <h5>Ref:{{::vm.product.referenceCode}}</h5>
+            <br>
+            <div layout="row" ng-if="!vm.product.isSingleImage">
+                <div class="col-xs-2 col-sm-2 col-md-2 no-padding" ng-repeat="image in vm.productImages">
+                <img ng-src="{{::image.url}}" style="width:100%" ng-click="::vm.setActive($index)">
+                </div>
+            </div>
+    
+            <br>
+            
+            <table>
+                <tr ng-if="::vm.product.brand!=''">
+                <td width="45%"><strong>Marca </strong></td>
+                <td>{{::vm.product.brand}}</td>           
+                </tr>
+                <tr ng-if="::vm.product.family!=''">
+                <td width="45%"><strong>Familia </strong></td>
+                <td>{{::vm.product.family}}</td> 
+                </tr>
+                <tr ng-if="::vm.product.subFamily!=''">
+                <td width="45%"><strong>Sub Familia </strong></td>
+                <td>{{::vm.product.subFamily}}</td> 
+                </tr>
+                <tr ng-if="::vm.product.model!=''">
+                <td width="45%"><strong>Modelo </strong></td>
+                <td>{{::vm.product.model}}</td> 
+                </tr>
+                <tr ng-if="::vm.product.colorCode!=''">
+                <td width="45%"><strong>Color </strong></td>
+                <td>{{::vm.product.colorCode}}</td> 
+                </tr>
+                <tr ng-if="::vm.product.gender!=''">
+                <td width="45%"><strong>Género </strong></td>
+                <td>{{::vm.product.gender}}</td> 
+                </tr>
+            </table>
+    
+            <div ng-if="::vm.product.htmlDescription!=''" ta-bind ng-model="vm.product.htmlDescription"></div>
+            <br />
+    
+            <div layout="row">
+            <div flex>
+                <div ng-if="vm.products.length > 0">
+                    <h3>Tallas</h3>
+                    <md-select ng-model="vm.option1" aria-label="Sizes">
+                        <md-option ng-repeat="variant in vm.products" value="{{::variant.externalId}}">
+                            {{::variant.size}}
+                        </md-option>
+                    </md-select>
+                    </div> 
+            </div>
+            <div flex hide-xs></div>
+            </div>
+    
+            <div layout="row">
+                <div class="text-center" ng-if="vm.products.length > 0" flex>
+                    <div ng-repeat="variant in vm.products | filter:{externalId: vm.option1 }| limitTo:1">
+                        <div class="product-price">
+                            <h3 ng-if="::variant.discountPrice==0">
+                                {{::variant.price | currency:'₡'}} 
+                                <!-- <small class="gray">({{::variant.priceUsd|currency}})</small> -->
+                            </h3>
+                            <h3 ng-if="::variant.discountPrice!=0">
+                                <small class="gray"><strike>{{::variant.price|currency:'₡'}}</strike></small><br />
+                                {{::variant.discountPrice| currency:'₡'}} 
+                                <!-- <small class="gray">({{::variant.discountPriceUsd|currency}})</small> -->
+                            </h3>
+                        <h4 ng-if="variant.stock == 0" class="gray"><small> - No hay disponible en este momento</small></h4>
+                        </div>
+                        <ngcart-detail ng-if="variant.discountPrice==0" id="{{ variant.externalId }}" name="{{ variant.title }}" price="{{ variant.price }}" quantity="1" quantity-max="10" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
+                        <ngcart-detail ng-if="variant.discountPrice>0" id="{{ variant.externalId }}" name="{{ variant.title }}" price="{{ variant.discountPrice }}" quantity="1" quantity-max="10" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
+                    </div>
+                </div>
+                <div flex hide-xs></div>
+            </div>
+            
+        </div>
+    </div>

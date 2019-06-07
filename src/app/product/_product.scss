@@ -23,7 +23,14 @@
 }
 
 .custom{
-  background-color: black!important;
+  background-color: #35c25f !important;
+  font-weight: bold;
+  color: #fff !important;
+}
+
+.custom-2{
+  background-color: #000 !important;
+  font-weight: bold;
 }
 
 .join{
@@ -34,11 +41,6 @@
 }
 
 
-.leyend{
-  padding-left: 15px!important;
-  padding-right: 15px;
-}
-
 .m-input{
   width: 318px;
   height:38px;
@@ -46,47 +48,12 @@
 
 }
 
-.e{
-  margin-top: 6em;
-}
 
-.soc{
-  color: #666666;
-  margin-left: 0.8em;
-}
-
-.soc:hover{
-  color: #32C1B0;
-  text-decoration: none;
-}
-.tag {
-  color: #666666;
-}
 .content-margin{
   margin-top:5em;
 }
+
 .carousel-control.left, .carousel-control.right {
     background-image: none;
     color: black
 }
-
-.fabSpeedDialdemoBasicUsage .text-capitalize {
-  text-transform: capitalize; }
-
-.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
-  background-color: #000 !important; }
-
-.fabSpeedDialdemoBasicUsage p.note {
-  font-size: 1.2rem; }
-
-.fabSpeedDialdemoBasicUsage .lock-size {
-  min-width: 300px;
-  min-height: 300px;
-  width: 300px;
-  height: 300px;
-  margin-left: auto;
-  margin-right: auto; }
-
-  .options-format {
-  max-width:50%;
-  }

@@ -1,66 +1,87 @@
-<!--navbar-static-top-->
-<div ng-if="vm.companyId!=402" class="logo-bg-color" layout="row" layout-align="center center">
-    <img ui-sref="home" style="cursor: pointer" class="principal-img" ng-src="https://cms.blumewebsites.com/{{vm.navbar.logoUrl}}">
-</div>
-<div ng-cloak>
-  <md-content>
-    <md-toolbar layout="row" layout-align="center center" class="">
-
+<md-content>
+    <md-toolbar layout="row" layout-align="center center">
       <div class="navbar-color md-toolbar-tools shadow">
-        <md-button class="md-icon-button launch" ng-click="toggleLeft()"  hide-gt-md>
-          <i class="material-icons">menu</i>
-        </md-button>
-          <span flex></span>
-          <md-button hide-xs ng-if="vm.companyId==402" ui-sref="home" class="md-warn"><img ui-sref="home" style="max-height:60px;" ng-src="https://cms.blumewebsites.com/{{vm.navbar.logoUrl}}" alt="Logo"></md-button>
-          <div hide-xs ng-repeat="tab in vm.navbar.tabs"> 
-            <md-button ng-class="::tab.name=='discounts' ? 'discount-button' : ''" ng-if="::tab.name != 'collections'" ui-sref="{{::tab.name}}">{{::tab.title}}</md-button>
-            <md-menu ng-if="::tab.name == 'collections'" class="menu-bar">
-             <md-button ng-click="openMenu($mdOpenMenu, $event)">
-               {{::tab.title}} <md-icon style="color:black"class="material-icons  principal-color md-48">arrow_drop_down</md-icon>
-             </md-button>
-             <md-menu-content width="4">
-               <md-menu-item ng-if="::collection.title!=''" ng-repeat="collection in vm.collections">
-                 <md-button ui-sref="collection(::{name:collection.title})">
-                   {{::collection.title}}
-                 </md-button>
-               </md-menu-item>
-             </md-menu-content>
-           </md-menu>
-          </div>
-          <md-button ui-sref="checkout.summary" class="md-icon-button" aria-label="More">
-              <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
+          <md-button class="md-icon-button launch" ng-click="vm.toggleLeft()" hide-gt-md>
+            <i class="material-icons">menu</i>
           </md-button>
-          <span class="badge black">{{ vm.items }}</span>
-          <span flex></span>
-    </div>
+            <span flex></span>
+            <md-button aria-label="Home Button" ui-sref="home" class="md-warn"><img ui-sref="home" style="max-height:50px;" ng-src="{{vm.navbar.logoUrl}}" alt="Ecommerce Costa Rica"></md-button>
+            <div hide-xs ng-repeat="tab in vm.navbar.tabs"> 
+              <md-button ng-if="::tab.type=='simple'" href="{{::tab.url}}"> {{::tab.name}} &nbsp;</md-button>
+
+              <!-- Dropdown Menus -->
+              <md-menu ng-if="::tab.type=='dropdown'" class="menu-bar">
+                <md-button ng-click="vm.openMenu($mdOpenMenu, $event)">
+                  {{::tab.name}} <md-icon style="color:black"class="material-icons  principal-color md-48">arrow_drop_down</md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                  <md-menu-item ng-repeat="value in tab.subMenu">
+                    <md-button href="{{::tab.url}}{{::value}}">
+                      {{::value}}
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+
+              <!-- Uncomment to add large Submenu -->
+              <!-- <md-menu ng-if="::tab.submenu" class="menu-bar">
+              <md-button ng-click="$mdOpenMenu($event)">
+                {{::tab.name}} &nbsp;<i class="fa fa-chevron-down"></i>
+              </md-button>
+              <md-menu-content class="menu-content-mp">
+                  <div layout="row">
+                    <div class="navbar-submenu-container" ng-repeat="sub in tab.submenu" flex>
+                      <a class="no-decor" href="{{::sub.linkUrl}}"><h4><strong>{{::sub.title}}</strong></h4></a>
+                        <md-menu-item class="custom-height" ng-if="::sub2.title!=''" ng-repeat="sub2 in sub.submenu">
+                          <a class="no-decor" href="{{::sub2.linkUrl}}">
+                            {{::sub2.title}}
+                          </a>
+                        </md-menu-item>
+                    </div>
+                  </div>
+              </md-menu-content>
+            </md-menu> -->
+            </div>
+            <md-button class="discount-button" ng-if="::!tab.submenu" href="/sale" hide-xs>&nbsp;<i class="fa fa-tags"></i> Descuentos &nbsp;</md-button>
+            <md-button ui-sref="cartReview" class="md-icon-button" aria-label="Go to Cart and Checkout">
+                <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
+            </md-button>
+            <span class="badge black">{{vm.cart.getTotalItems()}}</span>
+            <span flex></span>
+      </div>
     </md-toolbar>
-  </md-content>
+</md-content>
 
   <!-- Start Left Menu bar -->
-  <section layout="row" flex ng-cloak>
+  <section layout="row" flex>
    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
      <md-toolbar class="center-block text-center" ng-controller="LeftCtrl">
-       <span><img cla style="max-width:50px;margin-top:0.5px;" ss="img-responsive img-brand md-toolbar-tools principal" ng-src="https://cms.blumewebsites.com/{{vm.navbar.logoUrl}}" /></span>
+       <span><img style="max-width:50px;margin-top:0.5px;" ss="img-responsive img-brand md-toolbar-tools principal" ng-src="{{vm.navbar.logoUrl}}" /></span>
      </md-toolbar>
      <md-content>
        <md-list ng-controller="LeftCtrl as vm">
          <div ng-repeat="tab in vm.navbar.tabs">
-           <md-list-item ng-if="::tab.name != 'collections'" ng-click="vm.goTo(tab.name)">
-             <p class="upper-text">{{::tab.title}}</p>
+           <md-list-item ng-if="::!tab.submenu" ng-click="::vm.goTo(tab.url)">
+             <p class="upper-text">{{::tab.name}}</p>
            </md-list-item>
-           <md-list-item ng-if="::tab.name == 'collections'">
-            <p class="upper-text">{{::tab.title}}</p>
+           <md-list-item ng-if="::tab.submenu">
+            <p class="upper-text">{{::tab.name}}</p>
             <md-menu class="md-secondary">
               <md-button class="md-icon-button">
                 <md-icon><i class="material-icons icon-color">keyboard_arrow_down</i></md-icon>
               </md-button>
-              <md-menu-content width="4">
-                <md-menu-item ng-if="::collection.title != ''" ng-repeat="collection in vm.collections">
-                  <md-button ng-click="vm.collection(collection.title)">
-                    {{::collection.title}}
-                  </md-button>
-                </md-menu-item>
-              </md-menu-content>
+              <md-menu-content class="menu-content-mp">
+                <div layout="row">
+                  <div class="navbar-submenu-container" ng-repeat="sub in tab.submenu" flex>
+                    <a class="no-decor" href="" ng-click="::vm.goTo(sub.linkUrl)"><h4><strong>{{::sub.title}}</strong></h4></a>
+                      <md-menu-item class="custom-height" ng-if="::sub2.title!=''" ng-repeat="sub2 in sub.submenu">
+                        <a class="no-decor" href="" ng-click="::vm.goTo(sub2.linkUrl)">
+                          {{::sub2.title}}
+                        </a>
+                      </md-menu-item>
+                  </div>
+                </div>
+            </md-menu-content>
             </md-menu>
           </md-list-item>
          </div>
@@ -68,4 +89,3 @@
      </md-content>
    </md-sidenav>
  </section>
-</div>

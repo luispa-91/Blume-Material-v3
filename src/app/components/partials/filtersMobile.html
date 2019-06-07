@@ -1,0 +1,18 @@
+<div class="center-block text-center">
+    <md-button class="md-raised md-primary custom" ng-click="vm.showFiltersMobile=true" ng-show="!vm.showFiltersMobile">Mostrar filtros</md-button>
+    <md-button class="md-raised" ng-click="vm.showFiltersMobile=false" ng-show="vm.showFiltersMobile">Esconder</md-button>
+</div>
+<div class="col-sm-12 col-xs-12" ng-if="vm.showFiltersMobile">
+    <section id="filters" ng-repeat="filter in vm.filters" class="filter-list-height">
+        <strong style="margin-left:5px;" ng-click="filter.isCollapsed=!filter.isCollapsed">{{::filter.title}} 
+            <i class="fa fa-chevron-down" ng-show="filter.isCollapsed"></i>
+            <i class="fa fa-chevron-up" ng-show="!filter.isCollapsed"></i>
+        </strong>
+        <ul class="filter-list fadeIn" ng-show="!filter.isCollapsed">
+            <md-radio-group ng-model="filter.criteria">
+                <md-radio-button value="" ng-click="vm.removeFilter(filter,'')"> Todos </md-radio-button>
+                <md-radio-button ng-repeat="option in filter.options" ng-click="vm.setFilter(filter,option)" value="{{::option}}" aria-label="Available product filter options"> {{::option}} </md-radio-button>
+            </md-radio-group>
+        </ul>
+    </section>
+</div>

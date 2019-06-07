@@ -10,8 +10,13 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 }
 
 .discount-button {
-  background-color: red;
+  background-color: #d42626;
   color: white !important;
+}
+
+.discount-button:hover {
+  background-color: #d42626;
+  color: #d42626 !important;
 }
 
 .navbar-logo{
@@ -54,42 +59,33 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 .i-color{
   color: #CCCCCC;
 }
-.facebook{};
-.facebook:hover{
-  background-color: #3B5998;
-  .i-color{
-    color:white;
-  }
+
+.navbar-fixed-container {
+  position: fixed; 
+  width: 100%;
+  z-index: 9999;
 }
 
-.youtube{};
-.youtube:hover{
-  background-color: #E62117;
-  .i-color{
-    color:white;
-  }
+.navbar-submenu-container {
+  padding:10px;
+  padding-top:0px;
 }
 
-.instagram{};
-.instagram:hover{
-  background-color: #0074B1;
-  .i-color{
-    color:white;
-  }
+.menu-content-mp {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-.twitter{};
-.twitter:hover{
-  background-color: #1DA1F2;
-  .i-color{
-    color:white;
-  }
+.md-open-menu-container{
+  top: 58px !important;
 }
 
-.vimeo{};
-.vimeo:hover{
-  background-color: #00B3EC;
-  .i-color{
-    color:white;
-  }
+.no-decor {
+  text-decoration: none !important;
+  color:inherit;
+}
+
+.custom-height {
+  height:35px;
+  min-height:35px;
 }

@@ -1,0 +1,74 @@
+<md-card class="card-simple top-shadow" md-theme="custom">
+    <md-card-content>
+            <h3>
+                Datos Personales 
+                <small ng-if="vm.customerComplete" class="success-green"><i class="fas fa-check-circle"></i></small>
+            </h3>
+            <br />
+            <div class="row">
+                <form ng-if="!vm.loginModuleVisible" name="customerData">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Nombre completo</label>
+                                <input name="name" ng-model="vm.customer.fullName" ng-blur="vm.verify(customerData.$valid)" required />
+                            </md-input-container>
+                        </div>
+                        <div class="form-group">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Cédula</label>
+                                <input name="documentId" ng-model="vm.customer.documentId" ng-blur="vm.verify(customerData.$valid)" required />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Correo Electrónico</label>
+                                <input name="email" ng-model="vm.customer.email" type="email" ng-blur="vm.verify(customerData.$valid)" required />
+                            </md-input-container>
+                        </div>
+                        <div class="form-group">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Teléfono</label>
+                                <input name="phone" ng-model="vm.customer.phone" ng-blur="vm.verify(customerData.$valid)" required />
+                            </md-input-container>
+                        </div>
+                    </div>
+                </form>
+                <form ng-if="vm.loginModuleVisible" name="loginData">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Correo Electrónico</label>
+                                <input name="email" ng-model="vm.customer.email" type="email" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Contraseña</label>
+                                <input name="password" ng-model="vm.customer.password" type="password" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div ng-if="vm.customer.exists" layout="row" layout-align="left center">
+               <div flex-xs>
+                    <md-button ng-if="!vm.loginModuleVisible" class="md-button md-raised custom" ng-click="vm.loginModuleVisible=true">
+                        <i class="fa fa-user"></i>&nbsp; Iniciar Sesión
+                    </md-button> &nbsp;
+               </div>
+               <small class="info-blue" flex-xs ng-if="!vm.loginModuleVisible"> <i class="fas fa-info-circle"></i> Su correo ya está registrado, puede iniciar sesión para usar los datos de su última compra.</small>
+               <md-button ng-if="vm.loginModuleVisible" class="md-button md-raised" ng-click="vm.loginModuleVisible=false">
+                    <i class="fa fa-chevron-left"></i>&nbsp; Volver
+                </md-button>
+                <md-button ng-if="vm.loginModuleVisible" class="md-button md-raised custom" ng-click="vm.loginModuleVisible=false">
+                    <i class="fa fa-check"></i>&nbsp; Ingresar
+                </md-button>
+            </div>
+            <br />
+    </md-card-content>
+</md-card>

@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function config($logProvider, $qProvider, AnalyticsProvider) {
-    
+
     AnalyticsProvider.setAccount('UA-62919114-3');
     AnalyticsProvider.trackPages(true);
     AnalyticsProvider.trackUrlParams(true);

@@ -12,16 +12,16 @@
         'directory': 'demoshop',
         'website_url': 'http://localhost:3000/checkout/confirmed',
         'international_shipping': true,
-        'use_map': false,
         'gateway': {
             'url': 'http://www.fttserver.com:4217',
             'applicationName': 'SHOPS_TEST',
             'applicationPassword': 'Shops082017%'
         },
         'bac': {
-            'key_id': '7185696',
-            'processor_id': 'freaks2',
-            'applicationPassword': 'CAwDP8vg6wbxP42FS775r6Q8RfB2j2Ep'
+            'url': 'https://paycom.credomatic.com/PayComBackEndWeb/common/requestPaycomService.go',
+            'key_id': '93458250',
+            'processor_id': 'INET5598',
+            'applicationPassword': 'ANKT75RcYU2Pek61rRl9L8HSbkKs4nQy'
         },
         'chat': {
             'order': 'facebook,whatsapp',

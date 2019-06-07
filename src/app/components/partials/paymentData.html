@@ -1,0 +1,123 @@
+<md-card class="card-simple top-shadow" md-theme="custom">
+    <md-card-content>
+            <h3> Método de Pago</h3> <br>
+            <!-- PayPal Starts Here -->
+            <div class="list-title" ng-click="vm.paymentMethod='Paypal'">
+              <h4 ng-class="{'success-green':vm.paymentMethod=='Paypal'}"> 
+                    PayPal  <i class="fab fa-cc-paypal"></i>
+                    <small ng-if="vm.paymentMethod=='Paypal'" class="success-green"> Para pagar con PayPal haga click en Finalizar Compra.</small>
+              </h4>
+            </div>
+            <form id="PaypalPost" name="PaypalPost" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                <input type="hidden" name="business" value="{{vm.store.paypal_account}}">
+                <input type="hidden" name="cmd" value="_xclick">
+                <input type="hidden" name="item_name" value="{{vm.temp.purchase.order_id}}">
+                <input type="hidden" name="amount" value="{{cart.totalCost() - vm.discount_code.amount}}">
+                <input type="hidden" name="currency_code" value="{{vm.store.currency}}">
+            </form>
+            <!-- BAC Payments Start Here -->
+            <div class="list-title" ng-click="vm.paymentMethod='BACSanJose'">
+                <h4 ng-class="{'success-green':vm.paymentMethod=='BACSanJose'}">
+                    Tarjeta de Crédito <i class="fa fa-credit-card"></i> &nbsp;
+                </h4>
+            </div>
+            <div layout="row" ng-if="vm.paymentMethod=='BACSanJose'">
+                <div flex="25" hide-xs></div>
+                <div flex>
+                    <form 
+                        id="CredomaticPost" 
+                        name="CredomaticPost" 
+                        action="https://credomatic.compassmerchantsolutions.com/api/transact.php" 
+                        method="post">
+                    <div>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <label>Número de tarjeta</label>
+                            <input style="margin-top:10px" type="text" ng-model="vm.card.number" />
+                        </md-input-container>
+                    </div>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <md-select ng-model="vm.card.exp_month">
+                            <label>Mes</label>
+                                <md-option ng-repeat="month in vm.months" ng-value="month">
+                                {{month}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <br>
+                    </div>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <md-select ng-model="vm.card.exp_year">
+                            <label>Año</label>
+                                <md-option ng-repeat="year in vm.years" ng-value="year">
+                                {{year}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <br>
+                    </div>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <label>CVC</label>
+                            <input style="margin-top:10px" type="text" ng-model="vm.card.cvc" />
+                        </md-input-container>
+                    </div>
+                    </div>
+                    <input type="hidden" name="hash" value="{{vm.temp.hash}}" />
+                    <input type="hidden" name="time" value="{{vm.temp.timestamp}}" />
+                    <input type="hidden" name="amount" value="{{vm.total}}" />
+                    <input type="hidden" name="ccexp" value="{{vm.card.expiry}}" />
+                    <input type="hidden" name="type" value="sale" />
+                    <input type="hidden" name="orderid" value="{{vm.temp.purchase.order_id}}" />
+                    <input type="hidden" name="key_id" value="{{vm.bac.key_id}}" />
+                    <input type="hidden" name="processor_id" value="{{vm.bac.processor_id}}" />
+                    <input type="hidden" name="address" value="{{vm.address.state}}" />
+                    <input type="hidden" name="redirect" value="{{vm.website_url}}" />
+                </form>
+                <div class="center-block text-center"><span style="color:darkred">{{vm.error_message}}</span></div>
+            </div>
+            <div flex="25" hide-xs></div>
+        </div>
+        <!-- Money Transfers Start Here -->
+        <div class="list-title" ng-click="vm.paymentMethod='MoneyTransfer'">
+            <h4 ng-class="{'success-green':vm.paymentMethod=='MoneyTransfer'}">
+                Transferencia <i class="fas fa-file-import"></i> 
+                <small ng-if="vm.paymentMethod=='MoneyTransfer'" class="success-green"> Para pagar con haga una transferencia cargue la imagen del comprobante y haga click en Finalizar Compra.</small>
+            </h4>
+        </div>
+        <div layout="row" layout-align="center center">
+            <div ng-if="vm.paymentMethod=='MoneyTransfer'" class="center-block text-center">
+                <h2>Su orden ha sido creada!</h2>
+                <p>Para pagar su orden, deposite el monto total de la compra a la siguiente cuenta: <br /><br />
+                    <strong>Banco</strong> {{vm.store.bank_information.bank}}<br />
+                    <strong>Cuenta</strong> {{vm.store.bank_information.account}}<br />
+                    <strong>Cuenta Cliente</strong> {{vm.store.bank_information.outside_account}}<br />
+                    <strong>Nombre</strong> {{vm.store.bank_information.owner}}<br />
+                    <strong>Cédula</strong> {{vm.store.bank_information.owner_id}}<br />
+                    <strong>Moneda</strong> {{vm.store.bank_information.currency}}<br />
+                </p>
+                <p>Una vez que realice el pago, tome una foto del comprobante y adjuntelo a la factura. </p>
+
+                <md-button class="md-button md-raised md-primary custom">Enviar comprobante</md-button>
+            </div>
+        </div>
+        <!-- Terms and Conditions -->
+        <div class="center-block text-center">
+			<br>
+			<md-checkbox id="PrivacyPolicy" ng-model="vm.acceptedPrivacyPolicy" aria-label="Privacy Policy">	   
+			</md-checkbox>
+			Leí y acepto las <a href="#" onClick="window.open('politica-de-privacidad','pagename','resizable,height=600,width=400,left=200,top=50'); return false;">Políticas de Privacidad</a>
+			<br>
+        </div>
+        <!-- Complete Payment -->
+        <md-card-actions layout="row" layout-align="center center">
+            <md-button class="pull-left sm-margin-left" ui-sref="cartReview"><i class="fa fa-chevron-left"></i>&nbsp; Volver</md-button>
+            <md-button analytics-on="click" analytics-event="CompleteRegistration" class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.verifyData(vm.pickup_in_store, vm.export)">
+                <span ng-show="!vm.loading_verifyData"><i class="fa fa-check"></i>&nbsp; Finalizar Compra</span>
+                <span ng-show="vm.loading_verifyData"><i class="fa fa-spinner fa-spin"></i></span>
+            </md-button>
+        </md-card-actions>
+    </md-card-content>
+</md-card>

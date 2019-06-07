@@ -3,31 +3,35 @@
     angular
         .module('angular')
         .factory('Products', Products);
-        Products.$inject = ['$http', 'APP_INFO'];
-        function Products($http, APP_INFO){
+        Products.$inject = ['$http'];
+        function Products($http){
 
-          var all = function () {
-              return $http.get("https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestProducts?code=D9wCpljr6pIkVsDqMz7TAM2DHHzXTO3nGW1Hmw4tatapVWQ9jgoqSw==&companyId=" + APP_INFO.ID).then(function (results) {
-                  return results.data;
+          var list = function (filterArray) {
+              return $http.post("https://api2.madebyblume.com/v3/storeFront/products",filterArray).then(function (results) {
+                  return results.data.data;
               });
           }
 
-          var allByVariantName = function (variantName) {
-              return $http.get("https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestProductsByVariantName?code=maVjSbWTapFjsg3Yhiz9EKoVyNKw8O4QNBb1yNRvdeS0H5ZGFMLt3w==&companyId=" + APP_INFO.ID + "&variantName=" + variantName).then(function (results) {
-                  return results.data;
+          var filterList = function (filterArray) {
+              return $http.post("https://api2.madebyblume.com/v3/storeFront/products/filters",filterArray).then(function (results) {
+                  return results.data.data;
               });
           }
 
-          var featured = function () {
-              return $http.get("https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestFeaturedProducts?code=JfwyH9oLdKg14Ss7CiH6tDaa5X0MNl0CQxSYNcDw2zch3KFRDHZW8g==&companyId=" + APP_INFO.ID).then(function (results) {
-                  return results.data;
-              });
-          }
+          var expand = function (referenceCode,colorCode) {
+              var request = {
+                  referenceCode: referenceCode,
+                  colorCode: colorCode
+              }
+                return $http.post("https://api2.madebyblume.com/v3/storeFront/products/expand",request).then(function (results) {
+                    return results.data.data;
+                });
+            }
 
             return {
-              all: all,
-              allByVariantName: allByVariantName,
-              featured: featured
+              list: list,
+              filterList: filterList,
+              expand: expand
             }
         }
 })();

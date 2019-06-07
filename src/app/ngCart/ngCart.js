@@ -28,7 +28,7 @@ angular.module('ngCart', ['ngCart.directives'])
 
     }])
 
-    .service('ngCart', ['$rootScope', 'ngCartItem', 'store', function ($rootScope, ngCartItem, store) {
+    .service('ngCart', ['$rootScope', 'ngCartItem', 'store', 'toaster', function ($rootScope, ngCartItem, store, toaster) {
 
         this.init = function(){
             this.$cart = {
@@ -52,6 +52,7 @@ angular.module('ngCart', ['ngCart.directives'])
                 var newItem = new ngCartItem(id, name, price, quantity, data);
                 this.$cart.items.push(newItem);
                 $rootScope.$broadcast('ngCart:itemAdded', newItem);
+                toaster.pop({type: 'success',title: 'Producto agregado',body: name,timeout: 3000});
             }
             $rootScope.$broadcast('ngCart:change', {});
             $rootScope.$broadcast('updateItemQ', '');
@@ -171,7 +172,6 @@ angular.module('ngCart', ['ngCart.directives'])
             var item = this.$cart.items.splice(index, 1)[0] || {};
             $rootScope.$broadcast('ngCart:itemRemoved', item);
             $rootScope.$broadcast('ngCart:change', {});
-
         };
 
         this.removeItemById = function (id) {
@@ -384,48 +384,6 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
         $scope.ngCart = ngCart;
     }])
 
-    .directive('ngcartAddtocart', ['ngCart', function(ngCart){
-        return {
-            restrict : 'E',
-            controller : 'CartController',
-            scope: {
-                id:'@',
-                name:'@',
-                quantity:'@',
-                quantityMax:'@',
-                price:'@',
-                data:'='
-            },
-            transclude: true,
-            templateUrl: function(element, attrs) {
-                if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'app/ngCart/addtocart.html';
-                } else {
-                    return attrs.templateUrl;
-                }
-            },
-            link:function(scope, element, attrs){
-                scope.attrs = attrs;
-                scope.inCart = function(){
-                    return  ngCart.getItemById(attrs.id);
-                };
-
-                if (scope.inCart()){
-                    scope.q = ngCart.getItemById(attrs.id).getQuantity();
-                } else {
-                    scope.q = parseInt(scope.quantity);
-                }
-
-                scope.qtyOpt =  [];
-                for (var i = 1; i <= scope.quantityMax; i++) {
-                    scope.qtyOpt.push(i);
-                }
-
-            }
-
-        };
-    }])
-
     .directive('ngcartDetail', ['ngCart', function(ngCart){
             return {
                 restrict : 'E',
@@ -441,7 +399,7 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 transclude: true,
                 templateUrl: function(element, attrs) {
                     if ( typeof attrs.templateUrl == 'undefined' ) {
-                        return 'app/ngCart/detail.html';
+                        return 'app/ngCart/addtocart.html';
                     } else {
                         return attrs.templateUrl;
                     }
