@@ -1,3 +1,5 @@
+import { chmod } from "fs";
+
 (function() {
     'use strict';
 
@@ -14,9 +16,11 @@
             //Initialize Controller
             vm.customer = {fullName:'',documentId:'',email:'',phone:'',password:'',isLoggedIn:false,exists:false};
             vm.customerComplete = false;
+            vm.loginModuleVisible = false;
 
             //Bind functions
             vm.verify = verify;
+            vm.login = login;
         }
 
         function verify(isValid){
@@ -24,9 +28,16 @@
                 vm.customerComplete = true;
             } 
             //Verify if customer already exists
-            // if(vm.customer.email=='luispa91@gmail.com'){
-            //     vm.customer.exists = true;
-            // }
+            if(vm.customer.email!=''){
+                Customer.verify(vm.customer.email).then(function(response){ vm.customer.exists = response.exists; })
+            }
+            if(vm.customerComplete){
+                Customer.create(vm.customer).then(function(response){  })
+            }
+        }
+
+        function login(){
+            
         }
     }
 })();

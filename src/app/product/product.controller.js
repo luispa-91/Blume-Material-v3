@@ -20,7 +20,6 @@
 
       //Initialize Variables
       Products.expand(vm.referenceCode,vm.colorCode).then(function(data){
-        console.log(data);
         vm.products = data.products;
         vm.productImages = data.images;
         vm.product = vm.products[0];

@@ -8,49 +8,35 @@
         Customer.$inject = ['$http'];
         function Customer($http){
 
-    //       var signUp = function (customer) {
-    //       return $http({
-    //           method: "POST",
-    //           url: "https://central-api.madebyblume.com/v1/website/customer",
-    //           data: {
-    //               id: APP_INFO.ID,
-    //               full_name: customer.full_name,
-    //               email: customer.email,
-    //               phone: customer.phone,
-    //               subscribed_newsletter: false
-    //           },
-    //           headers: {
-    //               'Accept': 'application/json',
-    //               'Content-Type': 'application/json'
-    //           }
-    //       })
-    //   }
+            var verify = function (email) {
+                var request = {
+                    email: email
+                }
+                return $http.post("https://api2.madebyblume.com/v3/storeFront/customers/verify",request).then(function (results) {
+                    return results.data.data;
+                });
+            }
 
-    //   var addAddress = function (address) {
-    //       return $http({
-    //           method: "POST",
-    //           url: "https://central-api.madebyblume.com/v1/website/customer/address",
-    //           headers: {
-    //               'Accept': 'application/json',
-    //               'Content-Type': 'application/json'
-    //           },
-    //           data: {
-    //               id: address.customer_id,
-    //               city: address.city,
-    //               state: address.state,
-    //               country: address.country,
-    //               address: address.address,
-    //               address2: "",
-    //               zip_code: "",
-    //               note: address.note
-    //           }
-    //       })
-    //   }
+            var expand = function (email) {
+                var request = {
+                    email: email
+                }
+                return $http.post("https://api2.madebyblume.com/v3/storeFront/customers/create",request).then(function (results) {
+                    return results.data.data;
+                });
+            }
+
+            var update = function (email) {
+                var request = {
+                    email: email
+                }
+                return $http.post("https://api2.madebyblume.com/v3/storeFront/customers/expand",request).then(function (results) {
+                    return results.data.data;
+                });
+            }
 
         return {
-        //   signUp: signUp,
-        //   addAddress: addAddress
-
+            verify:verify
         }
     }
 

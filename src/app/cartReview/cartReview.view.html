@@ -1,12 +1,10 @@
-<img ng-src="https://source.unsplash.com/random/1920x200" class="img-responsive" alt="" />
-<br>
 
 <div class="container-fluid">
 	<div class="col-md-1"></div>
 	<div ng-controller="CartReviewController as vm" class="col-md-7">
 			<div ng-include="'app/ngCart/summary.html'"></div>
 	</div>
-	<div ng-controller="CheckoutController as vm" class="col-md-3">
+	<div ng-controller="CartTotalsController as vm" class="col-md-3">
 		<div ng-include="'app/components/partials/cartTotals.html'"></div>
 	</div>
 	<div class="col-md-1"></div>

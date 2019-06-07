@@ -3,8 +3,8 @@
     angular
     .module('angular')
     .factory('Cart', Cart);
-    Cart.$inject = [];
-    function Cart(){
+    Cart.$inject = ['ngCart','$http'];
+    function Cart(ngCart,$http){
 
         var verifyStock = function(){
             var cartItems = ngCart.$cart.items;
@@ -12,9 +12,13 @@
                 requestProductVariantStock(cartItems[i]._id,i).then(function (results){ 
                     var tempItem = results;
                     if(tempItem.stock == 0){
-                        ngCart.removeItemById(tempItem.id);
+                        ngCart.removeItemById(tempItem.externalId);
                     } else {
-                        ngCart.$cart.items[tempItem.iterator]._price = tempItem.price * ((100 - tempItem.sale_percentage) / 100);
+                        if(tempItem.discountPrice>0){
+                            ngCart.$cart.items[tempItem.iterator]._price = tempItem.discountPrice;
+                        } else {
+                            ngCart.$cart.items[tempItem.iterator]._price = tempItem.price;
+                        }
                     }
                     if(cartItems[i]._quantity > cartItems[i]._data.stock){
                         outOfStockVariants += 1;
@@ -23,8 +27,12 @@
             }
         }
 
-        var requestProductVariantStock = function(productVariantId, iterator){
-            return $http.get('https://blumewebsitefunctions.azurewebsites.net/api/WebsiteRequestProductVariantStock?code=Y3IElQAmnPgSz0DCzTWUYkDflK6EQRkyMMavCbBOog1Ztxg51I9fuA==&productVariantId=' + productVariantId + '&iterator=' + iterator).then(function (results) {    
+        var requestProductVariantStock = function(externalId, iterator){
+            var request = {
+                externalId: externalId,
+                iterator: iterator
+            }
+            return $http.post('https://api2.madebyblume.com/v3/storeFront/verifyStock',request).then(function (results) {
                 return results.data;
             },function (err){ Mail.errorLog(err) });
         }
