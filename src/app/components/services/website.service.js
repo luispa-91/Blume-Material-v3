@@ -83,13 +83,20 @@
                 $location.search(filter.type, null);
             }
 
+            var storeLocations = function () {
+                return $http.get("https://api2.madebyblume.com/v3/storeFront/storeLocations").then(function (results) {
+                    return results.data.data;
+                });
+            }
+
             return {
                 mainPage: mainPage,
                 getInstagramFeed: getInstagramFeed,
                 createChatBubble: createChatBubble,
                 footer: footer,
                 setFilter: setFilter,
-                removeFilter: removeFilter
+                removeFilter: removeFilter,
+                storeLocations: storeLocations
             }
         }
 })();

@@ -2,11 +2,11 @@
   'use strict';
     angular
         .module('angular')
-        .factory('Countries', Countries);
-        Countries.$inject = [];
-        function Countries(){
+        .factory('LocationAutoComplete', LocationAutoComplete);
+        LocationAutoComplete.$inject = [];
+        function LocationAutoComplete(){
 
-          var list = [
+          var countries = [
                 {name: 'Angola', continent: 'Africa'},
                 {name: 'Argelia', continent: 'Africa'},
                 {name: 'Benin', continent: 'Africa'},
@@ -731,7 +731,7 @@
             ];
 
             return {
-              list: list,
+              countries: countries,
               costaRicaProvinces: costaRicaProvinces,
               costaRicaStates: costaRicaStates,
               costaRicaCities: costaRicaCities

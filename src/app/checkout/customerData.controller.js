@@ -1,5 +1,3 @@
-import { chmod } from "fs";
-
 (function() {
     'use strict';
 
@@ -14,7 +12,7 @@ import { chmod } from "fs";
 
         function init(){
             //Initialize Controller
-            vm.customer = {fullName:'',documentId:'',email:'',phone:'',password:'',isLoggedIn:false,exists:false};
+            vm.customer = {id: '', fullName:'',documentId:'',email:'',phone:'',password:'',isLoggedIn:false,exists:false};
             vm.customerComplete = false;
             vm.loginModuleVisible = false;
 
@@ -26,13 +24,15 @@ import { chmod } from "fs";
         function verify(isValid){
             if(isValid){
                 vm.customerComplete = true;
-            } 
-            //Verify if customer already exists
-            if(vm.customer.email!=''){
-                Customer.verify(vm.customer.email).then(function(response){ vm.customer.exists = response.exists; })
+            } else {
+                vm.customerComplete = false;
             }
-            if(vm.customerComplete){
-                Customer.create(vm.customer).then(function(response){  })
+            //Verify if customer already exists
+            if(vm.customer.email!=''&&vm.customer.id==''){
+                Customer.verify(vm.customer.email).then(function(response){ vm.customer.exists = response.exists; vm.customer.id = response.id; })
+            }
+            if(vm.customerComplete&&!vm.customer.exists){
+                Customer.create(vm.customer).then(function(response){ vm.customer.id = response.id; });
             }
         }
 

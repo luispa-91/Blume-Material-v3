@@ -1,42 +1,55 @@
 <md-card class="card-simple top-shadow" md-theme="custom">
 <md-card-content>
     <!-- Delivery Information -->
-<h3>Método de Entrega</h3> <br>
+<h3>
+    Método de Entrega 
+    <small ng-if="vm.addressComplete" class="success-green"><i class="fas fa-check-circle"></i></small>
+</h3> <br>
 <!-- Pick up in store section starts here -->
 <section name="deliveryMethodSelection">
     <div layout="row" layout-align="center center">
-        <div class="list-title" ng-click="vm.deliveryMethod='national'" flex>
+        <div class="list-title" ng-click="vm.toggleDeliveryMethod('national')" flex>
             <h4>
                 <span ng-class="{'success-green':vm.deliveryMethod=='national'}">
                     Envío a domicilio <i class="fas fa-shipping-fast"></i> &nbsp; 
                 </span>
             </h4>
         </div> 
-        <div class="list-title" ng-click="vm.deliveryMethod='pickup'" flex>
+        <div class="list-title" ng-click="vm.toggleDeliveryMethod('pickup')" flex>
             <h4>
                 <span ng-class="{'success-green':vm.deliveryMethod=='pickup'}">
                     Recoger en tienda <i class="fas fa-store"></i> &nbsp;
                 </span>
             </h4>
         </div>
-        <div class="list-title" ng-click="vm.deliveryMethod='international'" flex>
+        <!-- <div class="list-title" ng-click="vm.toggleDeliveryMethod('international')" flex>
             <h4>
                 <span ng-class="{'success-green':vm.deliveryMethod=='international'}">
                     Envío internacional <i class="fas fa-globe-americas"></i> &nbsp; 
                 </span>
             </h4>
-        </div> 
+        </div>  -->
     </div>
 </section>
+<form name="addressData">
 <!-- Pick up in store form starts here -->
 <div class="row" ng-if="vm.deliveryMethod=='pickup'">
     <div class="col-md-12">
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Escriba aquí un mensaje para el vendedor</label>
-                <textarea ng-model="vm.deliveryNote" md-maxlength="300" rows="5" ></textarea>
+                <textarea ng-model="vm.deliveryNote" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
             </md-input-container>
         </div>
+        <h4>Lugar de entrega </h4><br />
+        <div class="form-group">
+                <md-radio-group ng-model="vm.selectedFare">
+                <md-radio-button ng-click="vm.getDeliveryCost(method)" aria-label="Delivery Fare Picker" ng-repeat="method in vm.deliveryMethods | filter:{deliveryType:vm.deliveryMethod}" value="{{method.id}}">
+                    {{ method.name }}
+                </md-radio-button>
+            </md-radio-group>
+        </div>
+        <br>
         <small ng-if="vm.deliveryMethod=='pickup'" class="gray"> Recuerde llevar su cédula al retirar su compra.</small>
     </div>
 </div>
@@ -46,7 +59,7 @@
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Provincia</label>
-                <ui-select style="width:95%" class="mui-dropdown" ng-model="vm.selectedProvince" on-select="vm.selectProvince($select.selected)">
+                <ui-select ng-change="vm.clearStateAndCity()" style="width:95%" class="mui-dropdown" ng-model="vm.selectedProvince" on-select="vm.selectProvince($select.selected)" ng-blur="vm.verify(addressData.$valid)" required>
                 <ui-select-match>{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices style="border:none;" repeat="province in vm.provinces | filter:$select.search">
                     <span ng-bind-html="province.name | highlight:$select.search"></span>
@@ -57,7 +70,7 @@
         <div ng-if="vm.selectedProvince!=''" class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Cantón</label>
-                <ui-select style="width:95%" class="mui-dropdown" ng-model="vm.selectedState" ng-disabled="false" title="Elija un Cantón" on-select="vm.selectState($select.selected)">
+                <ui-select style="width:95%" class="mui-dropdown" ng-model="vm.selectedState" ng-disabled="false" title="Elija un Cantón" on-select="vm.selectState($select.selected)" ng-blur="vm.verify(addressData.$valid)" required>
                 <ui-select-match>{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="state in vm.states | filter:{province:vm.address.country} | filter: $select.search2">
                 <span ng-bind-html="state.name | highlight: $select.search2"></span>
@@ -68,7 +81,7 @@
         <div ng-if="vm.selectedState!=''" class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                     <label>Distrito</label>
-                    <ui-select style="width:95%" class="mui-dropdown" ng-model="vm.selectedCity" ng-disabled="false" title="Elija un Distrito" on-select="vm.selectCity($select.selected)">
+                    <ui-select style="width:95%" class="mui-dropdown" ng-model="vm.selectedCity" ng-disabled="false" title="Elija un Distrito" on-select="vm.selectCity($select.selected)" ng-blur="vm.verify(addressData.$valid)" required>
                     <ui-select-match>{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="city in vm.cities | filter:{state:vm.address.state} | filter:$select.search3">
                         <span ng-bind-html="city.name | highlight:$select.search3"></span>
@@ -79,7 +92,7 @@
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Escriba aquí detalles de la dirección de entrega</label>
-                    <textarea ng-model="vm.address.address" md-maxlength="300" rows="5" ></textarea>
+                    <textarea ng-model="vm.address.address" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
             </md-input-container>
         </div>
     </div>
@@ -92,16 +105,12 @@
                 </div>
         <h4>Transporte </h4><br />
         <div class="form-group">
-                <md-radio-group ng-model="vm.selectedFare" ng-change="vm.selectFare()">
-                <md-radio-button aria-label="Delivery Company Option" ng-repeat="fare in vm.store_fares" value="{{fare.id}}">
-                    <span ng-if="fare.delivery_company">{{fare.delivery_company}} <img ng-if="fare.delivery_company_name=='correosdecostarica'" src="assets/images/correos.png" style="width:auto;height:30px;" /> </span> 
-                    <span ng-if="!fare.delivery_company">{{fare.delivery_company_name}} </span>
-                    <span ng-show="vm.destination_coords.selected_fare == fare.id">
-                        <small class="text-muted" ng-if="vm.store.currency == 'USD'">
-                            {{ cart.getShipping() | currency }} | Tiempo de entrega {{fare.eta}} (approx)
-                        </small>
-                        <small class="text-muted" ng-if="vm.store.currency == 'CRC'">
-                            {{ cart.getShipping() | currency:'₡' }} | Tiempo de entrega {{fare.eta}} (approx)
+                <md-radio-group ng-model="vm.selectedFare">
+                <md-radio-button ng-click="vm.getDeliveryCost(method)" aria-label="Delivery Fare Picker" ng-repeat="method in vm.deliveryMethods | filter:{deliveryType:vm.deliveryMethod}" value="{{method.id}}">
+                    {{ method.name }}
+                    <span>
+                        <small class="text-muted">
+                           <strong ng-if="cart.getShipping()>0"> + {{ cart.getShipping() | currency:'₡' }}</strong> Tiempo de entrega {{method.eta}} (approx)
                         </small>
                     </span>
                 </md-radio-button>
@@ -110,11 +119,12 @@
     </div>
 </div>
 <!-- International home delivery form starts here -->
-<div class="row" ng-if="vm.deliveryMethod=='international'">
+<!-- <div class="row" ng-if="vm.deliveryMethod=='international'">
     <div class="col-md-6">
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
-                <ui-select style="width:95%" class="mui-dropdown" placeholder="Pick a country" ng-model="vm.country_selected" ng-disabled="false" title="Pick a country" on-select="vm.calculateExportShipping($select.selected)">
+                <label>Country</label>
+                <ui-select style="width:95%" class="mui-dropdown" ng-disabled="false" title="Pick a country" ng-model="vm.selectedCountry" on-select="vm.calculateExportShipping($select.selected)" ng-blur="vm.verify(addressData.$valid)" required>
                 <ui-select-match>{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="country in vm.countries | filter: $select.search">
                     <span ng-bind-html="country.name | highlight: $select.search"></span>
@@ -125,34 +135,48 @@
         <div class="form-group">
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>State / Province</label>
-                    <input ng-model="vm.address.state">
+                    <input ng-model="vm.address.state" ng-blur="vm.verify(addressData.$valid)" required />
                 </md-input-container>
             </div>
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>City</label>
-                <input ng-model="vm.address.city" >
+                <input ng-model="vm.address.city" ng-blur="vm.verify(addressData.$valid)" required />
             </md-input-container>
         </div>
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Zip Code</label>
-                <input ng-model="vm.address.zip_code">
+                <input ng-model="vm.address.zip_code" ng-blur="vm.verify(addressData.$valid)" required />
+            </md-input-container>
+        </div>
+        <div class="form-group">
+            <md-input-container class="md-block" flex-gt-sm>
+                    <textarea ng-model="vm.address.address" placeholder="Address details"  md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required /></textarea>
             </md-input-container>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
-                    <textarea ng-model="vm.address.address" placeholder="Address details"  md-maxlength="300" rows="5" ></textarea>
-            </md-input-container>
-        </div>
-        <div class="form-group">
-            <md-input-container class="md-block" flex-gt-sm>
                     <textarea ng-model="vm.address.note" placeholder="Write a message for the vendor"  md-maxlength="300" rows="3" ></textarea>
             </md-input-container>
         </div>
+        <h4>Delivery options </h4><br />
+        <div class="form-group">
+                <md-radio-group ng-model="vm.selectedFare">
+                <md-radio-button ng-click="vm.getDeliveryCost(method)" aria-label="Delivery Fare Picker" ng-repeat="method in vm.deliveryMethods | filter:{deliveryType:vm.deliveryMethod}" value="{{method.id}}">
+                    {{ method.name }}
+                    <span>
+                        <small class="text-muted">
+                           <strong ng-if="cart.getShipping()>0"> + {{ cart.getShipping() | currency:'₡' }}</strong> ETA {{method.eta}} (approx)
+                        </small>
+                    </span>
+                </md-radio-button>
+            </md-radio-group>
+        </div>
     </div>
-</div>
+</div> -->
+</form>
 </md-card-content>
 </md-card>

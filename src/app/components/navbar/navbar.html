@@ -6,6 +6,7 @@
           </md-button>
             <span flex></span>
             <md-button aria-label="Home Button" ui-sref="home" class="md-warn"><img ui-sref="home" style="max-height:50px;" ng-src="{{vm.navbar.logoUrl}}" alt="Ecommerce Costa Rica"></md-button>
+            <span flex></span>
             <div hide-xs ng-repeat="tab in vm.navbar.tabs"> 
               <md-button ng-if="::tab.type=='simple'" href="{{::tab.url}}"> {{::tab.name}} &nbsp;</md-button>
 
@@ -43,6 +44,7 @@
             </md-menu> -->
             </div>
             <md-button class="discount-button" ng-if="::!tab.submenu" href="/sale" hide-xs>&nbsp;<i class="fa fa-tags"></i> Descuentos &nbsp;</md-button>
+            <span flex></span>
             <md-button ui-sref="cartReview" class="md-icon-button" aria-label="Go to Cart and Checkout">
                 <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
             </md-button>

@@ -103,8 +103,8 @@
           controller: 'BlogPostController',
           controllerAs: 'vm'
         })
-        .state('storeLocator', {
-          url: '/storeLocator',
+        .state('storeLocations', {
+          url: '/storeLocations',
           title: 'Puntos de Venta',
           templateUrl: 'app/storeLocator/storeLocator.view.html',
           controller: 'StoreLocatorController',
