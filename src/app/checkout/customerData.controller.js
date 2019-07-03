@@ -32,7 +32,7 @@
                 Customer.verify(vm.customer.email).then(function(response){ vm.customer.exists = response.exists; vm.customer.id = response.id; })
             }
             if(vm.customerComplete&&!vm.customer.exists){
-                Customer.create(vm.customer).then(function(response){ vm.customer.id = response.id; });
+                Customer.create(vm.customer).then(function(response){ vm.customer.id = response.id; }, function(err){console.log(err)});
             }
         }
 

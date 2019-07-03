@@ -9,7 +9,7 @@
             var mainPage = function () {
                 return $http.get("https://api2.madebyblume.com/v3/storeFront/mainPage").then(function (results) {
                     return results.data.data;
-                });
+                }, function(err){ });
             }
 
             var getInstagramFeed = function(accessToken){
@@ -89,6 +89,23 @@
                 });
             }
 
+            //-------------- Custom Pages --------------//
+            var getCustomPage = function(name){
+                var request = {
+                    name: name
+                }
+                return $http.post('https://api2.madebyblume.com/v3/storeFront/customPage',request).then(function (results) {
+                    return results.data.data;
+                });
+            }
+
+            var createBitrixChat = function(){
+                (function(w,d,u){
+                        var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);
+                        var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
+                })(window,document,'https://cdn.bitrix24.com/b1772825/crm/site_button/loader_6_2nzuxo.js');
+            }
+
             return {
                 mainPage: mainPage,
                 getInstagramFeed: getInstagramFeed,
@@ -96,7 +113,9 @@
                 footer: footer,
                 setFilter: setFilter,
                 removeFilter: removeFilter,
-                storeLocations: storeLocations
+                storeLocations: storeLocations,
+                getCustomPage: getCustomPage,
+                createBitrixChat: createBitrixChat
             }
         }
 })();

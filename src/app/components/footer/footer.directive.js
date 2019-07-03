@@ -37,7 +37,8 @@
                 Website.footer().then(function(results){ 
                     vm.footer = results;
                     //Initialize chat bubble
-                    if(vm.footer.chatBubble){ Website.createChatBubble(vm.footer); }
+                    if(vm.footer.chatBubble&&!vm.footer.isBitrixChat){ Website.createChatBubble(vm.footer); };
+                    if(vm.footer.isBitrixChat){ Website.createBitrixChat(); };
                     //Initialize facebook pixel
                     BlumeAnalytics.fbPixelInit(vm.footer.facebookPixelId);
                     BlumeAnalytics.fbPixelPageView();

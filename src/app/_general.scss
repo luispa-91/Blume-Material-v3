@@ -167,7 +167,7 @@ $width: 100px;
 }
 
 .icon-color{
-  color: #DBDBDB;
+  color: #000;
 }
 
 .messenger{
@@ -414,8 +414,24 @@ md-radio-button.md-custom-theme .md-on {
 
 .imageCard {
   display: block;
-  width: 100%;
-  height: auto;
+  width: auto;
+}
+
+.imageCard:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.imageInstagram{
+  display: block;
+  width: auto;
+}
+
+.imageInstagram:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
 
 .imageOverlay {
@@ -520,4 +536,23 @@ md-radio-button.md-custom-theme .md-on {
 
 .quarter-width{
   width: 25%;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+md-checkbox.md-custom-theme.md-checked .md-icon {
+  background-color: #35C25F;
+  color: white;
 }

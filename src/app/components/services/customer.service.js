@@ -13,6 +13,7 @@
                     email: email
                 }
                 return $http.post("https://api2.madebyblume.com/v3/storeFront/customers/verify",request).then(function (results) {
+                    $localStorage.customerId = results.data.data.id;
                     return results.data.data;
                 });
             }
@@ -36,13 +37,11 @@
                 });
             }
 
-            var create = function (email) {
-                var request = {
-                    email: email
-                }
-                return $http.post("https://api2.madebyblume.com/v3/storeFront/customers/create",request).then(function (results) {
+            var create = function (customer) {
+                return $http.post("https://api2.madebyblume.com/v3/storeFront/customers/create",customer).then(function (results) {
+                    $localStorage.customerId = results.data.data.id;
                     return results.data.data;
-                });
+                },function(err){console.log(err);});
             }
 
             var update = function (email) {

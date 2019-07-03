@@ -12,11 +12,14 @@
         function init(){
             //Initialize Controller
             vm.addressComplete = false;
-            vm.address = {};
+            vm.addressCreated = false;
+            vm.address = { customerId: 0, isDefault: true };
             vm.provinces = LocationAutoComplete.costaRicaProvinces;
             vm.states = LocationAutoComplete.costaRicaStates;
             vm.cities = LocationAutoComplete.costaRicaCities;
             vm.countries = LocationAutoComplete.countries;
+            vm.selectedFare= {};
+            vm.orderNote = "";
 
             //Bind functions
             vm.verify = verify;
@@ -36,6 +39,10 @@
             } else {
                 vm.addressComplete = false;
             }
+            //Verify if customer already exists
+            if(vm.addressComplete&&!vm.addressCreated){
+                Delivery.createAddress(vm.address,vm.orderNote).then(function(response){ vm.addressCreated = true; });
+            }
         }
 
         function getDeliveryMethods(){
@@ -45,7 +52,7 @@
         function toggleDeliveryMethod(selectedMethod){
             vm.addressComplete = false;
             vm.deliveryMethod = selectedMethod;
-            Delivery.reset();
+            Delivery.reset(selectedMethod,vm.selectedFare,vm.deliveryMethods);
         }
 
         function clearStateAndCity(){

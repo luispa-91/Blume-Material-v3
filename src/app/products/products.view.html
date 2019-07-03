@@ -19,7 +19,10 @@
           <div ng-include="'app/components/partials/filterSidebar.html'"></div>
       </div>
       <!-- Product Grid 3 -->
-      <div class="col-md-10" infinite-scroll="vm.addMoreItems()" infinite-scroll-distance="1">
+      <div ng-if="vm.state!='sale'" class="col-md-10" infinite-scroll="vm.addMoreItems()" infinite-scroll-distance="1">
+          <div ng-include="'app/components/partials/productsGrid3.html'"></div>
+      </div>
+      <div ng-if="vm.state=='sale'" class="col-md-10" infinite-scroll="vm.addMoreItems()" infinite-scroll-distance="1">
           <div ng-include="'app/components/partials/productsGrid3.html'"></div>
       </div>
     </div>

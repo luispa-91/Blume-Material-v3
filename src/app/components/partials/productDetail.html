@@ -59,7 +59,7 @@
     
             <div layout="row">
             <div flex>
-                <div ng-if="vm.products.length > 0">
+                <div ng-if="vm.products.length > 1">
                     <h3>Tallas</h3>
                     <md-select ng-model="vm.option1" aria-label="Sizes">
                         <md-option ng-repeat="variant in vm.products" value="{{::variant.externalId}}">
@@ -84,10 +84,10 @@
                                 {{::variant.discountPrice| currency:'₡'}} 
                                 <!-- <small class="gray">({{::variant.discountPriceUsd|currency}})</small> -->
                             </h3>
-                        <h4 ng-if="variant.stock == 0" class="gray"><small> - No hay disponible en este momento</small></h4>
+                        <h4 ng-if="variant.stock == 0" class="gray"><small><br> No hay disponible en este momento</small></h4>
                         </div>
-                        <ngcart-detail ng-if="variant.discountPrice==0" id="{{ variant.externalId }}" name="{{ variant.title }}" price="{{ variant.price }}" quantity="1" quantity-max="10" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
-                        <ngcart-detail ng-if="variant.discountPrice>0" id="{{ variant.externalId }}" name="{{ variant.title }}" price="{{ variant.discountPrice }}" quantity="1" quantity-max="10" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
+                        <ngcart-detail ng-if="variant.discountPrice==0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }}" price="{{ variant.price }}" quantity="1" quantity-max="10" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:0}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
+                        <ngcart-detail ng-if="variant.discountPrice>0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }}" price="{{ variant.discountPrice }}" quantity="1" quantity-max="10" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:1}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
                     </div>
                 </div>
                 <div flex hide-xs></div>

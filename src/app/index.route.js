@@ -52,17 +52,17 @@
         controllerAs: 'vm'
       })
       .state('cartReview', {
-        url: '/cartReview?cartId',
+        url: '/cartReview?orderId',
         templateUrl: 'app/cartReview/cartReview.view.html',
         params: {
-          cartId: {squash:true}
+          orderId: {squash:true}
         }
       })
       .state('checkout', {
-        url: '/checkout?cartId',
+        url: '/checkout?customerId',
         templateUrl: 'app/checkout/checkout.view.html',
         params: {
-          cartId: {squash:true}
+          customerId: {squash:true}
         }
       })
       .state('paymentNotification', {
@@ -82,25 +82,18 @@
         controller: 'PaymentNotificationController',
         controllerAs: 'vm'
       })
+      .state('paymentNotificationPayPal', {
+        url: '/payment/paypal/:paymentStatus',
+        title: 'Notificación del Pago',
+        templateUrl: 'app/paymentNotification/paymentNotification.view.html',
+        controller: 'PaymentNotificationController',
+        controllerAs: 'vm'
+      })
         .state('informationPage', {
           url: '/info/:pageName',
           title: 'Página Informativa',
           templateUrl: 'app/informationPage/informationPage.view.html',
           controller: 'InformationPageController',
-          controllerAs: 'vm'
-        })
-        .state('blog', {
-          url: '/blog',
-          title: 'Blog',
-          templateUrl: 'app/blog/blog.view.html',
-          controller: 'BlogController',
-          controllerAs: 'vm'
-        })
-        .state('blogPost', {
-          url: '/blog/:postId',
-          title: 'Publicación',
-          templateUrl: 'app/blog/blog-post.view.html',
-          controller: 'BlogPostController',
           controllerAs: 'vm'
         })
         .state('storeLocations', {

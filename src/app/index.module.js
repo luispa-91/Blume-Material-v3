@@ -22,7 +22,8 @@
     'ui.scrollpoint',
     'angular-google-analytics',
     'angular.filter',
-    'mdRangeSlider']).config(function($mdThemingProvider) {
+    'mdRangeSlider',
+    'angularFileUpload']).config(function($mdThemingProvider) {
       $mdThemingProvider.theme("custom").primaryPalette("green").accentPalette("green");
     });
 })();

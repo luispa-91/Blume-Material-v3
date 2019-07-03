@@ -3,8 +3,8 @@
     angular
     .module('angular')
     .factory('Cart', Cart);
-    Cart.$inject = ['ngCart','$http'];
-    function Cart(ngCart,$http){
+    Cart.$inject = ['ngCart','$http','$rootScope'];
+    function Cart(ngCart,$http,$rootScope){
 
         var verifyStock = function(){
             var cartItems = ngCart.$cart.items;
@@ -25,6 +25,7 @@
                     }
                     });
             }
+            $rootScope.$emit('discountUpdate');
         }
 
         var requestProductVariantStock = function(externalId, iterator){

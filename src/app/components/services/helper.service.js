@@ -2,6 +2,17 @@
     'use strict';
       angular
           .module('angular')
+          .directive('onErrorSend', function() {
+            return {
+                link: function(scope, element, attrs) {
+                  element.bind('error', function() {
+                    var lastslashindex = attrs.src.lastIndexOf('/');
+                    var result= attrs.src.substring(lastslashindex  + 1).replace(".jpg","");
+                    console.log(result);
+                  });
+                }
+            }
+        })
           .factory('Helper', Helper);
           Helper.$inject = ['$http'];
           function Helper($http){

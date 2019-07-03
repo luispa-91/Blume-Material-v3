@@ -38,10 +38,10 @@
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Escriba aquí un mensaje para el vendedor</label>
-                <textarea ng-model="vm.deliveryNote" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
+                <textarea ng-model="vm.orderNote" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
             </md-input-container>
         </div>
-        <h4>Lugar de entrega </h4><br />
+        <!-- <h4>Lugar de entrega </h4><br />
         <div class="form-group">
                 <md-radio-group ng-model="vm.selectedFare">
                 <md-radio-button ng-click="vm.getDeliveryCost(method)" aria-label="Delivery Fare Picker" ng-repeat="method in vm.deliveryMethods | filter:{deliveryType:vm.deliveryMethod}" value="{{method.id}}">
@@ -49,7 +49,7 @@
                 </md-radio-button>
             </md-radio-group>
         </div>
-        <br>
+        <br> -->
         <small ng-if="vm.deliveryMethod=='pickup'" class="gray"> Recuerde llevar su cédula al retirar su compra.</small>
     </div>
 </div>
@@ -92,7 +92,7 @@
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Escriba aquí detalles de la dirección de entrega</label>
-                    <textarea ng-model="vm.address.address" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
+                    <textarea ng-model="vm.address.locationDescription" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
             </md-input-container>
         </div>
     </div>
@@ -100,12 +100,12 @@
                 <div class="form-group">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Escriba aquí un mensaje para el vendedor</label>
-                        <textarea ng-model="vm.address.address2" md-maxlength="300" rows="3"></textarea>
+                        <textarea ng-model="vm.orderNote" md-maxlength="300" rows="3"></textarea>
                     </md-input-container>
                 </div>
         <h4>Transporte </h4><br />
         <div class="form-group">
-                <md-radio-group ng-model="vm.selectedFare">
+                <md-radio-group ng-model="vm.selectedFare" ng-change="vm.verify(addressData.$valid)" required>
                 <md-radio-button ng-click="vm.getDeliveryCost(method)" aria-label="Delivery Fare Picker" ng-repeat="method in vm.deliveryMethods | filter:{deliveryType:vm.deliveryMethod}" value="{{method.id}}">
                     {{ method.name }}
                     <span>

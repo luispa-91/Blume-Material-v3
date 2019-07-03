@@ -4,8 +4,8 @@
     angular
         .module('angular')
         .controller('PaymentNotificationController', PaymentNotificationController);
-        PaymentNotificationController.$inject = ['Mail','DataCollection'];
-        function PaymentNotificationController(Mail,DataCollection) {
+        PaymentNotificationController.$inject = ['Payments','DataCollection','$location'];
+        function PaymentNotificationController(Payments,DataCollection,$location) {
         var vm = this;
         init();
         ///////////////
@@ -13,8 +13,8 @@
         function init() {
             //Initialize Controller
             vm.loading = false;
-            vm.paymentData = DataCollection.logPayment();
-            vm.sendEmail = Mail.sendOrderDetails;
+            Payments.receivePaymentNotificationCredix();
+            // vm.paymentData = DataCollection.logPayment();
         }
 
     }

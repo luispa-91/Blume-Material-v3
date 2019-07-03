@@ -1,9 +1,10 @@
-<div class="col-md-4 col-sm-6 no-padding" ng-repeat="product in vm.products | filter:vm.criteria | limitTo:vm.itemsDisplayed"> 
+<div class="col-md-4 col-sm-6 no-padding" ng-repeat="product in vm.products | filter:vm.criteria | filter: vm.saleProducts('discountPrice',0) | limitTo:vm.itemsDisplayed"> 
     <md-card class="center-block text-center card-h-3">
         <md-card-content>
         <a href="" ui-sref="product(::{referenceCode:product.referenceCode,colorCode:product.colorCode})">
             <div class="imageContainer">
-                <img ng-src="{{::product.imageUrl}}" alt="{{::product.title}}" class="imageCard">
+                <div style="background:url({{::product.imageUrl}}) no-repeat center; background-size:contain;" class="md-card-image img-card"></div>
+                <!-- <img ng-src="{{::product.imageUrl}}" alt="{{::product.title}}" class="imageCard center-block"> -->
                 <div class="imageOverlay">
                     <div class="imageOverlayText"><i class="fa fa-2x fa-search"></i></div>
                 </div>

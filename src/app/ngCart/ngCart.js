@@ -123,11 +123,13 @@ angular.module('ngCart', ['ngCart.directives'])
 
             for (var i = 0; i < oldItems.length; i++) {
                 var item = {
-                    product_variant_id: oldItems[i]._id,
-                    short_description: oldItems[i]._name + " " + oldItems[i]._data.selectedVariant,
+                    productId: oldItems[i]._id,
+                    description: oldItems[i]._name,
                     quantity: oldItems[i]._quantity,
-                    unit_price: oldItems[i]._price
+                    unitPrice: oldItems[i]._price,
+                    total: oldItems[i]._quantity * oldItems[i]._price
                 };
+                if(oldItems[i]._data.isDiscountPrice = 1){ item.isDiscountPrice = true; } else { item.isDiscountPrice = false; }
                 newItems.push(item);
             }
 

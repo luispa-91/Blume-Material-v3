@@ -55,7 +55,8 @@
                     </div>
                 </form>
             </div>
-            <div ng-if="vm.customer.exists" layout="row" layout-align="left center">
+            <!-- Uncomment to allow login if customer exists -->
+            <!-- <div ng-if="vm.customer.exists" layout="row" layout-align="left center">
                <div flex-xs>
                     <md-button ng-if="!vm.loginModuleVisible" class="md-button md-raised custom" ng-click="vm.loginModuleVisible=true">
                         <i class="fa fa-user"></i>&nbsp; Iniciar Sesión
@@ -68,7 +69,7 @@
                 <md-button ng-if="vm.loginModuleVisible" class="md-button md-raised custom" ng-click="vm.login()">
                     <i class="fa fa-check"></i>&nbsp; Ingresar
                 </md-button>
-            </div>
+            </div> -->
             <br />
     </md-card-content>
 </md-card>

@@ -3,47 +3,31 @@
     angular
         .module('angular')
         .factory('DataCollection', DataCollection);
-        DataCollection.$inject = ['$stateParams','$http'];
-        function DataCollection($stateParams,$http){
+        DataCollection.$inject = ['$http'];
+        function DataCollection($http){
 
             var paymentLog = {
                 paymentMethod: '',
-                paymentStatus: '',
-                responseCode: '',
                 orderId: 0,
-                responseText: '',
-                authCode: '',
-                transactionId: '',
                 lastFourDigits: '',
                 clientIp:'',
                 clientDevice:'',
-                clientLocation:'',
-                hash:''
+                clientLocation:''
             };
 
-            var logPayment = function (){
-                paymentLog.paymentMethod = $stateParams.paymentMethod;
-                paymentLog.responseCode = $stateParams.response_code;
-                paymentLog.orderId = $stateParams.orderid;
-                paymentLog.responseText = $stateParams.responsetext;
-                paymentLog.lastFourDigits = $stateParams.lastFour;
-                paymentLog.hash = $stateParams.hash;
-                if(paymentLog.responseCode=='100'){
-                    paymentLog.transactionId = $stateParams.transactionid;
-                    paymentLog.authCode = $stateParams.authcode;
-                    paymentLog.paymentStatus = "approved";
-                } else {
-                    paymentLog.paymentStatus = "declined";
-                }
+            var logPayment = function (orderId,paymentMethod,cardNumber){
+                var lastFourDigits = cardNumber.substr(cardNumber.length - 4);
+                paymentLog.paymentMethod = paymentMethod;
+                paymentLog.orderId = orderId;
+                paymentLog.lastFourDigits = lastFourDigits;
                 //Hacer esto dentro del mismo call del log
-                getClientInfo();
-
-                return paymentLog;
-            }
-
-            var getClientInfo = function (){
-                return $http.get('http://api.ipstack.com/check?access_key=16c6f4370e3ec63ddcfaba935c844c99').then(function (results) {
-                    return results;
+                return $http.get('https://api.ipstack.com/check?access_key=16c6f4370e3ec63ddcfaba935c844c99').then(function (results) {
+                    paymentLog.clientIp = results.data.ip;
+                    paymentLog.clientDevice = results.data.type;
+                    paymentLog.clientLocation = results.data.city + ", " + results.data.country_name;
+                    return $http.post("https://api2.madebyblume.com/v3/storeFront/payment/log",paymentLog).then(function (results) {
+                        return results.data.data;
+                    });
                 });
             }
 

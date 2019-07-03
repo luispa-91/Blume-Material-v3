@@ -8,13 +8,25 @@
                     <small ng-if="vm.paymentMethod=='paypal'" class="success-green"> Para pagar con PayPal haga click en Finalizar Compra.</small>
               </h4>
             </div>
-            <form id="PaypalPost" name="PaypalPost" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                <input type="hidden" name="business" value="{{vm.paymentMethods.paypal.account}}">
-                <input type="hidden" name="cmd" value="_xclick">
-                <input type="hidden" name="item_name" value="{{vm.payment.orderId}}">
-                <input type="hidden" name="amount" value="{{vm.payment.amount}}">
-                <input type="hidden" name="currency_code" value="{{vm.currency.value}}">
-            </form>
+            <div ng-if="vm.paymentMethod=='paypal'">
+                <form id="PayPalPost" name="PayPalPost" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_xclick">
+                    <input type="hidden" name="business" value="{{vm.paymentMethods.paypal.account}}">
+                    <input type="hidden" name="lc" value="AL">
+                    <input type="hidden" name="item_name" value="{{vm.payment.orderId}}">
+                    <input type="hidden" name="amount" value="{{vm.payment.amount}}">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="button_subtype" value="services">
+                    <input type="hidden" name="no_note" value="1">
+                    <input type="hidden" name="no_shipping" value="1">
+                    <input type="hidden" name="rm" value="1">
+                    <input type="hidden" name="return" value="http://localhost:3000/payment/paypal/approved?orderId={{vm.payment.orderId}}">
+                    <input type="hidden" name="cancel_return" value="http://localhost:3000/payment/paypal/declined?orderId={{vm.payment.orderId}}">
+                    <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+                    <input ng-show="false" type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+                </form>    
+            </div>
             <!-- BAC Payments Start Here -->
             <div class="list-title" ng-click="vm.paymentMethod='bacsanjose'" ng-if="vm.paymentMethods.bac">
                 <h4 ng-class="{'success-green':vm.paymentMethod=='bacsanjose'}">
@@ -33,7 +45,7 @@
                     <div class="form-group c-c">
                         <md-input-container class="md-block">
                             <label>Número de tarjeta</label>
-                            <input style="margin-top:10px" type="text" ng-model="vm.payment.card.number" />
+                            <input name="ccnumber" style="margin-top:10px" type="text" ng-model="vm.payment.card.number" />
                         </md-input-container>
                     </div>
                     <div class="form-group c-c">
@@ -61,7 +73,7 @@
                     <div class="form-group c-c">
                         <md-input-container class="md-block">
                             <label>CVC</label>
-                            <input style="margin-top:10px" type="text" ng-model="vm.payment.card.cvc" />
+                            <input style="margin-top:10px" name="cvv" type="text" ng-model="vm.payment.card.cvc" />
                         </md-input-container>
                     </div>
                     </div>
@@ -84,12 +96,10 @@
         <div class="list-title" ng-click="vm.paymentMethod='moneytransfer'" ng-if="vm.paymentMethods.bankAccounts.length>0">
             <h4 ng-class="{'success-green':vm.paymentMethod=='moneytransfer'}">
                 Transferencia <i class="fas fa-file-import"></i> 
-                <small ng-if="vm.paymentMethod=='moneytransfer'" class="success-green"> Para pagar con una transferencia envía la imagen del comprobante y haz click en Finalizar Compra.</small>
             </h4>
         </div>
         <div layout="row" layout-align="center center">
             <div ng-if="vm.paymentMethod=='moneytransfer'" class="center-block text-center">
-                <h2>Tu orden ha sido creada!</h2>
                 <p>Para pagar tu orden, deposita el monto total de la compra 
                     <span ng-if="::vm.paymentMethods.bankAccounts.length==1">a la siguiente cuenta:</span>
                     <span ng-if="::vm.paymentMethods.bankAccounts.length>1">a una de las siguientes cuentas:</span>
@@ -105,10 +115,22 @@
                         </div>
                     </div>
                 </p>
-                <p>Una vez realizado el pago, toma una foto del comprobante y adjúntala a la factura con el botón de enviar comprobante. </p>
+                <p>Una vez realizado el pago, toma una foto del comprobante y adjúntala a la factura con el botón de adjuntar comprobante. </p>
 
-                <md-button class="md-button md-raised md-primary custom"><i class="fas fa-paper-plane"></i>&nbsp; Enviar comprobante</md-button>
+                <div class="upload-btn-wrapper" ng-if="vm.uploader.queue.length==0">
+                    <md-button class="md-button md-raised md-primary custom"><i class="fas fa-plus"></i>&nbsp; Adjuntar comprobante</md-button>
+                    <input type="file" nv-file-select="" uploader="vm.uploader" />
+                </div>
+                <!-- Image bulk upload -->
+                <div ng-if="vm.uploader.queue.length>0" ng-include="'app/components/partials/imageUpload.html'"></div>
             </div>
+        </div>
+        <!-- Credix -->
+        <div class="list-title" ng-click="vm.paymentMethod='credix'" ng-if="vm.paymentMethods.credix">
+            <h4 ng-class="{'success-green':vm.paymentMethod=='credix'}">
+                Credix 
+                <small ng-if="vm.paymentMethod=='credix'" class="success-green"> Para pagar con credix haz click en Finalizar Compra.</small>
+            </h4>
         </div>
         <!-- Terms and Conditions -->
         <div class="center-block text-center">
