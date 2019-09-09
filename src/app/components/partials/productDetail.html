@@ -10,7 +10,10 @@
                     <img class="soldOutTag" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
                 </span>
                 <span ng-if="::vm.product.discountPrice!=0">
-                    <img class="salesTag" src="https://shops.blob.core.windows.net/demoshop/website/sales-tag.svg" />
+                        <div style="position:absolute;top:50px;right:38px;z-index:1">
+                            <strong style="color:white">{{100-(vm.product.discountPrice*100)/vm.product.price | number:0}}%</strong>
+                        </div>
+                        <img class="salesTag" src="https://shops.blob.core.windows.net/demoshop/website/offer-tag.png" />
                 </span>
             </div>
         </div>
@@ -27,7 +30,7 @@
     
             <br>
             
-            <table>
+            <table ng-if="vm.isGrupoCachos">
                 <tr ng-if="::vm.product.brand!=''">
                 <td width="45%"><strong>Marca </strong></td>
                 <td>{{::vm.product.brand}}</td>           
@@ -59,7 +62,7 @@
     
             <div layout="row">
             <div flex>
-                <div ng-if="vm.products.length > 1">
+                <div ng-if="vm.products.length > 0 && vm.products[0].size!=''">
                     <h3>Tallas</h3>
                     <md-select ng-model="vm.option1" aria-label="Sizes">
                         <md-option ng-repeat="variant in vm.products" value="{{::variant.externalId}}">

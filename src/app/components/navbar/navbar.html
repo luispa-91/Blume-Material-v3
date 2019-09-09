@@ -1,9 +1,13 @@
 <!-- Topbar-->
 <div class="topbar">
+    <div class="topbar-column">
+      <form ng-submit="vm.searchProducts()">
+        <input style="width:50%;" class="searchBox ng-pristine ng-valid ng-empty ng-touched" type="text" ng-model="vm.searchQuery" placeholder="Buscar..." aria-invalid="false">
+      </form>
+    </div>
   <div class="topbar-column">
     <a ng-repeat="info in vm.navbar.contactLinks" class="hidden-md-down" href="{{::info.url}}" target="_blank"><i class="{{::info.iconClass}}"></i> {{::info.text}}</a>
   </div>
-  <div class="topbar-column" ng-if="vm.navbar.isGrupoCachos"><a class="site-mini-logo" href="https://cachoscr.com"><img src="assets/images/stores/cachos.png" alt="Cachos"></a><a class="site-mini-logo" href="https://nmnuevomundo.com"><img src="assets/images/stores/nuevomundo.png" alt="Nuevo Mundo"></a><br hide-gt-xs><a class="site-mini-logo" href="https://keepcr.com"><img src="assets/images/stores/keep.png" alt="Keep"></a><a class="site-mini-logo" href="https://foxracingcr.com"><img src="assets/images/stores/fox.png" alt="Fox Head"></a><a class="site-mini-logo" href="https://freaks.fit"><img src="assets/images/stores/freaks.png" alt="Freaks"></a></div>
 </div>  
 <md-content>
     <md-toolbar layout="row" layout-align="center center">
@@ -13,7 +17,7 @@
           </md-button>
             <span flex></span>
             <md-button aria-label="Home Button" ui-sref="home" class="md-warn"><img ui-sref="home" style="max-height:50px;" ng-src="{{vm.navbar.logoUrl}}" alt="Ecommerce Costa Rica"></md-button>
-            <span flex></span>
+            
             <div hide-xs ng-repeat="tab in vm.navbar.tabs"> 
               <md-button ng-if="::tab.type=='simple'" href="{{::tab.url}}"> {{::tab.name}} &nbsp;</md-button>
 
@@ -56,7 +60,6 @@
                 <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
             </md-button>
             <span class="badge black">{{vm.cart.getTotalItems()}}</span>
-            <span flex></span>
       </div>
     </md-toolbar>
 </md-content>
@@ -65,7 +68,7 @@
   <section layout="row" flex>
    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
      <md-toolbar class="center-block text-center" ng-controller="LeftCtrl">
-       <span><img style="max-width:50px;margin-top:0.5px;" ss="img-responsive img-brand md-toolbar-tools principal" ng-src="{{vm.navbar.logoUrl}}" /></span>
+       <span><img style="max-width:50px;margin-top:90px;margin-bottom:10px;" ng-src="{{vm.navbar.logoUrl}}" /></span>
      </md-toolbar>
      <md-content>
        <md-list ng-controller="LeftCtrl as vm">
@@ -95,6 +98,7 @@
           </md-list-item>
          </div>
        </md-list>
+       <div layout="row" ng-if="!vm.navbar.isGrupoCachos" class="ng-scope layout-row" style=""><a class="site-mini-logo" href="https://cachoscr.com"><img src="assets/images/stores/cachos.png" alt="Cachos"></a> <a class="site-mini-logo" href="https://nmnuevomundo.com"><img src="assets/images/stores/nuevomundo.png" alt="Nuevo Mundo"></a> <a class="site-mini-logo" href="https://keepcr.com"><img src="assets/images/stores/keep.png" alt="Keep"></a> <a class="site-mini-logo" href="https://foxracingcr.com"><img src="assets/images/stores/foxweb.png" alt="Fox Head"></a> <a class="site-mini-logo" href="https://freaks.fit"><img src="assets/images/stores/freaksweb.png" alt="Freaks"></a> <a class="site-mini-logo" href="https://beakcr.com"><img src="assets/images/stores/beak.png" alt="Freaks"></a> <a class="site-mini-logo" href="https://newwavecr.com"><img src="assets/images/stores/newwave.png" alt="Freaks"></a></div>
      </md-content>
    </md-sidenav>
  </section>

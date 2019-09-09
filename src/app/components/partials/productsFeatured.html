@@ -16,7 +16,10 @@
                                 <img class="soldOutTag" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
                             </span>
                             <span ng-if="::product.discountPrice!=0">
-                                <img class="salesTag" src="https://shops.blob.core.windows.net/demoshop/website/sales-tag.svg" />
+                                <div style="position:absolute;top:40px;right:33px;z-index:1">
+                                    <strong style="color:white">{{100-(product.discountPrice*100)/product.price | number:0}}%</strong>
+                                </div>
+                                <img class="salesTag" src="https://shops.blob.core.windows.net/demoshop/website/offer-tag.png" />
                             </span>
                         </div>
                     </a>

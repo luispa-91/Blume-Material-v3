@@ -19,6 +19,9 @@ angular
         vm.showFiltersMobile = false;
         vm.itemsDisplayed = 9;
         vm.state = $state.$current.name;
+        if($state.params.s){
+            vm.criteria = $state.params.s;
+        }
 
         loadProducts();
 

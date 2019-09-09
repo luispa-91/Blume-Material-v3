@@ -15,6 +15,7 @@
       //Get Parameters
       vm.referenceCode = "";
       vm.colorCode = "";
+      vm.isGrupoCachos = false;
       if($stateParams.referenceCode){vm.referenceCode = $stateParams.referenceCode;}
       if($stateParams.colorCode){vm.colorCode = $stateParams.colorCode;}
 
@@ -25,6 +26,7 @@
         vm.product = vm.products[0];
         vm.option1 = vm.product.externalId;
         vm.relatedProducts = data.relatedProducts;
+        vm.isGrupoCachos = data.isGrupoCachos;
         BlumeAnalytics.fbPixelViewContent(vm.product);
       });
       

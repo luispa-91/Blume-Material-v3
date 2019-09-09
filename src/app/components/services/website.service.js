@@ -46,6 +46,9 @@
                 var nextIsFilter = true; 
                 var isNewFilter = true;
                 var url = $location.url().substring(1);
+                if(filter.type=="s"){
+                    url = "products";
+                }
                 url = url.replace("?","/");
                 url = url.replace(/=/g,"/");
                 url = url.replace(/&/g,"/");

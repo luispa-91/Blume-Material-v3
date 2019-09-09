@@ -12,6 +12,7 @@
         function init(){
             //Initialize Controller
             vm.saving = false;
+            vm.useTasaCero = false;
             vm.payment = {orderId: 0, url:'', amount: 0, card: {number: '', expMonth: '', expYear: '', cvc: '', expDate: ''}};
             vm.currency = { value: 'CRC', symbol: '₡' };
             vm.paymentMethod = "";
@@ -35,7 +36,7 @@
         });
 
         function getPaymentMethods(){
-            Payments.availableMethods().then(function(data){ vm.paymentMethods = data; });
+            Payments.availableMethods().then(function(data){ vm.paymentMethods = data; console.log(data); });
         }
 
         function makePayment(){
@@ -58,6 +59,9 @@
                   break;
                 case "bacsanjose":
                     DataCollection.logPayment(vm.payment.orderId,vm.paymentMethod,vm.payment.card.number).then(function(data){
+                      if(vm.useTasaCero==true){
+                        vm.paymentMethods.bac.processorId="grupocachostc3";
+                      }
                       vm.payment.card.expDate = vm.payment.card.expMonth + vm.payment.card.expYear;
                       vm.paymentMethods.bac.timestamp = Math.round((new Date()).getTime() / 1000);
                       vm.paymentMethods.bac.hash = Payments.bacCreateMd5Hash(vm.payment.orderId,vm.payment.amount,vm.paymentMethods.bac.timestamp,vm.paymentMethods.bac.applicationPassword);
@@ -74,7 +78,8 @@
                   break;
                 case "credix":
                   DataCollection.logPayment(vm.payment.orderId,vm.paymentMethod,"Credix").then(function(data){ 
-                    var submitUrl = "https://webpay.credix.com/consumo#hash=" + vm.paymentMethods.credix.hash + "&referencia=" + vm.payment.orderId + "&monto=" + vm.payment.amount + "&moneda=188";
+                    var amount = vm.payment.amount * 100;
+                    var submitUrl = "https://webpay.credix.com/consumo#hash=" + vm.paymentMethods.credix.hash + "&referencia=" + vm.payment.orderId + "&monto=" + amount + "&moneda=188";
                     Payments.sendPaymentCredix(submitUrl).then(function(data){ vm.saving = false; });
                   });
                   break;

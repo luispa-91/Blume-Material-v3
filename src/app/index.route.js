@@ -16,14 +16,15 @@
         controllerAs: 'vm'
       })
       .state('products', {
-        url: '/products?productType&gender&brand&size&color',
+        url: '/products?productType&gender&brand&size&color&s',
         templateUrl: 'app/products/products.view.html',
         params: {
           productType: {squash:true},
           gender: {squash:true},
           brand: {squash:true},
           size: {squash:true},
-          color: {squash:true}
+          color: {squash:true},
+          s: {squash:true}
         },
         controller: 'ProductsController',
         controllerAs: 'vm'

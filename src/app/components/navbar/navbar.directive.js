@@ -22,7 +22,7 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController(Navbar, ngCart) {
+    function NavbarController(Navbar, ngCart, Website) {
       var vm = this;
 
       init();
@@ -35,6 +35,7 @@
         vm.toggleRight = Navbar.buildToggler('right');
         vm.isOpenRight = Navbar.openRight;
         vm.cart = ngCart;
+        vm.searchProducts = searchProducts;
 
         //Get navbar
         Navbar.get().then(function(results){ vm.navbar = results; },function(err){ Mail.errorLog(err) });
@@ -44,6 +45,14 @@
       vm.openMenu = function($mdOpenMenu, ev) {
         $mdOpenMenu(ev);
       };
+
+      function searchProducts(){
+        var filter = {
+            criteria: vm.searchQuery,
+            type: "s"
+        };
+        Website.setFilter(filter);
+      }
       
     }
   }
@@ -55,7 +64,7 @@
 
     function init(){
       //Get navbar
-      vm.navbar = Navbar.example;
+      Navbar.get().then(function(results){ vm.navbar = results; },function(err){ Mail.errorLog(err) });
       //Bind functions
       vm.close = Navbar.close;
       vm.goTo = Navbar.goTo;

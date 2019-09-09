@@ -15,9 +15,9 @@
                 </span>
             </h4>
         </div> 
-        <div class="list-title" ng-click="vm.toggleDeliveryMethod('pickup')" flex>
+        <div class="list-title" ng-click="vm.toggleDeliveryMethod('storepickup')" flex>
             <h4>
-                <span ng-class="{'success-green':vm.deliveryMethod=='pickup'}">
+                <span ng-class="{'success-green':vm.deliveryMethod=='storepickup'}">
                     Recoger en tienda <i class="fas fa-store"></i> &nbsp;
                 </span>
             </h4>
@@ -33,7 +33,7 @@
 </section>
 <form name="addressData">
 <!-- Pick up in store form starts here -->
-<div class="row" ng-if="vm.deliveryMethod=='pickup'">
+<div class="row" ng-if="vm.deliveryMethod=='storepickup'">
     <div class="col-md-12">
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
@@ -50,7 +50,7 @@
             </md-radio-group>
         </div>
         <br> -->
-        <small ng-if="vm.deliveryMethod=='pickup'" class="gray"> Recuerde llevar su cédula al retirar su compra.</small>
+        <small ng-if="vm.deliveryMethod=='storepickup'" class="gray"> Recuerde llevar su cédula al retirar su compra.</small>
     </div>
 </div>
 <!-- National home delivery form starts here -->

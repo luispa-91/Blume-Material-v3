@@ -42,8 +42,8 @@
                 <h4 class="pull-left upper-text">Total</h4>
             </div>
             <div class="col-md-8">
-                <h4 class="" ng-if="vm.discount.total==0"><strong>{{ cart.totalCost() | currency:'₡' }}</strong> <small>({{cart.totalCost() / 600 | currency}})</small></h4>
-                <h4 class="" ng-if="vm.discount.total!=0"><strong>{{ cart.totalCost() - vm.discount.total | currency:'₡' }}</strong> <small>({{cart.totalCost() / 600 | currency}})</small></h4>
+                <h4 ng-if="vm.discount.total==0"><strong>{{ cart.totalCost() | currency:'₡' }}</strong> <small>({{cart.totalCost() / 600 | currency}})</small></h4>
+                <h4 ng-if="vm.discount.total!=0"><strong>{{ cart.totalCost() - vm.discount.total | currency:'₡' }}</strong> <small>({{cart.totalCost() / 600 | currency}})</small></h4>
             </div>
         </div>
     </md-card-actions>

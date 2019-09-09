@@ -30,7 +30,7 @@
             <!-- BAC Payments Start Here -->
             <div class="list-title" ng-click="vm.paymentMethod='bacsanjose'" ng-if="vm.paymentMethods.bac">
                 <h4 ng-class="{'success-green':vm.paymentMethod=='bacsanjose'}">
-                    Tarjeta de Crédito <i class="fa fa-credit-card"></i> &nbsp;
+                    Tarjeta de Crédito o Débito <i class="fa fa-credit-card"></i> &nbsp;
                 </h4>
             </div>
             <div layout="row" ng-if="vm.paymentMethod=='bacsanjose'">
@@ -76,6 +76,12 @@
                             <input style="margin-top:10px" name="cvv" type="text" ng-model="vm.payment.card.cvc" />
                         </md-input-container>
                     </div>
+                    <div ng-if="vm.paymentMethods.bac.processorId=='grupocachos'" class="form-group c-c center-block text-center">
+                        <md-checkbox ng-model="vm.useTasaCero" aria-label="Use Tasa Cero">
+                            <img src="../assets/images/tasa0.png" class="img-responsive" />
+                        </md-checkbox>
+                    </div>
+
                     </div>
                     <input type="hidden" name="hash" value="{{vm.paymentMethods.bac.hash}}" />
                     <input type="hidden" name="time" value="{{vm.paymentMethods.bac.timestamp}}" />

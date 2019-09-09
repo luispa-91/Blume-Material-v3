@@ -48,10 +48,15 @@
                 scope.$on('$destroy', handler);
             }
 
+            var reset = function() {
+                $localStorage.discount = { code: '', value: 0 };
+            }
+
         return {
             calculateDiscount: calculateDiscount,
             verify:verify,
-            broadcastDiscountUpdate: broadcastDiscountUpdate
+            broadcastDiscountUpdate: broadcastDiscountUpdate,
+            reset:reset
         }
     }
 

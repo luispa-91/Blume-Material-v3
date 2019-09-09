@@ -4,8 +4,8 @@
   angular
     .module('angular')
     .controller('CartReviewController', CartReviewController);
-  CartReviewController.$inject = ['$stateParams','Cart','$state'];
-  function CartReviewController($stateParams,Cart,$state) {
+  CartReviewController.$inject = ['$stateParams','Cart','$state','Discount'];
+  function CartReviewController($stateParams,Cart,$state,Discount) {
     var vm = this;
 
     init();
@@ -15,6 +15,8 @@
       //Initialize Controller
       vm.cartId = "";
       if($stateParams.cartId){vm.cartId = $stateParams.cartId;}
+      Discount.reset();
+      
       Cart.verifyStock();
 
       //Bind Functions

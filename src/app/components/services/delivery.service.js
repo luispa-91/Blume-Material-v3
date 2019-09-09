@@ -55,7 +55,9 @@
                 var method = {};
                 for (var i = 0; i < methods.length; i++) { if(methods[i].id == selectedFare){ method = methods[i]; }}
                 getDeliveryCost(method);
-              } else if(selectedMethod=='pickup') {
+              } else if(selectedMethod=='storepickup') {
+                $localStorage.deliveryType = "storepickup";
+                $localStorage.deliveryMethod = "Recoger en tienda";
                 ngCart.setShipping(0);
                 $rootScope.$emit('discountUpdate');
               }
