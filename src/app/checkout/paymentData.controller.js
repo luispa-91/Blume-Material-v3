@@ -14,6 +14,7 @@
             vm.saving = false;
             vm.useTasaCero = false;
             vm.acceptedPrivacyPolicy = false;
+            vm.moneyTransferReceiptSent = false;
             vm.errorMessage = "";
             vm.payment = {orderId: 0, url:'', amount: 0, card: {number: '', expMonth: '', expYear: '', cvc: '', expDate: ''}};
             vm.currency = { value: 'CRC', symbol: '₡' };
@@ -32,7 +33,7 @@
         BlumeStorage.broadcastUploadComplete($scope, function broadcastUpdate() {
             // Handle notification
             setTimeout(function(){
-                
+                vm.moneyTransferReceiptSent = true;
                 $scope.$apply();
                 }, 500);
         });

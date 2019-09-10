@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('DeliveryDataController', DeliveryDataController);
-        DeliveryDataController.$inject = ['LocationAutoComplete', 'Delivery'];
-    function DeliveryDataController(LocationAutoComplete, Delivery) {
+        DeliveryDataController.$inject = ['LocationAutoComplete', 'Delivery', '$localStorage'];
+    function DeliveryDataController(LocationAutoComplete, Delivery,$localStorage) {
         var vm = this;
         init();
         ///////////////
@@ -34,6 +34,7 @@
         }
 
         function verify(isValid){
+            $localStorage.orderNote = vm.orderNote;
             if(isValid){
                 vm.addressComplete = true;
             } else {

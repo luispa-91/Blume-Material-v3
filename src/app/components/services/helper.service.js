@@ -25,7 +25,6 @@
 
               var googleAnalyticsId = function () {
                 return $http.get("https://api2.madebyblume.com/v3/storeFront/googleAnalytics").then(function (results) {
-                  console.log(results);
                     return results.data.data;
                 });
             }

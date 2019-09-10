@@ -148,8 +148,11 @@
             </h4>
         </div>
         <div layout="row" layout-align="center center">
-            <div ng-if="vm.paymentMethod=='moneytransfer'" class="center-block text-center">
-                <p>Para pagar tu orden, deposita el monto total de la compra 
+            <div class="center-block text-center" ng-if="vm.paymentMethod=='moneytransfer' && vm.moneyTransferReceiptSent">
+                <p class="success-green">Recibimos el comprobante correctamente, gracias por tu compra! Te enviamos una copia de la orden al correo, ya puedes cerrar esta página.</p>
+            </div>
+            <div ng-if="vm.paymentMethod=='moneytransfer' && !vm.moneyTransferReceiptSent" class="center-block text-center">
+                <p>1. Para pagar tu orden, deposita el monto total de la compra 
                     <span ng-if="::vm.paymentMethods.bankAccounts.length==1">a la siguiente cuenta:</span>
                     <span ng-if="::vm.paymentMethods.bankAccounts.length>1">a una de las siguientes cuentas:</span>
                     <br />
@@ -164,8 +167,8 @@
                         </div>
                     </div>
                 </p>
-                <p>Una vez realizado el pago, toma una foto del comprobante y adjúntala a la factura con el botón de adjuntar comprobante. </p>
-
+                <p>2. Una vez realizado el pago, toma una foto del comprobante y adjúntalo con el botón de Adjuntar Comprobante. </p>
+                <p>3. Por último, haz click en el botón de Finalizar Compra para enviarnos el comprobante.</p>
                 <div class="upload-btn-wrapper" ng-if="vm.uploader.queue.length==0">
                     <md-button class="md-button md-raised md-primary custom"><i class="fas fa-plus"></i>&nbsp; Adjuntar comprobante</md-button>
                     <input type="file" nv-file-select="" uploader="vm.uploader" />

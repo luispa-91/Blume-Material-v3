@@ -100,7 +100,7 @@
                 <div class="form-group">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Escriba aquí un mensaje para el vendedor</label>
-                        <textarea ng-model="vm.orderNote" md-maxlength="300" rows="3"></textarea>
+                        <textarea ng-model="vm.orderNote" ng-blur="vm.verify(addressData.$valid)" md-maxlength="300" rows="3"></textarea>
                     </md-input-container>
                 </div>
         <h4>Transporte </h4><br />
