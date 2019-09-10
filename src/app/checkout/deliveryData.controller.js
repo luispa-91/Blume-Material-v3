@@ -18,7 +18,7 @@
             vm.states = LocationAutoComplete.costaRicaStates;
             vm.cities = LocationAutoComplete.costaRicaCities;
             vm.countries = LocationAutoComplete.countries;
-            vm.selectedFare= {};
+            vm.selectedFare= 0;
             vm.orderNote = "";
 
             //Bind functions
@@ -46,7 +46,10 @@
         }
 
         function getDeliveryMethods(){
-            Delivery.availableMethods().then(function(data){ vm.deliveryMethods = data; });
+            Delivery.availableMethods().then(function(data){ 
+                vm.deliveryMethods = data;
+                vm.selectedFare=vm.deliveryMethods[0].id;
+             });
         }
 
         function toggleDeliveryMethod(selectedMethod){

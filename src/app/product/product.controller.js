@@ -33,6 +33,9 @@
     }
 
       vm.setActive = function(index) {
+        for (var i = 0; i < vm.productImages.length; i++) {
+          vm.productImages[i].active=false;
+        }
         vm.productImages[index].active=true;
       }
 

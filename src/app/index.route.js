@@ -90,6 +90,20 @@
         controller: 'PaymentNotificationController',
         controllerAs: 'vm'
       })
+      .state("paymentNotificationFttech", {
+        url: "/payment/fttech/:paymentStatus&orderId=:orderId",
+        title: "Notificación del Pago",
+        templateUrl: "app/paymentNotification/paymentNotification.view.html",
+        controller: "PaymentNotificationController",
+        controllerAs: "vm"
+      })
+    .state("paymentNotificationCredix", {
+        url: "/payment/credix/:paymentStatus",
+        title: "Notificación del Pago",
+        templateUrl: "app/paymentNotification/paymentNotification.view.html",
+        controller: "PaymentNotificationController",
+        controllerAs: "vm"
+      })
         .state('informationPage', {
           url: '/info/:pageName',
           title: 'Página Informativa',

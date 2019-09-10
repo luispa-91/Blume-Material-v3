@@ -6,26 +6,25 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($rootScope, ngCart) {
+  function runBlock($rootScope, ngCart,$transitions, Helper) {
     $rootScope.cart = ngCart;
 
     $rootScope.$on('$locationChangeSuccess', function() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
 
-    $rootScope.$on(
-        '$stateChangeStart',
-        function(event, toState) {
-            if (toState.externalUrl) {
-                event.preventDefault();
-                $window.open(toState.externalUrl, '_self');
-            }
-            // Google Analytics during state change
-            // console.log(toState.url);
-            // ga('set', 'page', toState.url);
-            // ga('set', 'title', toState.url);
-            // ga('send', 'pageview');
-        }
-    );
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    Helper.googleAnalyticsId().then(function(response){ gtag('config', response.id); });
+
+    $transitions.onStart( {}, function (trans) {
+      var to = trans.to().name;
+      // Google Analytics during state change
+      gtag('set', 'page', to);
+      gtag('set', 'title', to);
+      gtag('send', 'pageview');
+    });
   }
 })();

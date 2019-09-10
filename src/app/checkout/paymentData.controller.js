@@ -13,6 +13,8 @@
             //Initialize Controller
             vm.saving = false;
             vm.useTasaCero = false;
+            vm.acceptedPrivacyPolicy = false;
+            vm.errorMessage = "";
             vm.payment = {orderId: 0, url:'', amount: 0, card: {number: '', expMonth: '', expYear: '', cvc: '', expDate: ''}};
             vm.currency = { value: 'CRC', symbol: '₡' };
             vm.paymentMethod = "";
@@ -36,11 +38,13 @@
         });
 
         function getPaymentMethods(){
-            Payments.availableMethods().then(function(data){ vm.paymentMethods = data; console.log(data); });
+            Payments.availableMethods().then(function(data){ vm.paymentMethods = data; });
         }
 
         function makePayment(){
           vm.saving = true;
+          vm.errorMessage = "";
+          if(vm.acceptedPrivacyPolicy==true){
             Order.create(vm.currency.value,vm.paymentMethod).then(function(data){
               vm.payment.orderId = data.id;
               vm.payment.amount = data.total;
@@ -91,6 +95,10 @@
                   break;
               }
             })
+          } else {
+            vm.errorMessage = "Para continuar con tu compra debes aceptar las políticas de privacidad.";
+            vm.saving = false;
+          }
         }
     }
 })();

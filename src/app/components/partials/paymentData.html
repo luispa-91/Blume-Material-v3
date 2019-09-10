@@ -94,7 +94,50 @@
                     <input type="hidden" name="address" value="San Jose, Costa Rica" />
                     <input type="hidden" name="redirect" value="{{vm.paymentMethods.bac.returnUrl}}" />
                 </form>
-                <div class="center-block text-center"><span style="color:darkred">{{vm.errorMessage}}</span></div>
+            </div>
+            <div flex="25" hide-xs></div>
+        </div>
+        <!-- Banco Nacional Start Here -->
+        <div class="list-title ng-scope" ng-click="vm.paymentMethod='fttech'" ng-if="vm.paymentMethods.fttech" role="button" tabindex="0">
+            <h4 ng-class="{'success-green':vm.paymentMethod=='fttech'}">Tarjeta de Crédito o Débito <i class="fa fa-credit-card"></i> &nbsp;</h4>
+        </div>
+        <div layout="row" ng-if="vm.paymentMethod=='fttech'">
+            <div flex="25" hide-xs></div>
+            <div flex>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <label>Número de tarjeta</label>
+                            <input name="ccnumber" style="margin-top:10px" type="text" ng-model="vm.payment.card.number" />
+                        </md-input-container>
+                    </div>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <md-select ng-model="vm.payment.card.expMonth">
+                            <label>Mes</label>
+                                <md-option ng-repeat="month in vm.months" ng-value="month">
+                                {{month}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <br>
+                    </div>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <md-select ng-model="vm.payment.card.expYear">
+                            <label>Año</label>
+                                <md-option ng-repeat="year in vm.years" ng-value="year">
+                                {{year}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <br>
+                    </div>
+                    <div class="form-group c-c">
+                        <md-input-container class="md-block">
+                            <label>CVC</label>
+                            <input style="margin-top:10px" name="cvv" type="text" ng-model="vm.payment.card.cvc" />
+                        </md-input-container>
+                    </div>
             </div>
             <div flex="25" hide-xs></div>
         </div>
@@ -144,7 +187,8 @@
 			<md-checkbox id="PrivacyPolicy" ng-model="vm.acceptedPrivacyPolicy" aria-label="Privacy Policy">	   
 			</md-checkbox>
 			Leí y acepto las <a href="#" onClick="window.open('politica-de-privacidad','pagename','resizable,height=600,width=400,left=200,top=50'); return false;">Políticas de Privacidad</a>
-			<br>
+            <br>
+            <div class="center-block text-center"><span style="color:darkred">{{vm.errorMessage}}</span></div>
         </div>
         <!-- Complete Payment -->
         <md-card-actions layout="row" layout-align="center center">

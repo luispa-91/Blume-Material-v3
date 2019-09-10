@@ -30,9 +30,13 @@
                     expirationYear: card.expYear,
                     verificationValue: card.cvc
                 };
-                
                 return $http.post(paymentMethod.gatewayUrl, request).then(function (results) {
-                      return results.data;
+                    var temp = "";
+                     if(results.data.apiStatus.toLowerCase()=="successful"){ temp = "approved"; } else { temp = "declined"; }
+                    $state.go("paymentNotificationFttech", {
+                        paymentStatus: temp,
+                        orderId: request.chargeDescription
+                    }), e.data
                   });
               }
 
@@ -49,13 +53,45 @@
                   var result = $location.path().substring(n + 1);
                   //Get payment status
                   var array = result.split('&');
-                  var paymentStatus = array[0];
+                  var paymentStatus = array[0].toLowerCase();
                   var orderId = array[1].split('=')[1];
+                  var responseText = "";
+                  var temp = {
+                      paymentStatus: paymentStatus,
+                      responseText: responseText
+                  };
+                  if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
                   return $http.get("https://api2.madebyblume.com/v3/payments/ipn/credix?paymentStatus=" + paymentStatus + "&orderId=" + orderId).then(function (results) {
-                    console.log(results);  
-                    return results;
+                    return temp;
                   });
                 }
+              }
+
+              var receivePaymentNotificationFttech = function(){
+                //Disect location
+                var n = $location.path().lastIndexOf('/');
+                var result = $location.path().substring(n + 1);
+                //Get payment status
+                var array = result.split('&');
+                var paymentStatus = array[0].toLowerCase();
+                var orderId = array[1].split('=')[1];
+                var responseText = "";
+                var temp = {
+                    paymentStatus: paymentStatus,
+                    responseText: responseText
+                };
+                if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
+                return $http.get("https://api2.madebyblume.com/v3/payments/ipn/fttech?paymentStatus=" + paymentStatus + "&orderId=" + orderId).then(function (results) {
+                  return temp;
+                });
+              }
+
+              var receivePaymentNotification = function(){
+                var temp = {
+                    paymentStatus: $state.params.paymentMethod,
+                    responseText: $state.params.responseText
+                };
+                return temp;
               }
               
               return {
@@ -63,7 +99,9 @@
                 bacCreateMd5Hash: bacCreateMd5Hash,
                 sendPaymentFttech: sendPaymentFttech,
                 sendPaymentCredix: sendPaymentCredix,
-                receivePaymentNotificationCredix: receivePaymentNotificationCredix
+                receivePaymentNotificationCredix: receivePaymentNotificationCredix,
+                receivePaymentNotificationFttech: receivePaymentNotificationFttech,
+                receivePaymentNotification: receivePaymentNotification
               }
           }
   })();
