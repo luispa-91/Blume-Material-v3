@@ -13,6 +13,7 @@
             //Initialize Controller
             vm.addressComplete = false;
             vm.addressCreated = false;
+            vm.showStorePickup = false;
             vm.address = { customerId: 0, isDefault: true };
             vm.provinces = LocationAutoComplete.costaRicaProvinces;
             vm.states = LocationAutoComplete.costaRicaStates;
@@ -50,6 +51,11 @@
             Delivery.availableMethods().then(function(data){ 
                 vm.deliveryMethods = data;
                 vm.selectedFare=vm.deliveryMethods[0].id;
+                for (var i = 0; i < vm.deliveryMethods.length; i++) {
+                    if(vm.deliveryMethods[i].deliveryType=="storepickup"){
+                        vm.showStorePickup = true;
+                    }
+                }
              });
         }
 

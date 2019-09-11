@@ -59,6 +59,16 @@
     
             <div ng-if="::vm.product.htmlDescription!=''" ta-bind ng-model="vm.product.htmlDescription"></div>
             <br />
+
+            <div ng-if="vm.productAvailability.length > 0">
+                <span style="color:darkgreen">Disponible en:</span><br>
+                <ul style="list-style:none;padding-left:0px;padding-bottom:10px;">
+                    <li ng-repeat="store in vm.productAvailability" style="color:darkgreen">
+                        {{store.name}} 
+                        <a href="tel:{{store.phone}}"><i class="fas fa-phone"></i></a>
+                    </li>
+                </ul>
+            </div>
     
             <div layout="row">
             <div flex>

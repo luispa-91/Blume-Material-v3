@@ -28,10 +28,20 @@
                 });
             }
 
+            var availability = function (externalId) {
+                var request = {
+                    externalId: externalId
+                }
+                return $http.post("https://api2.madebyblume.com/v3/storeFront/products/availability",request).then(function (results) {
+                    return results.data.data;
+                });
+            }
+
             return {
               list: list,
               filterList: filterList,
-              expand: expand
+              expand: expand,
+              availability: availability
             }
         }
 })();

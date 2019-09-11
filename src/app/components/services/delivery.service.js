@@ -62,12 +62,19 @@
                 $rootScope.$emit('discountUpdate');
               }
             }
+
+            var restart = function(){
+              delete $localStorage.deliveryType;
+              delete $localStorage.deliveryMethod;
+              delete $localStorage.orderNote;
+            }
             
             return {
               availableMethods: availableMethods,
               createAddress: createAddress,
               getDeliveryCost: getDeliveryCost,
-              reset: reset
+              reset: reset,
+              restart: restart
             }
         }
 })();

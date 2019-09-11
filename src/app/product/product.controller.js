@@ -16,6 +16,7 @@
       vm.referenceCode = "";
       vm.colorCode = "";
       vm.isGrupoCachos = false;
+      vm.getProductAvailability = getProductAvailability;
       if($stateParams.referenceCode){vm.referenceCode = $stateParams.referenceCode;}
       if($stateParams.colorCode){vm.colorCode = $stateParams.colorCode;}
 
@@ -28,8 +29,13 @@
         vm.relatedProducts = data.relatedProducts;
         vm.isGrupoCachos = data.isGrupoCachos;
         BlumeAnalytics.fbPixelViewContent(vm.product);
+        vm.getProductAvailability();
       });
       
+    }
+
+    function getProductAvailability(){
+      Products.availability(vm.option1).then(function(response){ vm.productAvailability = response; });
     }
 
       vm.setActive = function(index) {

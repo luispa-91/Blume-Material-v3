@@ -15,7 +15,7 @@
                 </span>
             </h4>
         </div> 
-        <div class="list-title" ng-click="vm.toggleDeliveryMethod('storepickup')" flex>
+        <div ng-if="vm.showStorePickup" class="list-title" ng-click="vm.toggleDeliveryMethod('storepickup')" flex>
             <h4>
                 <span ng-class="{'success-green':vm.deliveryMethod=='storepickup'}">
                     Recoger en tienda <i class="fas fa-store"></i> &nbsp;
@@ -116,6 +116,10 @@
                 </md-radio-button>
             </md-radio-group>
         </div>
+        <!-- <div ng-if="">
+            <strong>Mapa de cobertura Glovo</strong>
+            <a href="https://glovoapp.com/es/map" target="_blank"><img ng-src="assets/images/glovoMap.png" class="img-responsive" alt="" /></a>
+        </div> -->
     </div>
 </div>
 <!-- International home delivery form starts here -->
