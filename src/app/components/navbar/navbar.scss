@@ -181,3 +181,27 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: white;
 }
+
+.input-icons i { 
+  position: absolute; 
+} 
+
+.input-icons { 
+  width: 100%; 
+} 
+
+.icon { 
+  padding: 10px; 
+  color: white; 
+  min-width: 50px; 
+  text-align: center; 
+} 
+
+.input-field { 
+  width: 25%; 
+  padding: 10px; 
+  text-align: center; 
+  background: 0 0!important;
+  color: #fff!important;
+  border: none;
+} 

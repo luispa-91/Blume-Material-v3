@@ -65,6 +65,7 @@
     function init(){
       //Get navbar
       Navbar.get().then(function(results){ vm.navbar = results; },function(err){ Mail.errorLog(err) });
+      
       //Bind functions
       vm.close = Navbar.close;
       vm.goTo = Navbar.goTo;

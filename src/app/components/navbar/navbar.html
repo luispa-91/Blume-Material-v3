@@ -2,7 +2,10 @@
 <div class="topbar">
     <div class="topbar-column">
       <form ng-submit="vm.searchProducts()">
-        <input style="width:50%;" class="searchBox ng-pristine ng-valid ng-empty ng-touched" type="text" ng-model="vm.searchQuery" placeholder="Buscar..." aria-invalid="false">
+          <div class="input-icons"> 
+              <i class="fa fa-search icon"></i> 
+              <input class="input-field" placeholder="Buscar" type="text" ng-model="vm.searchQuery" /> 
+          </div> 
       </form>
     </div>
   <div class="topbar-column" hide-xs hide-sm>
@@ -73,27 +76,22 @@
      <md-content>
        <md-list ng-controller="LeftCtrl as vm">
          <div ng-repeat="tab in vm.navbar.tabs">
-           <md-list-item ng-if="::!tab.submenu" ng-click="::vm.goTo(tab.url)">
+           <md-list-item ng-if="::!tab.subMenu" ng-click="::vm.goTo(tab.url)">
              <p class="upper-text">{{::tab.name}}</p>
            </md-list-item>
-           <md-list-item ng-if="::tab.submenu">
+           <md-list-item ng-if="::tab.subMenu">
             <p class="upper-text">{{::tab.name}}</p>
             <md-menu class="md-secondary">
               <md-button class="md-icon-button">
                 <md-icon><i class="material-icons icon-color">keyboard_arrow_down</i></md-icon>
               </md-button>
-              <md-menu-content class="menu-content-mp">
-                <div layout="row">
-                  <div class="navbar-submenu-container" ng-repeat="sub in tab.submenu" flex>
-                    <a class="no-decor" href="" ng-click="::vm.goTo(sub.linkUrl)"><h4><strong>{{::sub.title}}</strong></h4></a>
-                      <md-menu-item class="custom-height" ng-if="::sub2.title!=''" ng-repeat="sub2 in sub.submenu">
-                        <a class="no-decor" href="" ng-click="::vm.goTo(sub2.linkUrl)">
-                          {{::sub2.title}}
-                        </a>
-                      </md-menu-item>
-                  </div>
-                </div>
-            </md-menu-content>
+              <md-menu-content width="4">
+                <md-menu-item ng-repeat="value in tab.subMenu">
+                  <md-button href="{{::tab.url}}{{::value}}">
+                    {{::value}}
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
             </md-menu>
           </md-list-item>
          </div>

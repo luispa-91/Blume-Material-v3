@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .factory('Website', Website);
-        Website.$inject = ['$http','$location'];
-        function Website($http,$location){
+        Website.$inject = ['$http','$location','$rootScope'];
+        function Website($http,$location,$rootScope){
 
             var mainPage = function () {
                 return $http.get("https://api2.madebyblume.com/v3/storeFront/mainPage").then(function (results) {
@@ -109,6 +109,11 @@
                 })(window,document,'https://cdn.bitrix24.com/b1772825/crm/site_button/loader_6_2nzuxo.js');
             }
 
+            var broadcastUrlChanged = function(scope, callback) {
+                var handler = $rootScope.$on('urlChanged', callback);
+                scope.$on('$destroy', handler);
+            }
+
             return {
                 mainPage: mainPage,
                 getInstagramFeed: getInstagramFeed,
@@ -118,7 +123,8 @@
                 removeFilter: removeFilter,
                 storeLocations: storeLocations,
                 getCustomPage: getCustomPage,
-                createBitrixChat: createBitrixChat
+                createBitrixChat: createBitrixChat,
+                broadcastUrlChanged: broadcastUrlChanged
             }
         }
 })();

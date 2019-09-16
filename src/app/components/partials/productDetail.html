@@ -22,13 +22,6 @@
             <h1 class="no-margin">{{::vm.product.title}} </h1> 
             <h5>Ref:{{::vm.product.referenceCode}}</h5>
             <br>
-            <div layout="row" ng-if="!vm.product.isSingleImage">
-                <div class="col-xs-2 col-sm-2 col-md-2 no-padding" ng-repeat="image in vm.productImages">
-                <img ng-src="{{::image.url}}" style="width:100%" ng-click="::vm.setActive($index)">
-                </div>
-            </div>
-    
-            <br>
             
             <table ng-if="vm.isGrupoCachos">
                 <tr ng-if="::vm.product.brand!=''">
@@ -49,7 +42,7 @@
                 </tr>
                 <tr ng-if="::vm.product.colorCode!=''">
                 <td width="45%"><strong>Color </strong></td>
-                <td>{{::vm.product.colorCode}}</td> 
+                <td>{{::vm.product.colorCode}} ({{::vm.product.color}})</td> 
                 </tr>
                 <tr ng-if="::vm.product.gender!=''">
                 <td width="45%"><strong>Género </strong></td>
@@ -69,6 +62,15 @@
                     </li>
                 </ul>
             </div>
+
+            
+            <div layout="row" ng-if="!vm.product.isSingleImage">
+                <div class="col-xs-2 col-sm-2 col-md-2 no-padding" ng-repeat="image in vm.productImages">
+                <img ng-src="{{::image.url}}" style="width:100%" ng-click="::vm.setActive($index)">
+                </div>
+            </div>
+    
+            <br>
     
             <div layout="row">
             <div flex>
@@ -76,7 +78,7 @@
                     <h3>Tallas</h3>
                     <md-select ng-model="vm.option1" aria-label="Sizes">
                         <md-option ng-repeat="variant in vm.products" value="{{::variant.externalId}}">
-                            {{::variant.size}}
+                            {{::variant.size}} <span ng-if="variant.customValueB!=''">({{::variant.customValueB}})</span>
                         </md-option>
                     </md-select>
                     </div> 

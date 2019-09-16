@@ -3,8 +3,8 @@
 angular
     .module('angular')
     .controller('ProductsController', ProductsController);
-    ProductsController.$inject = ['$location','Website','Products','$state'];
-    function ProductsController($location, Website,Products,$state) {
+    ProductsController.$inject = ['$location','Website','Products','$state','$scope'];
+    function ProductsController($location, Website,Products,$state,$scope) {
     var vm = this;
 
     init();
@@ -30,6 +30,14 @@ angular
         vm.addMoreItems = addMoreItems;
         vm.saleProducts = saleProducts;
     }
+
+    Website.broadcastUrlChanged($scope, function broadcastUpdate() {
+        // Handle notification
+        setTimeout(function(){
+            loadProducts();
+            $scope.$apply();
+            }, 500);
+    });
 
     function addMoreItems () {
         vm.itemsDisplayed += 3;
