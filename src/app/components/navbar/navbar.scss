@@ -198,9 +198,10 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 } 
 
 .input-field { 
-  width: 25%; 
+  width: 50%; 
   padding: 10px; 
-  text-align: center; 
+  text-align: left; 
+  margin-left: 35px;
   background: 0 0!important;
   color: #fff!important;
   border: none;

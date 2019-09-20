@@ -156,14 +156,15 @@
                     <span ng-if="::vm.paymentMethods.bankAccounts.length==1">a la siguiente cuenta:</span>
                     <span ng-if="::vm.paymentMethods.bankAccounts.length>1">a una de las siguientes cuentas:</span>
                     <br />
-                    <div layout="row">
-                        <div flex ng-repeat="bankAccount in vm.paymentMethods.bankAccounts">
+                    <div class="row">
+                        <div class="col-md-4" ng-repeat="bankAccount in vm.paymentMethods.bankAccounts">
                             <strong>Banco</strong> {{bankAccount.bankName}}<br />
                             <strong>Cuenta</strong> {{bankAccount.account}}<br />
                             <strong>Cuenta Cliente</strong> {{bankAccount.longAccount}}<br />
                             <strong>Nombre</strong> {{bankAccount.owner}}<br />
                             <strong>Cédula</strong> {{bankAccount.ownerDocumentId}}<br />
                             <strong>Moneda</strong> {{bankAccount.currency}}<br />
+                            <br>
                         </div>
                     </div>
                 </p>

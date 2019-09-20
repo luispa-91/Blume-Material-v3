@@ -1,39 +1,40 @@
 <!doctype html>
 <html ng-app="angular">
-  <head>
+  <head ng-controller="HeadController">
     <base href="/">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title></title>
+    <title>{{metaTags.title}}</title>
 
     <!--SEO-->
-    <meta name="description" content="Una nueva forma de vender en línea">
-    <meta name="keywords" content="">
-    <meta name="author" content="My App">
+    <meta name="description" content="{{metaTags.description}}">
+    <meta name="keywords" content="{{metaTags.keywords}}">
+    <meta name="author" content="Blume Software">
 
     <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="<?php echo $title; ?>">
-    <meta itemprop="description" content="<?php echo $description; ?>">
-    <meta itemprop="image" content="<?php echo $imageUrl; ?>">
+    <meta itemprop="name" content="{{metaTags.title}}">
+    <meta itemprop="description" content="{{metaTags.description}}">
+    <meta itemprop="image" content="{{metaTags.imageUrl}}">
 
     <!-- Twiter Cards -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@myapp"> 
-    <meta name="twitter:title" content="<?php echo $title; ?>">
-    <meta name="twitter:description" content="<?php echo $description; ?>">
-    <meta name="twitter:image:src" content="<?php echo $imageUrl; ?>">
+    <meta name="twitter:site" content="@blumeapps"> 
+    <meta name="twitter:title" content="{{metaTags.title}}">
+    <meta name="twitter:description" content="{{metaTags.description}}">
+    <meta name="twitter:image:src" content="{{metaTags.imageUrl}}">
     <!--/ Twiter Cards -->
 
     <!-- Open Graph -->
-    <meta property="og:site_name" content="My App">
+    <meta property="og:site_name" content="{{metaTags.companyName}}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<?php echo $title; ?>" />
-    <meta property="og:url" content="<?php echo $pageUrl; ?>">
-    <meta property="og:description" content="<?php echo $description; ?>">
-    <meta property="og:image" content="<?php echo $imageUrl; ?>">
+    <meta property="og:title" content="{{metaTags.title}}" />
+    <meta property="og:url" content="{{metaTags.url}}">
+    <meta property="og:description" content="{{metaTags.description}}">
+    <meta property="og:image" content="{{metaTags.imageUrl}}">
     <!--/ Open Graph -->
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="icon" type="image/png" href="{{faviconUrl}}" />
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
     <!-- bower:css -->
