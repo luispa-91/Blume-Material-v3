@@ -60,7 +60,7 @@
                       paymentStatus: paymentStatus,
                       responseText: responseText
                   };
-                  if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
+                  if(paymentStatus.toLowerCase()=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
                   return $http.get("https://api2.madebyblume.com/v3/payments/ipn/credix?paymentStatus=" + paymentStatus + "&orderId=" + orderId).then(function (results) {
                     return temp;
                   });
@@ -89,7 +89,7 @@
               var receivePaymentNotification = function(){
                 var temp = {
                     paymentStatus: $state.params.paymentMethod,
-                    responseText: $state.params.responseText
+                    responseText: $state.params.responsetext
                 };
                 return temp;
               }

@@ -5,15 +5,15 @@
             <md-list-item>
                 <div class="row">
                     <div class="col-md-6">Subtotal </div>
-                    <div class="col-md-6"><strong>{{ cart.getSubTotal() | currency:'₡' }}</strong></div>
+                    <div class="col-md-6"><strong>{{ cart.getSubTotal() | currency:vm.currency.symbol }}</strong></div>
                 </div>
             </md-list-item>
             <md-list-item>
                 <div class="row">
                     <div class="col-md-6">Envío</div>
                     <div class="col-md-6">
-                        <span ng-if="cart.getShipping()"><strong>{{ cart.getShipping() | currency:'₡' }}</strong></span>
-                        <span ng-if="!cart.getShipping()"><strong>₡0.00</strong></span>
+                        <span ng-if="cart.getShipping()"><strong>{{ cart.getShipping() | currency:vm.currency.symbol }}</strong></span>
+                        <span ng-if="!cart.getShipping()"><strong>{{vm.currency.symbol}}0.00</strong></span>
                     </div>
                 </div>
             </md-list-item>
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-md-6">Descuento</div>
                     <div class="col-md-6">
-                        <span><strong>{{ vm.discount.total | currency:'₡' }}</strong></span>
+                        <span><strong>{{ vm.discount.total | currency:vm.currency.symbol }}</strong></span>
                     </div>
                 </div>
             </md-list-item>
@@ -42,8 +42,8 @@
                 <h4 class="pull-left upper-text">Total</h4>
             </div>
             <div class="col-md-8">
-                <h4 ng-if="vm.discount.total==0"><strong>{{ cart.totalCost() | currency:'₡' }}</strong> <small>({{cart.totalCost() / 600 | currency}})</small></h4>
-                <h4 ng-if="vm.discount.total!=0"><strong>{{ cart.totalCost() - vm.discount.total | currency:'₡' }}</strong> <small>({{cart.totalCost() / 600 | currency}})</small></h4>
+                <h4 ng-if="vm.discount.total==0"><strong>{{ cart.totalCost() | currency:vm.currency.symbol }}</strong> <small ng-if="vm.currency.value=='CRC'">({{cart.totalCost() / 600 | currency}})</small></h4>
+                <h4 ng-if="vm.discount.total!=0"><strong>{{ cart.totalCost() - vm.discount.total | currency:vm.currency.symbol }}</strong> <small ng-if="vm.currency.value=='CRC'">({{cart.totalCost() / 600 | currency}})</small></h4>
             </div>
         </div>
     </md-card-actions>

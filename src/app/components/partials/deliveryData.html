@@ -110,16 +110,16 @@
                     {{ method.name }}
                     <span>
                         <small class="text-muted">
-                           <strong ng-if="cart.getShipping()>0"> + {{ cart.getShipping() | currency:'₡' }}</strong> Tiempo de entrega {{method.eta}} (approx)
+                           <strong ng-if="cart.getShipping()>0"> + {{ cart.getShipping() | currency:vm.currency.symbol }}</strong> Tiempo de entrega {{method.eta}} (approx)
                         </small>
                     </span>
                 </md-radio-button>
             </md-radio-group>
         </div>
-        <!-- <div ng-if="">
+        <div ng-if="vm.selectedFare==33">
             <strong>Mapa de cobertura Glovo</strong>
             <a href="https://glovoapp.com/es/map" target="_blank"><img ng-src="assets/images/glovoMap.png" class="img-responsive" alt="" /></a>
-        </div> -->
+        </div>
     </div>
 </div>
 <!-- International home delivery form starts here -->
@@ -173,7 +173,7 @@
                     {{ method.name }}
                     <span>
                         <small class="text-muted">
-                           <strong ng-if="cart.getShipping()>0"> + {{ cart.getShipping() | currency:'₡' }}</strong> ETA {{method.eta}} (approx)
+                           <strong ng-if="cart.getShipping()>0"> + {{ cart.getShipping() | currency:vm.currency.symbol }}</strong> ETA {{method.eta}} (approx)
                         </small>
                     </span>
                 </md-radio-button>

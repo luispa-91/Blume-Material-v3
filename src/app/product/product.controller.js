@@ -29,7 +29,7 @@
         vm.relatedProducts = data.relatedProducts;
         vm.isGrupoCachos = data.isGrupoCachos;
         BlumeAnalytics.fbPixelViewContent(vm.product);
-        vm.getProductAvailability();
+        vm.getProductAvailability();  
       });
       
     }

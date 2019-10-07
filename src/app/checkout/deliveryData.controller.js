@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('DeliveryDataController', DeliveryDataController);
-        DeliveryDataController.$inject = ['LocationAutoComplete', 'Delivery', '$localStorage'];
-    function DeliveryDataController(LocationAutoComplete, Delivery,$localStorage) {
+        DeliveryDataController.$inject = ['LocationAutoComplete', 'Delivery','$localStorage','Helper'];
+    function DeliveryDataController(LocationAutoComplete, Delivery,$localStorage,Helper) {
         var vm = this;
         init();
         ///////////////
@@ -21,6 +21,7 @@
             vm.countries = LocationAutoComplete.countries;
             vm.selectedFare= 0;
             vm.orderNote = "";
+            vm.currency = {value: '', symbol: ''}; 
 
             //Bind functions
             vm.verify = verify;
@@ -30,6 +31,12 @@
             vm.clearStateAndCity = clearStateAndCity;
             vm.getDeliveryCost = Delivery.getDeliveryCost;
             vm.toggleDeliveryMethod = toggleDeliveryMethod;
+            delete $localStorage.addressComplete;
+
+            Helper.currency().then(function (results) { 
+                vm.currency = results;
+                if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
+            });
 
             getDeliveryMethods();
         }
@@ -38,8 +45,10 @@
             $localStorage.orderNote = vm.orderNote;
             if(isValid){
                 vm.addressComplete = true;
+                $localStorage.addressComplete = true;
             } else {
                 vm.addressComplete = false;
+                delete $localStorage.addressComplete;
             }
             //Verify if customer already exists
             if(vm.addressComplete&&!vm.addressCreated){

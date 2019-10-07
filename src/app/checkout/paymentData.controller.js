@@ -49,6 +49,9 @@
             if(!$localStorage.deliveryType){
               vm.errorMessage = "Para continuar con tu compra debes escoger un método de entrega";
               vm.saving = false;
+            } else if(!$localStorage.addressComplete){
+              vm.errorMessage = "Para continuar con tu compra debes completar tus datos de envío";
+              vm.saving = false;
             } else {
               Order.create(vm.currency.value,vm.paymentMethod).then(function(data){
                 vm.payment.orderId = data.id;

@@ -76,7 +76,7 @@
             <div flex>
                 <div ng-if="vm.products.length > 0 && vm.products[0].size!=''">
                     <h3>Tallas</h3>
-                    <md-select ng-model="vm.option1" aria-label="Sizes">
+                    <md-select ng-model="vm.option1" ng-change="vm.getProductAvailability()" aria-label="Sizes">
                         <md-option ng-repeat="variant in vm.products" value="{{::variant.externalId}}">
                             {{::variant.size}} <span ng-if="variant.customValueB!=''">({{::variant.customValueB}})</span>
                         </md-option>
@@ -91,12 +91,12 @@
                     <div ng-repeat="variant in vm.products | filter:{externalId: vm.option1 }| limitTo:1">
                         <div class="product-price">
                             <h3 ng-if="::variant.discountPrice==0">
-                                {{::variant.price | currency:'₡'}} 
+                                {{::variant.price | currency:vm.currency.symbol}} 
                                 <!-- <small class="gray">({{::variant.priceUsd|currency}})</small> -->
                             </h3>
                             <h3 ng-if="::variant.discountPrice!=0">
-                                <small class="gray"><strike>{{::variant.price|currency:'₡'}}</strike></small><br />
-                                {{::variant.discountPrice| currency:'₡'}} 
+                                <small class="gray"><strike>{{::variant.price | currency:vm.currency.symbol}}</strike></small><br />
+                                {{::variant.discountPrice | currency:vm.currency.symbol}} 
                                 <!-- <small class="gray">({{::variant.discountPriceUsd|currency}})</small> -->
                             </h3>
                         <h4 ng-if="variant.stock == 0" class="gray"><small><br> No hay disponible en este momento</small></h4>

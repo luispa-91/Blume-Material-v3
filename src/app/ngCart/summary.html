@@ -17,7 +17,7 @@
 								<div flex="10"></div>
 								<div flex="40">
 										<h5>
-											<span class="text-muted">{{ item._price | currency:'₡' }} x</span>
+											<span class="text-muted">{{ item._price | currency:vm.currency.symbol }} x</span>
 											<a href="" class="incr-btn fa fa-angle-left" ng-class="{'inactive':item.getQuantity()==1}" ng-click="item.setQuantity(-1, true)"></a>
 											<span class="quantity">{{ item.getQuantity() | number }}</span>
 											<a href="" class="incr-btn fa fa-angle-right" ng-click="item.setQuantity(1, true)"></a> &nbsp;

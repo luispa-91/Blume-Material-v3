@@ -19,11 +19,14 @@
       vm.banners = [];
       vm.featuredCollections = [];
       vm.featuredProducts = [];
+      vm.currency = {value: '', symbol: ''}; 
 
       //Load MainPage
       Website.mainPage().then(function (data) { 
         vm.carousel = data.slides;
         vm.featuredLists = data.featured;
+        vm.currency.value = data.currency;
+        if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
         //Load Instagram Feed
         Website.getInstagramFeed(data.instagramAccessToken).then(function (data) { vm.instagramFeed.limit = 8; vm.instagramFeed.posts = data; },function(err){ Mail.errorLog(err) });
       },function(err){ Mail.errorLog(err) });

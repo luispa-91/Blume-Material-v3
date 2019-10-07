@@ -3,8 +3,8 @@
 angular
     .module('angular')
     .controller('ProductsController', ProductsController);
-    ProductsController.$inject = ['$location','Website','Products','$state','$scope'];
-    function ProductsController($location, Website,Products,$state,$scope) {
+    ProductsController.$inject = ['$location','Website','Products','$state','$scope','Helper'];
+    function ProductsController($location, Website,Products,$state,$scope,Helper) {
     var vm = this;
 
     init();
@@ -18,6 +18,7 @@ angular
         vm.loadingContent = false;
         vm.showFiltersMobile = false;
         vm.itemsDisplayed = 9;
+        vm.currency = {value: '', symbol: ''}; 
         vm.state = $state.$current.name;
         if($state.params.s){
             vm.criteria = $state.params.s;
@@ -29,6 +30,7 @@ angular
         vm.removeFilter = Website.removeFilter;
         vm.addMoreItems = addMoreItems;
         vm.saleProducts = saleProducts;
+
     }
 
     Website.broadcastUrlChanged($scope, function broadcastUpdate() {
@@ -62,14 +64,18 @@ angular
     }
 
     function loadProducts() {
-        vm.loading = true;
-        var url = $location.url().substring(1);
-        url = url.replace("?","/");
-        url = url.replace(/=/g,"/");
-        url = url.replace(/&/g,"/");
-        var filterArray = url.split('/');
-        Products.list(filterArray).then(function (results) { vm.loading = false; vm.products = results; },function(err){ Mail.errorLog(err) });
-        Products.filterList(filterArray).then(function (results) { vm.filters = results; },function(err){ Mail.errorLog(err) });
+        Helper.currency().then(function (results) { 
+            vm.currency = results;
+            if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
+            vm.loading = true;
+            var url = $location.url().substring(1);
+            url = url.replace("?","/");
+            url = url.replace(/=/g,"/");
+            url = url.replace(/&/g,"/");
+            var filterArray = url.split('/');
+            Products.list(filterArray).then(function (results) { vm.loading = false; vm.products = results; },function(err){ Mail.errorLog(err) });
+            Products.filterList(filterArray).then(function (results) { vm.filters = results; },function(err){ Mail.errorLog(err) });
+         });
     }
 
 }

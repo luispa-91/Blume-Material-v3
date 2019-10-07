@@ -28,12 +28,12 @@
             <h4>{{::product.title}}</h4>
             <p class="no-margin">
                 <span ng-if="::product.discountPrice==0">
-                    {{::product.price | currency:'₡'}} 
+                    {{::product.price | currency:vm.currency.symbol}} 
                     <!-- <small class="gray">({{::product.priceUsd|currency}})</small> -->
                 </span>
                 <span ng-if="::product.discountPrice!=0">
-                    <small class="gray"><strike>{{::product.price|currency:'₡'}}</strike></small><br />
-                    {{::product.discountPrice| currency:'₡'}} 
+                    <small class="gray"><strike>{{::product.price | currency:vm.currency.symbol}}</strike></small><br />
+                    {{::product.discountPrice | currency:vm.currency.symbol}} 
                     <!-- <small class="gray">({{::product.discountPriceUsd|currency}})</small> -->
                 </span>
             </p>

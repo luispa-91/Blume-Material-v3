@@ -18,7 +18,7 @@
           function Helper($http){
   
               var currency = function () {
-                  return $http.get("https://api2.madebyblume.com/v3/storeFront/helper/currency").then(function (results) {
+                  return $http.get("https://api2.madebyblume.com/v3/storeFront/currency").then(function (results) {
                       return results.data.data;
                   });
               }
