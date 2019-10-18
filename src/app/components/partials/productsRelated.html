@@ -26,7 +26,7 @@
                 </div>
             </a>
             <h4>{{::product.title}}</h4>
-            <p class="no-margin">
+            <p class="no-margin" ng-if="product.price!=0">
                 <span ng-if="::product.discountPrice==0">
                     {{::product.price | currency:vm.currency.symbol}} 
                     <!-- <small class="gray">({{::product.priceUsd|currency}})</small> -->

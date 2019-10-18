@@ -51,10 +51,17 @@
                   //Disect location
                   var n = $location.path().lastIndexOf('/');
                   var result = $location.path().substring(n + 1);
+                  var paymentStatus = "";
+                  var orderId = 0;
                   //Get payment status
-                  var array = result.split('&');
-                  var paymentStatus = array[0].toLowerCase();
-                  var orderId = array[1].split('=')[1];
+                  if(result=="approved"){
+                    paymentStatus="approved";
+                    orderId=$location.search().referencia;
+                  } else {
+                    var array = result.split('&');
+                    paymentStatus = array[0].toLowerCase();
+                    orderId = array[1].split('=')[1];
+                  }
                   var responseText = "";
                   var temp = {
                       paymentStatus: paymentStatus,

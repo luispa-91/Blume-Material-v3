@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('PaymentDataController', PaymentDataController);
-        PaymentDataController.$inject = ['Payments','Order','DataCollection','BlumeStorage','$scope','$localStorage'];
-    function PaymentDataController(Payments,Order,DataCollection,BlumeStorage,$scope,$localStorage) {
+        PaymentDataController.$inject = ['Payments','Order','DataCollection','BlumeStorage','$scope','$localStorage','Helper'];
+    function PaymentDataController(Payments,Order,DataCollection,BlumeStorage,$scope,$localStorage,Helper) {
         var vm = this;
         init();
         ///////////////
@@ -39,7 +39,11 @@
         });
 
         function getPaymentMethods(){
-            Payments.availableMethods().then(function(data){ vm.paymentMethods = data; });
+            Helper.currency().then(function (results) { 
+                vm.currency = results;
+                if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
+                Payments.availableMethods().then(function(data){ vm.paymentMethods = data; });
+            });
         }
 
         function makePayment(){

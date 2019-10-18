@@ -86,7 +86,7 @@
             <div flex hide-xs></div>
             </div>
     
-            <div layout="row">
+            <div layout="row" ng-if="vm.products[0].price!=0">
                 <div class="text-center" ng-if="vm.products.length > 0" flex>
                     <div ng-repeat="variant in vm.products | filter:{externalId: vm.option1 }| limitTo:1">
                         <div class="product-price">

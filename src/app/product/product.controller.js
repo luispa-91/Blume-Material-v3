@@ -4,8 +4,8 @@
   angular
     .module('angular')
     .controller('ProductDetailController', ProductDetailController);
-  ProductDetailController.$inject = ['BlumeAnalytics','$stateParams','Products'];
-  function ProductDetailController(BlumeAnalytics,$stateParams,Products) {
+  ProductDetailController.$inject = ['BlumeAnalytics','$stateParams','Products','Helper'];
+  function ProductDetailController(BlumeAnalytics,$stateParams,Products,Helper) {
     var vm = this;
     
     init();
@@ -19,18 +19,23 @@
       vm.getProductAvailability = getProductAvailability;
       if($stateParams.referenceCode){vm.referenceCode = $stateParams.referenceCode;}
       if($stateParams.colorCode){vm.colorCode = $stateParams.colorCode;}
+      vm.currency = {value: '', symbol: ''}; 
 
       //Initialize Variables
-      Products.expand(vm.referenceCode,vm.colorCode).then(function(data){
-        vm.products = data.products;
-        vm.productImages = data.images;
-        vm.product = vm.products[0];
-        vm.option1 = vm.product.externalId;
-        vm.relatedProducts = data.relatedProducts;
-        vm.isGrupoCachos = data.isGrupoCachos;
-        BlumeAnalytics.fbPixelViewContent(vm.product);
-        vm.getProductAvailability();  
-      });
+      Helper.currency().then(function (results) { 
+        vm.currency = results;
+        if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
+        Products.expand(vm.referenceCode,vm.colorCode).then(function(data){
+          vm.products = data.products;
+          vm.productImages = data.images;
+          vm.product = vm.products[0];
+          vm.option1 = vm.product.externalId;
+          vm.relatedProducts = data.relatedProducts;
+          vm.isGrupoCachos = data.isGrupoCachos;
+          BlumeAnalytics.fbPixelViewContent(vm.product);
+          vm.getProductAvailability();  
+        });
+     });
       
     }
 

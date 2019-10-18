@@ -11,7 +11,7 @@
     <div class="col-md-6" ng-repeat="store in vm.storeLocations | filter:vm.criteria">
         <h2>{{::store.name}}</h2>
         <p><i class="fas fa-store"></i> {{::store.address}}</p>
-        <a href=""><p ng-if="::store.directionsUrl!=''"><i class="fab fa-waze"></i> Abrir con Waze</p></a>
+        <a href="{{store.directionsUrl}}" target="_blank"><p ng-if="::store.directionsUrl!=''"><i class="fab fa-waze"></i> Abrir con Waze</p></a>
         <a href=""><p ng-if="::store.phone!=''"><i class="fa fa-phone"></i> {{::store.phone}}</p></a>
         <p ng-if="::store.schedule!=''"><i class="fa fa-calendar"></i> {{::store.schedule}}</p>
     </div>
