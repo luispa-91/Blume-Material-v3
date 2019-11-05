@@ -60,10 +60,10 @@
             </div>
             <md-button class="discount-button" ng-if="::!tab.submenu" href="/sale" hide-xs>&nbsp;<i class="fa fa-tags"></i> Descuentos &nbsp;</md-button>
             <span flex></span>
-            <md-button ui-sref="cartReview" class="md-icon-button" aria-label="Go to Cart and Checkout">
+            <md-button ng-if="vm.navbar.logoUrl!='https://cms.blumewebsites.com/fox/website/logo.png'" ui-sref="cartReview" class="md-icon-button" aria-label="Go to Cart and Checkout">
                 <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
             </md-button>
-            <span class="badge black">{{vm.cart.getTotalItems()}}</span>
+            <span ng-if="vm.navbar.logoUrl!='https://cms.blumewebsites.com/fox/website/logo.png'" class="badge black">{{vm.cart.getTotalItems()}}</span>
       </div>
     </md-toolbar>
 </md-content>
