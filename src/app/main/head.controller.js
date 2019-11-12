@@ -13,7 +13,7 @@
         $scope.faviconUrl = "";
           switch ($location.$$path) {
             case "/":
-              Prerender.mainPage().then(function (data) { $scope.metaTags = data; console.log(data); $scope.faviconUrl = $sce.trustAsResourceUrl("https://cms.blumewebsites.com/"+$scope.metaTags.directory+"/website/favicon.png"); });
+              Prerender.mainPage().then(function (data) { $scope.metaTags = data; $scope.faviconUrl = $sce.trustAsResourceUrl("https://cms.blumewebsites.com/"+$scope.metaTags.directory+"/website/favicon.png"); });
                   break;
             case "/product":
               Prerender.product().then(function (data) { $scope.metaTags = data; $scope.faviconUrl = $sce.trustAsResourceUrl("https://cms.blumewebsites.com/"+$scope.metaTags.directory+"/website/favicon.png"); });
