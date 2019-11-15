@@ -69,6 +69,7 @@ angular
             if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
             vm.loading = true;
             var url = $location.url().substring(1);
+            url = decodeURIComponent(url);
             url = url.replace("?","/");
             url = url.replace(/=/g,"/");
             url = url.replace(/&/g,"/");
