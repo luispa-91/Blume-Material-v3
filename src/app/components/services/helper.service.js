@@ -14,8 +14,8 @@
             }
         })
           .factory('Helper', Helper);
-          Helper.$inject = ['$http'];
-          function Helper($http){
+          Helper.$inject = ['$http','$location'];
+          function Helper($http,$location){
   
               var currency = function () {
                   return $http.get("https://api2.madebyblume.com/v3/storeFront/currency").then(function (results) {
@@ -28,10 +28,30 @@
                     return results.data.data;
                 });
             }
+
+            var isGrupoCachos = function () {
+              var websiteHost = $location.$$host;
+              if(websiteHost=='cachoscr.com'||websiteHost=='nmnuevomundo.com'||websiteHost=='foxracingcr.com'||websiteHost=='newwavecr.com'||websiteHost=='beakcr.com'||websiteHost=='freaks.fit') {
+                return true;
+              } else {
+                return false;
+              }
+            }
+
+            var showWrapGift = function () {
+              var websiteHost = $location.$$host;
+              if(websiteHost=='killerqueencr.com'||websiteHost=='basicbcr.com'||websiteHost=='woohoocr.com'||websiteHost=='demo.madebyblume.com'||websiteHost=='localhost') {
+                return true;
+              } else {
+                return false;
+              }
+            }
               
               return {
                 currency:currency,
-                googleAnalyticsId: googleAnalyticsId
+                googleAnalyticsId: googleAnalyticsId,
+                isGrupoCachos: isGrupoCachos,
+                showWrapGift: showWrapGift
               }
           }
   })();

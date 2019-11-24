@@ -100,8 +100,11 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
   width: 100%;
   height: 40px;
   padding: 0 30px;
-  background-color: #000;
   z-index: 9010;
+}
+
+.topbar-color {
+  background-color: #000;
 }
 
 .topbar .topbar-column:first-child {

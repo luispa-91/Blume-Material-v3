@@ -41,6 +41,12 @@
                 <textarea ng-model="vm.orderNote" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
             </md-input-container>
         </div>
+        <span ng-if="vm.showWrapGift">
+            <md-checkbox id="WrapGift" ng-model="vm.wrapGift" ng-change="vm.toggleWrapGift()" aria-label="Wrap gift">	   
+            </md-checkbox>
+            Empacar para regalo &nbsp;<i class="fas fa-gift"></i>
+            <br>
+        </span>
         <!-- <h4>Lugar de entrega </h4><br />
         <div class="form-group">
                 <md-radio-group ng-model="vm.selectedFare">
@@ -50,7 +56,7 @@
             </md-radio-group>
         </div>
         <br> -->
-        <small ng-if="vm.deliveryMethod=='storepickup'" class="gray"> Recuerde llevar su cédula y la tarjeta que utilizó para retirar su compra.</small>
+        <small ng-if="vm.deliveryMethod=='storepickup'" class="gray"> Recuerde llevar su cédula y la tarjeta que utilizó para retirar su compra. <strong ng-if="vm.isGrupoCachos" style="font-size:1.2em;">No se hacen entregas de pedidos los fines de semana.</strong></small>
     </div>
 </div>
 <!-- National home delivery form starts here -->
@@ -103,6 +109,12 @@
                         <textarea ng-model="vm.orderNote" ng-blur="vm.verify(addressData.$valid)" md-maxlength="300" rows="3"></textarea>
                     </md-input-container>
                 </div>
+                <span ng-if="vm.showWrapGift">
+                    <md-checkbox id="WrapGift" ng-model="vm.wrapGift" ng-change="vm.toggleWrapGift()" aria-label="Wrap gift">	   
+                    </md-checkbox>
+                    Empacar para regalo &nbsp;<i class="fas fa-gift"></i>
+                    <br>
+                </span>
         <h4>Transporte </h4><br />
         <div class="form-group">
                 <md-radio-group ng-model="vm.selectedFare" ng-change="vm.verify(addressData.$valid)" required>

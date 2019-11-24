@@ -33,6 +33,8 @@
               items: ngCart.getCustomItems()
             }
 
+            if($localStorage.wrapGift==true){ request.customerMessage += " | EMPACAR PARA REGALO"; }
+
             if($localStorage.discount){
               var discount = $localStorage.discount;
               if(discount.value!=0&&discount.total){
