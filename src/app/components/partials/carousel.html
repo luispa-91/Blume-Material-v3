@@ -1,0 +1,14 @@
+<carousel interval="5000" pause="false">
+    <slide ng-repeat="slide in vm.carousel">
+        <div ng-if="slide.overlay" class="center-block text-center">
+            <div class="slider-center-overlay" ng-class="::{'light-overlay':slide.overlay.style=='light','dark-overlay':slide.overlay.style=='dark'}" hide-xs>
+                <h1>{{::slide.overlay.title}}</h1>
+                <h2>{{::slide.overlay.description}}</h2>
+                <br>
+                <a href="{{::slide.overlay.linkUrl}}" target="_blank" class="btn btn-transparent">{{::slide.overlay.linkText}}</a>
+                <br><br>
+            </div>
+        </div>
+        <img class="img-responsive main-slider" ng-src="{{::slide.imageUrl}}" />
+    </slide>
+</carousel>

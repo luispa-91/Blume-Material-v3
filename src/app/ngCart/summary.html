@@ -1,0 +1,47 @@
+<md-card class="card-simple top-shadow">
+		<md-card-content>
+			<h3>Carrito de Compras</h3> 
+			<br />
+			<div class="row" ng-if="cart.$cart.items.length > 0">
+					<md-list>
+							<md-list-item ng-repeat="item in cart.$cart.items" layout="row">
+								<div flex="50">
+										<a href="" ui-sref="product({ referenceCode: item._data.referenceCode,colorCode: item._data.colorCode })" hide-xs>
+												<img ng-src="{{ item._data.imageUrl }}" class="md-avatar" />
+										</a> 
+									<a href="" class="product-name no-decor" ui-sref="product({ referenceCode: item._data.referenceCode,colorCode: item._data.colorCode })">
+										{{ item._name }} <small class="gray">{{item._data.size}}</small>
+										<small ng-if="item._quantity > item._data.stock" ><span class="out-of-stock">No hay suficientes</span></small>
+									</a>
+								</div>
+								<div flex="10"></div>
+								<div flex="40">
+										<h5>
+											<span class="text-muted">{{ item._price | currency:vm.currency.symbol }} x</span>
+											<a ng-if="!item._data.isReserve" href="" class="incr-btn fa fa-angle-left" ng-class="{'inactive':item.getQuantity()==1}" ng-click="item.setQuantity(-1, true)"></a>
+											<span class="quantity">{{ item.getQuantity() | number }}</span>
+											<a ng-if="!item._data.isReserve" href="" class="incr-btn fa fa-angle-right" ng-click="item.setQuantity(1, true)"></a> &nbsp;
+											<a href="" class="no-decor" ng-click="cart.removeItemById(item._id)"><i class="fas fa-trash gray"></i></a>
+										</h5>
+								</div>
+							</md-list-item>
+						</md-list>
+				</div>
+				<br />
+				
+				<div ng-if="cart.$cart.items.length == 0" class="text-center space-top">
+					<h4 class="gray">
+					¡Agregue productos al carrito!
+					</h4>
+					<br />
+				</div>
+				
+				<md-card-actions layout="row" layout-align="center center">
+					<md-button class="md-button" ui-sref="home"><i class="fa fa-chevron-left"></i>&nbsp; Volver</md-button> &nbsp;&nbsp;
+					<md-button ng-if="cart.$cart.items.length > 0" class="md-button md-raised md-primary custom" ng-click="vm.continueToCheckout()"><i class="fa fa-chevron-right"></i>&nbsp; Continuar </md-button>
+				</md-card-actions>
+				<br />
+				
+		</md-card-content>
+	</md-card>
+

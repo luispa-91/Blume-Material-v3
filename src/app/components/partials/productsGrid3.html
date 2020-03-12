@@ -1,0 +1,47 @@
+<div class="container" ng-if="vm.loadingPage">
+    <div class="row text-center">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+    </div>
+</div>
+<section name="PageContent" ng-if="!vm.loadingPage">
+    <div class="col-md-4 col-sm-6 no-padding" ng-repeat="product in vm.products | filter:vm.criteria | filter: vm.saleProducts('discountPrice',0) | limitTo:vm.itemsDisplayed"> 
+        <md-card class="center-block text-center card-h-3">
+            <md-card-content>
+            <a href="" ui-sref="product(::{referenceCode:product.referenceCode,colorCode:product.colorCode})">
+                <div class="imageContainer">
+                    <div style="background:url({{::product.imageUrl}}) no-repeat center; background-size:contain;" class="md-card-image img-card"></div>
+                    <!-- <img ng-src="{{::product.imageUrl}}" alt="{{::product.title}}" class="imageCard center-block"> -->
+                    <div class="imageOverlay">
+                        <div class="imageOverlayText"><i class="fa fa-2x fa-search"></i></div>
+                    </div>
+                    <span ng-if="::product.stock==0">
+                        <img class="soldOutTagSmall" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
+                    </span>
+                    <span ng-if="::product.discountPrice!=0">
+                        <div style="position:absolute;top:40px;right:33px;z-index:1">
+                            <strong style="color:white">{{100-(product.discountPrice*100)/product.price | number:0}}%</strong>
+                        </div>
+                        <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
+                    </span>
+                </div>
+            </a>
+            <h4>{{::product.title}}</h4>
+            <p class="no-margin" ng-if="product.price!=0">
+                <span ng-if="::product.discountPrice==0">
+                    {{::product.price | currency:vm.currency.symbol}} 
+                    <!-- <small class="gray">({{::product.priceUsd|currency}})</small> -->
+                </span>
+                <span ng-if="::product.discountPrice!=0">
+                    <small class="darkred"><strike>{{::product.price | currency:vm.currency.symbol}}</strike></small><br />
+                    {{::product.discountPrice | currency:vm.currency.symbol}} 
+                    <!-- <small class="gray">({{::product.discountPriceUsd|currency}})</small> -->
+                </span>
+                <strong ng-if="product.discountTimerEnd">
+                    <br>
+                    <timer class="discountTimer" end-time="product.discountTimerEnd" max-time-unit="'hour'">{{hours}} h {{minutes}} min {{seconds}} s</timer>
+                </strong>
+            </p>
+            </md-card-content>
+        </md-card>
+    </div>
+</section>

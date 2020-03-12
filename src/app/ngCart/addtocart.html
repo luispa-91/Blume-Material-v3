@@ -1,0 +1,41 @@
+<div ng-hide="attrs.id">
+    <a class="btn btn-custom" ng-disabled="true" ng-transclude></a>
+
+</div>
+
+<div class="row" ng-show="attrs.id">
+    <div ng-if="!inCart()">
+        <div class="form-inline" ng-if="data.stock != 0">
+          <md-input-container>
+             <md-select ng-model="q" aria-label="variant options">
+               <md-option ng-repeat="v in qtyOpt" value="{{v}}">
+                <strong>{{v}}</strong>
+               </md-option>
+             </md-select>
+          </md-input-container>
+          &nbsp;
+          <md-button class="md-raised md-primary custom" ng-click="ngCart.addItem(id, name, price, q, data)"><i class="fa fa-shopping-cart"></i>&nbsp; Agregar</md-button>
+        </div>
+        <div class="form-inline" ng-if="data.stock == 0">
+          <md-input-container>
+             <md-select ng-disabled="true" ng-model="q" aria-label="variant options">
+               <md-option ng-repeat="v in qtyOpt" value="{{v}}">
+                <strong>{{v}}</strong>
+               </md-option>
+             </md-select>
+          </md-input-container>
+          &nbsp;
+          <md-button ng-disabled="true"><i class="fa fa-shopping-cart"></i>&nbsp; Agregar</md-button>
+          <!--<select ng-show="quantityMax" class="form-control" name="quantity" id="quantity" ng-model="q"
+                ng-options=" v for v in qtyOpt"></select>-->
+        </div>
+    </div>
+
+    <div ng-if="inCart()">
+        <div class="form-inline" style="margin-top:17px;margin-bottom:17px">
+          <md-button class="md-button md-raised md-warn custom-2" ng-click="ngCart.removeItemById(id)"><i class="fa fa-times"></i>&nbsp; Eliminar</md-button>
+          &nbsp;
+          <md-button class="md-button md-raised" ui-sref="cartReview"><i class="fa fa-shopping-cart"></i>&nbsp; Checkout</md-button>
+        </div>
+    </div>
+</div>

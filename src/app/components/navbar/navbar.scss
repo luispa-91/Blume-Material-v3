@@ -1,0 +1,211 @@
+.acme-navbar-text{
+  color: white;
+}
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+  background-color: white;
+  color: black;
+}
+.principal-img{
+  margin-top: 15px;
+}
+
+.discount-button {
+  background-color: #d42626;
+  color: white !important;
+}
+
+.discount-button:hover {
+  background-color: #d42626;
+  color: #d42626 !important;
+}
+
+.navbar-logo{
+  cursor:pointer;
+  height:4.5em;
+}
+.badge {
+    color: rgb(63,81,181);
+    background-color: #fff;
+}
+.social-back{
+  background-color: white!important;
+}
+.socials{
+  margin-top: 0.4em;
+}
+
+.social-network li{
+  display: inline-block;
+}
+.i-sociala {
+    margin-left: 0.3em;
+    display: inline-block;
+    line-height: 26px;
+    border: 1px solid #cccccc;
+    text-align: center;
+    -webkit-border-radius: 15px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 15px;
+    -moz-background-clip: padding;
+    border-radius: 15px;
+    background-clip: padding-box;
+    width: 30px;
+    height: 30px;
+    -moz-transition: border 300ms, background 600ms;
+    -o-transition: border 300ms, background 600ms;
+    -webkit-transition: border 300ms, background 600ms;
+    transition: border 300ms, background 600ms;
+}
+.i-color{
+  color: #CCCCCC;
+}
+
+.navbar-fixed-container {
+  position: fixed; 
+  width: 100%;
+  z-index: 9999;
+}
+
+.navbar-submenu-container {
+  padding:10px;
+  padding-top:0px;
+}
+
+.menu-content-mp {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.md-open-menu-container{
+  top: 58px !important;
+}
+
+.no-decor {
+  text-decoration: none !important;
+  color:inherit;
+}
+
+.custom-height {
+  height:35px;
+  min-height:35px;
+}
+
+.csstransforms3d .offcanvas-wrapper, .csstransforms3d .navbar, .csstransforms3d .topbar {
+  transition: transform .4s ease-in-out, background-color .2s;
+}
+
+.topbar {
+  display: table;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 0 30px;
+  z-index: 9010;
+}
+
+.topbar-color {
+  background-color: #000;
+}
+
+.topbar .topbar-column:first-child {
+  text-align: left;
+}
+
+.topbar .topbar-column {
+  display: table-cell;
+  width: 50%;
+  vertical-align: middle;
+}
+
+.topbar .topbar-column:last-child {
+  text-align: right;
+}
+
+.topbar .topbar-column:first-child>a:not(.social-button), .topbar .topbar-column:first-child>span, .topbar .topbar-column:first-child>p {
+  margin-right: 20px;
+}
+
+.topbar .topbar-column a:not(.social-button) {
+  transition: color .3s;
+  text-decoration: none;
+}
+
+.topbar .topbar-column>a:not(.social-button), .topbar .topbar-column>span, .topbar .topbar-column>p {
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.topbar .topbar-column a:not(.social-button), .topbar .topbar-column span, .topbar .topbar-column p {
+  color: #fff;
+  font-size: 13px;
+}
+
+.social-button {
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 18px;
+  margin-bottom: 5px;
+  transition: color .3s;
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.site-mini-logo>img {
+  width: 100%;
+}
+
+.topbar .topbar-column:last-child>a:not(.social-button), .topbar .topbar-column:last-child>span, .topbar .topbar-column:last-child>p {
+  margin-left: 10px;
+}
+
+.topbar .topbar-column a:not(.social-button) {
+  transition: color .3s;
+  text-decoration: none;
+}
+
+.searchBox {
+  background: 0 0!important;
+  color: #fff!important;
+  border: none;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: white;
+}
+
+.input-icons i { 
+  position: absolute; 
+} 
+
+.input-icons { 
+  width: 100%; 
+} 
+
+.icon { 
+  padding: 10px; 
+  color: white; 
+  min-width: 50px; 
+  text-align: center; 
+} 
+
+.input-field { 
+  width: 50%; 
+  padding: 10px; 
+  text-align: left; 
+  margin-left: 35px;
+  background: 0 0!important;
+  color: #fff!important;
+  border: none;
+} 

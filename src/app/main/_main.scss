@@ -1,0 +1,205 @@
+.slider{
+  height: 602px;
+  width: 100%;
+  background-color: #E9E9E9;
+}
+.watch{
+  margin-top: 4.2em;
+  border-radius: 0px;
+  width: 361px;
+  height: 228px;
+}
+
+.watch-2{
+  border-radius: 0px;
+  border-color: #CCCCCC;
+  padding-top: -1em;
+  width: 330px;
+  height: 195px;
+  margin-left:auto;
+  margin-right: auto;
+  margin-top: 15px;
+
+}
+
+.join{
+  margin-top: 4.2em;
+  border-radius: 0px;
+  width: 361px;
+}
+
+.m-input{
+  width: 318px;
+  height:38px;
+  margin-left: 1.4em;
+
+}
+
+.soc{
+  color: #666666;
+  margin-left: 0.8em;
+}
+
+.soc:hover{
+  color: #32C1B0;
+  text-decoration: none;
+}
+.tag {
+  color: #666666;
+}
+.content-margin{
+  margin-top:5em;
+}
+
+@import url(https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
+.col-item
+{
+    border: 1px solid #E1E1E1;
+    border-radius: 5px;
+    background: #FFF;
+}
+.col-item .photo img
+{
+    margin: 0 auto;
+    width: 100%;
+}
+
+.col-item .info
+{
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+    margin-top: 1px;
+}
+
+.col-item:hover .info {
+    background-color: #F5F5DC;
+}
+.col-item .price
+{
+    /*width: 50%;*/
+    float: left;
+    margin-top: 5px;
+}
+
+.col-item .price h5
+{
+    line-height: 20px;
+    margin: 0;
+}
+
+.price-text-color
+{
+    color: #219FD1;
+}
+
+.col-item .info .rating
+{
+    color: #777;
+}
+
+.col-item .rating
+{
+    /*width: 50%;*/
+    float: left;
+    font-size: 17px;
+    text-align: right;
+    line-height: 52px;
+    margin-bottom: 10px;
+    height: 52px;
+}
+
+.col-item .separator
+{
+    border-top: 1px solid #E1E1E1;
+}
+
+.clear-left
+{
+    clear: left;
+}
+
+.col-item .separator p
+{
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.col-item .separator p i
+{
+    margin-right: 5px;
+}
+.col-item .btn-add
+{
+    width: 50%;
+    float: left;
+}
+
+.col-item .btn-add
+{
+    border-right: 1px solid #E1E1E1;
+}
+
+.col-item .btn-details
+{
+    width: 50%;
+    float: left;
+    padding-left: 10px;
+}
+.controls
+{
+    margin-top: 20px;
+}
+[data-slide="prev"]
+{
+    margin-right: 10px;
+}
+
+.dark-overlay {
+    position: absolute;
+    width: 60%;
+    color: #fff;
+    background-color: rgba(0,0,0,.4);
+    background: rgba(0,0,0,.4);
+    padding: 1em;
+}
+
+.light-overlay {
+    position: absolute;
+    width: 60%;
+    color: #000;
+    background-color: rgba(255,255,255,.4);
+    background: rgba(255,255,255,.4);
+    padding: 1em;
+}
+
+.slider-center-overlay {
+    transform: translateY(-50%);
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    border: 2px solid white;
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-transparent-light {
+    background-color: transparent;
+    border: 2px solid black;
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-transparent:hover {
+    opacity: 0.8;
+
+}
+

@@ -1,0 +1,58 @@
+<md-card class="card-simple top-shadow">
+    <md-card-content md-theme="custom">
+        <h3>Resumen</h3>
+        <md-list>
+            <md-list-item>
+                <div class="row">
+                    <div class="col-md-6">Subtotal </div>
+                    <div class="col-md-6"><strong>{{ cart.getSubTotal() | currency:vm.currency.symbol }}</strong></div>
+                </div>
+            </md-list-item>
+            <md-list-item>
+                <div class="row">
+                    <div class="col-md-6">Envío</div>
+                    <div class="col-md-6">
+                        <span ng-if="cart.getShipping()"><strong>{{ cart.getShipping() | currency:vm.currency.symbol }}</strong></span>
+                        <span ng-if="!cart.getShipping()"><strong>{{vm.currency.symbol}}0.00</strong></span>
+                    </div>
+                </div>
+            </md-list-item>
+            <md-list-item ng-if="vm.discount.value!=0">
+                <div class="row">
+                    <div class="col-md-6">Descuento</div>
+                    <div class="col-md-6">
+                        <span><strong>{{ vm.discount.total | currency:vm.currency.symbol }}</strong></span>
+                    </div>
+                </div>
+            </md-list-item>
+        </md-list>
+        <md-button class="md-button md-raised md-primary custom" ng-click="vm.showDiscountCodeInput=true" ng-if="!vm.showDiscountCodeInput&&vm.discount.value==0"><i class="fas fa-plus"></i>&nbsp; Aplicar descuento</md-button>
+        <md-input-container class="half-width" flex-gt-sm ng-if="vm.showDiscountCodeInput&&vm.discount.value==0">
+            <label>Cupón</label>
+            <input ng-model="vm.discount.code" type="text" ng-blur="vm.verifyDiscount()" />
+        </md-input-container> 
+        <small ng-if="vm.discount.value!=0" class="success-green"> &nbsp;&nbsp; Cupón aplicado <i class="fas fa-check-circle"></i></small>
+        <small ng-if="vm.discount.value==0&&vm.discount.name!=null&&vm.showDiscountCodeInput" class="darkred"><i class="fas fa-times-circle"></i></small>
+        <br>
+        <md-button class="md-button md-raised" ng-click="vm.showDiscountCodeInput=false" ng-if="vm.showDiscountCodeInput&&vm.discount.value==0"><i class="fas fa-times"></i>&nbsp; Cancelar</md-button>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="center center">
+        <div flex>
+            <div class="col-md-4">
+                <h4 class="pull-left upper-text">Total</h4>
+            </div>
+            <div class="col-md-8">
+                <h4 ng-if="vm.discount.total==0"><strong>{{ cart.totalCost() | currency:vm.currency.symbol }}</strong> 
+                    <!-- <small ng-if="vm.currency.value=='CRC'">({{cart.totalCost() / 600 | currency}})</small> -->
+                </h4>
+                <h4 ng-if="vm.discount.total!=0"><strong>{{ cart.totalCost() - vm.discount.total | currency:vm.currency.symbol }}</strong> 
+                    <!-- <small ng-if="vm.currency.value=='CRC'">({{cart.totalCost() / 600 | currency}})</small> -->
+                </h4>
+            </div>
+        </div>
+    </md-card-actions>
+</md-card>
+<div class="container-fluid">
+    <p>{{vm.store.delivery_terms}}</p>
+</div>
+    

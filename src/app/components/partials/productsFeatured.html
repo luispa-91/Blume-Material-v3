@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <div ng-repeat="list in vm.featuredLists">
+        <h2 class="text-center">{{::list.title}}</h2>
+        <div class="row">
+            <div class="col-md-3 col-sm-6" ng-repeat="product in list.products"> 
+                <md-card class="center-block text-center card-h">
+                    <md-card-content>
+                    <a href="" ui-sref="product(::{referenceCode:product.referenceCode,colorCode:product.colorCode})">
+                        <div class="imageContainer">
+                            <div style="background:url({{::product.imageUrl}}) no-repeat center; background-size:contain;" class="md-card-image img-card"></div>
+                            <!-- <img ng-src="{{::product.imageUrl}}" alt="{{::product.title}}" class="imageCard center-block"> -->
+                            <div class="imageOverlay">
+                                <div class="imageOverlayText"><i class="fa fa-2x fa-search"></i></div>
+                            </div>
+                            <span ng-if="::product.stock==0">
+                                <img class="soldOutTag" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
+                            </span>
+                            <span ng-if="::product.discountPrice!=0">
+                                <div style="position:absolute;top:40px;right:33px;z-index:1">
+                                    <strong style="color:white">{{100-(product.discountPrice*100)/product.price | number:0}}%</strong>
+                                </div>
+                                <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
+                            </span>
+                        </div>
+                    </a>
+                    <h4>{{::product.title}}</h4>
+                    <p class="no-margin" ng-if="product.price!=0">
+                        <span ng-if="::product.discountPrice==0">
+                            {{::product.price | currency:vm.currency.symbol}} 
+                            <!-- Uncomment to show secondary price -->
+                            <!-- <small class="gray">({{::product.priceUsd|currency}})</small> -->
+                        </span>
+                        <span ng-if="::product.discountPrice!=0">
+                            <small class="darkred"><strike>{{::product.price | currency:vm.currency.symbol}}</strike></small><br />
+                            {{::product.discountPrice | currency:vm.currency.symbol}} 
+                            <!-- Uncomment to show secondary price -->
+                            <!-- <small class="gray">({{::product.discountPriceUsd|currency}})</small> -->
+                        </span>
+                        <strong ng-if="product.discountTimerEnd">
+                            <br>
+                            <timer class="discountTimer" end-time="product.discountTimerEnd" max-time-unit="'hour'">{{hours}} h {{minutes}} min {{seconds}} s</timer>
+                        </strong>
+                    </p>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    
+    <div layout="row" layout-align="center center">
+        <md-button class="md-button md-raised custom" ui-sref="products"><i class="fa fa-search"></i> &nbsp;Ver todos los productos</md-button>
+    </div>
+</div>

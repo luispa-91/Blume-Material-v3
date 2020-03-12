@@ -1,0 +1,19 @@
+<div ng-hide="attrs.id">
+    <a class="btn btn-custom" ng-disabled="true" ng-transclude></a>
+
+</div>
+
+<div class="row" ng-show="attrs.id">
+    <div ng-if="!inCart()">
+        <div class="form-inline" ng-if="data.stock != 0">
+          &nbsp;
+          <md-button class="md-raised md-primary custom-3" ng-click="ngCart.addItem(id, name, price, q, data)"><i class="fa fa-shopping-cart"></i>&nbsp; Apartar con 25%</md-button>
+        </div>
+        <div class="form-inline" ng-if="data.stock == 0">
+          &nbsp;
+          <md-button ng-disabled="true"><i class="fa fa-shopping-cart"></i>&nbsp; Apartar con 25%</md-button>
+          <!--<select ng-show="quantityMax" class="form-control" name="quantity" id="quantity" ng-model="q"
+                ng-options=" v for v in qtyOpt"></select>-->
+        </div>
+    </div>
+</div>

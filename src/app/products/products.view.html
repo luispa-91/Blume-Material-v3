@@ -1,0 +1,30 @@
+<!-- Remove next line to remove keds banner -->
+<img ng-if="vm.state=='keds'" src="https://cms.blumewebsites.com/blume/keds.jpg" class="center-block img-responsive" alt="">
+
+<div ng-show="!vm.loadingContent">
+  <div class="container">
+    <div layout="row" md-theme="custom">
+        <md-input-container flex>
+            <label><md-icon><i class="material-icons icon-color">search</i></md-icon> Buscar </label>
+            <input ng-model="vm.criteria" />
+        </md-input-container>
+    </div>
+    <div class="row" hide-md hide-lg hide-xl>
+        <div ng-include="'app/components/partials/filtersMobile.html'"></div>
+    </div>
+    <div class="row">
+      <!-- Product Filters -->
+      <div class="col-md-2" hide-xs hide-sm>
+          <div ng-include="'app/components/partials/filterSidebar.html'"></div>
+      </div>
+      <!-- Product Grid 3 -->
+      <div ng-if="vm.state!='sale'" class="col-md-10" infinite-scroll="vm.addMoreItems()" infinite-scroll-distance="1">
+          <div ng-include="'app/components/partials/productsGrid3.html'"></div>
+      </div>
+      <div ng-if="vm.state=='sale'" class="col-md-10" infinite-scroll="vm.addMoreItems()" infinite-scroll-distance="1">
+          <div ng-include="'app/components/partials/productsGrid3.html'"></div>
+      </div>
+    </div>
+  </div>
+</div>
+

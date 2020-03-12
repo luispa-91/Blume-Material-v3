@@ -1,0 +1,130 @@
+<!-- Topbar-->
+<div class="topbar topbar-color" ng-if="vm.site!='costaskincare.com'&&vm.site!='mayorista.costaskincare.com'">
+    <div class="topbar-column">
+      <form ng-submit="vm.searchProducts()">
+          <div class="input-icons"> 
+              <i class="fa fa-search icon"></i> 
+              <input class="input-field" placeholder="Buscar" type="text" ng-model="vm.searchQuery" />
+          </div> 
+      </form>
+    </div>
+  <div class="topbar-column" hide-xs hide-sm>
+    <!-- Store list -->
+    <md-menu ng-if="vm.site=='cachoscr.com'||vm.site=='nmnuevomundo.com'" class="menu-bar-small">
+      <md-button class="topbar-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+        Tiendas <md-icon style="color:white;" class="material-icons principal-color md-48">arrow_drop_down</md-icon>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item ng-repeat="store in vm.warehouseList">
+          <md-button href="/products?storeId={{::store.externalWarehouseId}}">
+            {{::store.name}}
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+    <!-- End Store list -->
+    <a ng-repeat="info in vm.navbar.contactLinks" class="hidden-md-down" href="{{::info.url}}" target="_blank"><i class="{{::info.iconClass}}"></i> {{::info.text}}</a>
+  </div>
+</div>  
+<md-content>
+    <md-toolbar layout="row" layout-align="center center">
+      <div class="navbar-color md-toolbar-tools shadow">
+          <md-button class="md-icon-button launch" ng-click="vm.toggleLeft()" hide-gt-md>
+            <i class="material-icons">menu</i>
+          </md-button>
+            <span flex></span>
+            <md-button aria-label="Home Button" ui-sref="home" class="md-warn"><img ui-sref="home" style="max-height:50px;" ng-src="{{vm.navbar.logoUrl}}" alt="Ecommerce Costa Rica"></md-button>
+            
+            <div hide-xs ng-repeat="tab in vm.navbar.tabs"> 
+              <md-button ng-if="::tab.type=='simple'" href="{{::tab.url}}"> {{::tab.name}} &nbsp;</md-button>
+
+              <!-- Dropdown Menus -->
+              <md-menu ng-if="::tab.type=='dropdown'" class="menu-bar">
+                <md-button ng-click="vm.openMenu($mdOpenMenu, $event)">
+                  {{::tab.name}} <md-icon style="color:black"class="material-icons  principal-color md-48">arrow_drop_down</md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                  <md-menu-item ng-repeat="value in tab.subMenu">
+                    <md-button href="{{::tab.url}}{{::value}}">
+                      {{::value}}
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+
+              <!-- Uncomment to add large Submenu -->
+              <!-- <md-menu ng-if="::tab.submenu" class="menu-bar">
+              <md-button ng-click="$mdOpenMenu($event)">
+                {{::tab.name}} &nbsp;<i class="fa fa-chevron-down"></i>
+              </md-button>
+              <md-menu-content class="menu-content-mp">
+                  <div layout="row">
+                    <div class="navbar-submenu-container" ng-repeat="sub in tab.submenu" flex>
+                      <a class="no-decor" href="{{::sub.linkUrl}}"><h4><strong>{{::sub.title}}</strong></h4></a>
+                        <md-menu-item class="custom-height" ng-if="::sub2.title!=''" ng-repeat="sub2 in sub.submenu">
+                          <a class="no-decor" href="{{::sub2.linkUrl}}">
+                            {{::sub2.title}}
+                          </a>
+                        </md-menu-item>
+                    </div>
+                  </div>
+              </md-menu-content>
+            </md-menu> -->
+            </div>
+            <md-button ng-if="::vm.site=='cachoscr.com'" href="/keds" hide-xs><img src="https://cms.blumewebsites.com/blume/kedslogo.png" style="max-width:75px;" alt="" aria-label="Keds concept store"></md-button>
+            <md-button class="darkred" ng-if="::!tab.submenu" href="/sale" hide-xs>&nbsp; <strong>Descuentos</strong></md-button>
+            <span flex></span>
+            <md-button ng-if="vm.navbar.logoUrl!='https://cms.blumewebsites.com/fox/website/logo.png'" ui-sref="cartReview" class="md-icon-button" aria-label="Go to Cart and Checkout">
+                <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
+            </md-button>
+            <span ng-if="vm.navbar.logoUrl!='https://cms.blumewebsites.com/fox/website/logo.png'" class="badge black">{{vm.cart.getTotalItems()}}</span>
+      </div>
+    </md-toolbar>
+</md-content>
+
+  <!-- Start Left Menu bar -->
+  <section layout="row" flex>
+   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+     <md-toolbar class="center-block text-center" ng-controller="LeftCtrl">
+       <span><img style="max-width:50px;margin-top:60px;margin-bottom:10px;" ng-src="{{vm.navbar.logoUrl}}" class="img-responsive center-block" /></span>
+     </md-toolbar>
+     <md-content>
+       <md-list ng-controller="LeftCtrl as vm">
+         <div ng-repeat="tab in vm.navbar.tabs">
+           <md-list-item ng-if="::!tab.subMenu" href="{{::tab.url}}">
+             <p class="upper-text">{{::tab.name}}</p>
+           </md-list-item>
+           <md-list-item ng-if="::tab.subMenu">
+            <p class="upper-text">{{::tab.name}}</p>
+            <md-menu class="md-secondary">
+              <md-button class="md-icon-button">
+                <md-icon><i class="material-icons icon-color">keyboard_arrow_down</i></md-icon>
+              </md-button>
+              <md-menu-content width="4">
+                <md-menu-item ng-repeat="value in tab.subMenu">
+                  <md-button href="{{::tab.url}}{{::value}}">
+                    {{::value}}
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </md-list-item>
+         </div>
+         <md-list-item ng-if="::vm.site=='cachoscr.com'" ng-click="::vm.goTo('keds')">
+          <p class="upper-text"><img src="https://cms.blumewebsites.com/blume/kedslogo.png" style="max-width:75px;" alt=""></p>
+        </md-list-item>
+         <md-list-item ng-click="::vm.goTo('sale')">
+          <p class="upper-text darkred"> &nbsp;<strong>Descuentos</strong></p>
+        </md-list-item>
+       </md-list>
+       <div layout="row" ng-if="vm.navbar.isGrupoCachos" class="ng-scope layout-row">
+         <a class="site-mini-logo" href="https://cachoscr.com"><img src="assets/images/stores/cachos.png" alt="Cachos"></a> 
+         <a class="site-mini-logo" href="https://nmnuevomundo.com"><img src="assets/images/stores/nuevomundo2.png" alt="Nuevo Mundo"></a>
+         <a class="site-mini-logo" href="https://foxracingcr.com"><img src="assets/images/stores/foxweb.png" alt="Fox Head"></a> 
+         <a class="site-mini-logo" href="https://freaks.fit"><img src="assets/images/stores/freaksweb.png" alt="Freaks"></a> 
+         <a class="site-mini-logo" href="https://beakcr.com"><img src="assets/images/stores/beak.png" alt="Freaks"></a> 
+         <a class="site-mini-logo" href="https://newwavecr.com"><img src="assets/images/stores/newwave.png" alt="Freaks"></a>
+        </div>
+    </md-content>
+   </md-sidenav>
+ </section>

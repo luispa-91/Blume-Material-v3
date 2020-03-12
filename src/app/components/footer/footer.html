@@ -1,0 +1,36 @@
+<md-divider class="max-top"></md-divider>
+
+<div layout="row">
+    </div>
+
+<div class="footer-bottom footer-color special-font-color">
+    <div class="container">
+      <div class="col-md-4">
+        <div ta-bind="text" ng-model="vm.footer.footerHtml" ta-readonly="true"></div>
+        <br>
+        <span ng-repeat="method in vm.footer.paymentMethods">
+          <img ng-if="::method=='fttech'" src="assets/images/bancoNacional.png" class="social-icon card-logo" />
+          <img ng-if="::method=='bacsanjose'" src="assets/images/bacSanJose.png" class="social-icon card-logo" />
+          <img ng-if="::method=='bacsanjose'" src="assets/images/tasa0.png" class="social-icon card-logo" />
+          <img ng-if="::method=='fttech'" src="assets/images/credix.png" class="social-icon card-logo" />
+          <img ng-if="::method=='paypal'" src="assets/images/paypal.svg" class="social-icon card-logo" />
+        </span>
+        <img src="assets/images/visa.svg" class="social-icon card-logo" />
+        <img src="assets/images/mastercard.svg" class="social-icon card-logo" />
+      </div>
+      <div class="col-md-4">
+        
+      </div>
+      <div class="col-md-4">
+        <h4 class="title-margin">Contáctenos</h4>
+        <p class="gray" ng-repeat="info in vm.footer.contactLinks">
+          <a class="contact-link no-decor" target="_blank" href="{{::info.url}}"><i class="{{::info.iconClass}}"></i> {{::info.text}}</a>
+        </p>
+        <p class="gray"><a href="info/trminosycondiciones" target="_blank" class="gray">Términos y Condiciones</a> / <a href="info/polticadeprivacidad" target="_blank" class="gray">Política de Privacidad</a>
+        <br>
+        <a class="gray" href="https://madebyblume.com" target="_blank">Blume Software 2019 ©</a>
+        </p>
+      </div>
+    </div>
+    <br />
+</div>

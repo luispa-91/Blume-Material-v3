@@ -1,0 +1,18 @@
+
+<div class="container-fluid">
+	<div class="col-md-1"></div>
+	<div class="col-md-7">
+    <!-- Customer Data -->
+    <div ng-controller="CustomerDataController as vm" ng-include="'app/components/partials/customerData.html'"></div>
+    <!-- Delivery Data -->
+    <div ng-controller="DeliveryDataController as vm" ng-include="'app/components/partials/deliveryData.html'"></div>
+    <!-- Payment Data -->
+    <div ng-controller="PaymentDataController as vm" ng-include="'app/components/partials/paymentData.html'"></div>
+	</div>
+	<div class="col-md-3">
+    <!-- Cart Totals -->
+		<div ng-controller="CartTotalsController as vm" ng-include="'app/components/partials/cartTotals.html'"></div>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+	 

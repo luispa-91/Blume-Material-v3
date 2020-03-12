@@ -1,0 +1,27 @@
+<div class="container" ng-if="vm.loadingPage">
+  <div class="row text-center">
+    <i class="fa fa-2x fa-spinner fa-spin"></i>
+  </div>
+</div>
+<section name="Page Content" ng-if="!vm.loadingPage">
+  <!-- Carousel -->
+  <div ng-include="'app/components/partials/carousel.html'"></div>
+
+  <!-- Main container -->
+  <div class="container-fluid no-padding">
+    
+    <!-- Instagram Feed -->
+    <div ng-include="'app/components/partials/instagramFeed.html'"></div>
+
+    <!-- Banners -->
+    <div ng-include="'app/components/partials/fullWidthBanners.html'"></div>
+    <br />
+
+    <!-- Featured collection links with images -->
+    <!-- <div ng-include="'app/components/partials/featuredCollectionLinks.html'"></div> -->
+
+    <!-- Featured Products -->
+    <div ng-include="'app/components/partials/productsFeatured.html'"></div>
+    
+  </div>
+</section>

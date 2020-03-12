@@ -1,0 +1,13 @@
+
+<div class="container-fluid">
+	<div class="col-md-1"></div>
+	<div ng-controller="CartReviewController as vm" class="col-md-7">
+			<div ng-include="'app/ngCart/summary.html'"></div>
+			<span class="darkred center-block text-center">{{vm.errorMessage}}</span>
+	</div>
+	<div ng-controller="CartTotalsController as vm" class="col-md-3">
+		<div ng-include="'app/components/partials/cartTotals.html'"></div>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+	 
