@@ -33,12 +33,18 @@
           vm.product = vm.products[0];
           vm.option1 = vm.product.externalId;
           vm.relatedProducts = data.relatedProducts;
-          // vm.colorVariations = data.colorVariations;
+          vm.colorVariations = data.colorVariations;
           vm.isGrupoCachos = data.isGrupoCachos;
           BlumeAnalytics.fbPixelViewContent(vm.product);
           vm.getProductAvailability();  
         });
      });
+
+     if(vm.site=="kamlung.madebyblume.com"){
+          Helper.currencyExchangeRate().then(function (results) { 
+              vm.currencyExchangeRate = results;
+          });
+      }
       
     }
 

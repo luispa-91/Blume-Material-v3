@@ -14,7 +14,7 @@
              </md-select>
           </md-input-container>
           &nbsp;
-          <md-button class="md-raised md-primary custom" ng-click="ngCart.addItem(id, name, price, q, data)"><i class="fa fa-shopping-cart"></i>&nbsp; Agregar</md-button>
+          <md-button class="md-raised md-primary custom" ng-style="buttonPrimaryStyle" ng-click="ngCart.addItem(id, name, price, q, data)"><i class="fa fa-shopping-cart"></i>&nbsp; Agregar</md-button>
         </div>
         <div class="form-inline" ng-if="data.stock == 0">
           <md-input-container>
@@ -33,9 +33,9 @@
 
     <div ng-if="inCart()">
         <div class="form-inline" style="margin-top:17px;margin-bottom:17px">
-          <md-button class="md-button md-raised md-warn custom-2" ng-click="ngCart.removeItemById(id)"><i class="fa fa-times"></i>&nbsp; Eliminar</md-button>
+          <md-button class="md-button md-raised md-warn custom-2" ng-style="buttonTertiaryStyle" ng-click="ngCart.removeItemById(id)"><i class="fa fa-times"></i>&nbsp; Eliminar</md-button>
           &nbsp;
-          <md-button class="md-button md-raised" ui-sref="cartReview"><i class="fa fa-shopping-cart"></i>&nbsp; Checkout</md-button>
+          <md-button class="md-button md-raised" ng-style="buttonSecondaryStyle" ui-sref="cartReview"><i class="fa fa-shopping-cart"></i>&nbsp; Checkout</md-button>
         </div>
     </div>
 </div>

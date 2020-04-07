@@ -13,6 +13,7 @@
             //Initialize Controller
             vm.saving = false;
             vm.useTasaCero = false;
+            vm.useTasaCero6 = false;
             vm.acceptedPrivacyPolicy = false;
             vm.moneyTransferReceiptSent = false;
             vm.errorMessage = "";
@@ -62,6 +63,9 @@
             } else if(vm.paymentMethod==''){
               vm.errorMessage = "Para continuar con tu compra debes escoger un método de pago";
               vm.saving = false;
+            } else if(vm.paymentMethod=='moneytransfer'&&!vm.moneyTransferReceiptSent){
+              vm.errorMessage = "Para pagar con transferencia debes adjuntar el comprobante de pago. Haz click en el botón de adjuntar comprobante, una vez seleccionado, haz click en Finalizar Compra.";
+              vm.saving = false;
             } else {
               Order.create(vm.currency.value,vm.paymentMethod).then(function(data){
                 vm.payment.orderId = data.id;
@@ -82,8 +86,10 @@
                   case "bacsanjose":
                       DataCollection.logPayment(vm.payment.orderId,vm.paymentMethod,vm.payment.card.number).then(function(data){
                         if(vm.useTasaCero==true){
-                          vm.paymentMethods.bac.processorId="grupocachostc3";
-                        }
+                          if(vm.paymentMethods.bac.processorId=="grupocachos"){ vm.paymentMethods.bac.processorId="grupocachostc3"; }
+                          else if(vm.paymentMethods.bac.processorId=="11040616") { vm.paymentMethods.bac.processorId="11486398"; }
+                        } 
+                        if(vm.useTasaCero6==true) { vm.paymentMethods.bac.processorId="11486401"; }
                         vm.payment.card.expDate = vm.payment.card.expMonth + vm.payment.card.expYear;
                         vm.paymentMethods.bac.timestamp = Math.round((new Date()).getTime() / 1000);
                         vm.paymentMethods.bac.hash = Payments.bacCreateMd5Hash(vm.payment.orderId,vm.payment.amount,vm.paymentMethods.bac.timestamp,vm.paymentMethods.bac.applicationPassword);

@@ -37,6 +37,17 @@
         vm.cart = ngCart;
         vm.searchProducts = searchProducts;
         vm.site = Helper.currentSite();
+        vm.topbarStyle = {
+          'background-color': '#000000',
+          'color': '#ffffff',
+          'font-family': 'Camphor'
+        }
+
+        vm.navbarStyle = {
+          'background-color': '#fff',
+          'color': '#000',
+          'font-family': 'Camphor'
+        }
 
         //Get navbar
         Navbar.get().then(function(results){ vm.navbar = results; },function(err){ Mail.errorLog(err) });

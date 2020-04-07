@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('DeliveryDataController', DeliveryDataController);
-        DeliveryDataController.$inject = ['LocationAutoComplete', 'Delivery','$localStorage','Helper'];
-    function DeliveryDataController(LocationAutoComplete, Delivery,$localStorage,Helper) {
+        DeliveryDataController.$inject = ['LocationAutoComplete', 'Delivery','$localStorage','Helper','$scope','Customer'];
+    function DeliveryDataController(LocationAutoComplete, Delivery,$localStorage,Helper,$scope,Customer) {
         var vm = this;
         init();
         ///////////////
@@ -26,6 +26,7 @@
             vm.currency = {value: '', symbol: ''}; 
             vm.isGrupoCachos = Helper.isGrupoCachos();
             vm.showWrapGift = Helper.showWrapGift();
+            vm.site = Helper.currentSite();
 
             //Bind functions
             vm.verify = verify;
@@ -46,6 +47,16 @@
 
             getDeliveryMethods();
         }
+
+        Customer.broadcastCustomerComplete($scope, function broadcastUpdate() {
+            // Handle notification
+            setTimeout(function(){
+                if(vm.addressComplete&&!vm.addressCreated){
+                    Delivery.createAddress(vm.address,vm.orderNote).then(function(response){ vm.addressCreated = true; });
+                }
+                $scope.$apply();
+                }, 500);
+        });
 
         function verify(isValid){
             $localStorage.orderNote = vm.orderNote;

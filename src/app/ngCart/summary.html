@@ -37,8 +37,8 @@
 				</div>
 				
 				<md-card-actions layout="row" layout-align="center center">
-					<md-button class="md-button" ui-sref="home"><i class="fa fa-chevron-left"></i>&nbsp; Volver</md-button> &nbsp;&nbsp;
-					<md-button ng-if="cart.$cart.items.length > 0" class="md-button md-raised md-primary custom" ng-click="vm.continueToCheckout()"><i class="fa fa-chevron-right"></i>&nbsp; Continuar </md-button>
+					<md-button class="md-button" ui-sref="home"><i class="fa fa-chevron-left" ng-style="vm.buttonSecondaryStyle"></i>&nbsp; Volver</md-button> &nbsp;&nbsp;
+					<md-button ng-if="cart.$cart.items.length > 0" class="md-button md-raised md-primary custom" ng-style="vm.buttonPrimaryStyle" ng-click="vm.continueToCheckout()"><i class="fa fa-chevron-right"></i>&nbsp; Continuar </md-button>
 				</md-card-actions>
 				<br />
 				

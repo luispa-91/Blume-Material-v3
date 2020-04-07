@@ -4,6 +4,8 @@
     </div>
 </div>
 <section name="PageContent" ng-if="!vm.loadingPage">
+    <img ng-if="vm.site=='cachoscr.com'" src="https://cms.blumewebsites.com/cachos/brands/{{vm.brand}}banner.png" class="img-responsive" alt="">
+    <img ng-if="vm.site=='nmnuevomundo.com'" src="https://cms.blumewebsites.com/cachos/brandsnm/{{vm.brand}}banner.png" class="img-responsive" alt="">
     <div class="col-md-4 col-sm-6 no-padding" ng-repeat="product in vm.products | filter:vm.criteria | filter: vm.saleProducts('discountPrice',0) | limitTo:vm.itemsDisplayed"> 
         <md-card class="center-block text-center card-h-3">
             <md-card-content>

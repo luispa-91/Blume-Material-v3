@@ -1,25 +1,19 @@
-<div class="container-fluid no-padding">
-    <div layout="column">
-    <div ng-repeat="banner in vm.banners" flex>
-        <a href="{{::banner.linkUrl}}" target="_blank" ng-if="::banner.style=='imageFull'">
+<a href="{{::banner.linkUrl}}" ng-if="::banner.style=='full'">
+    <img ng-src="{{::banner.imageUrl}}" style="width: 100%;" alt="">
+</a>
+<div ng-if="::banner.style=='textLeft'">
+    <div layout="row">
+        <div ta-bind ng-model="::banner.text" flex></div>
+        <a href="{{::banner.linkUrl}}" flex>
             <img ng-src="{{::banner.imageUrl}}" class="img-responsive" alt="">
         </a>
-        <div ng-if="::banner.style=='textLeft'">
-            <div layout="row">
-                <div ta-bind ng-model="::banner.text" flex></div>
-                <a href="{{::banner.linkUrl}}" target="_blank" flex>
-                    <img ng-src="{{::banner.imageUrl}}" class="img-responsive" alt="">
-                </a>
-            </div>
-        </div>
-        <div ng-if="::banner.style=='textRight'">
-            <div layout="row">
-                <a href="{{::banner.linkUrl}}" target="_blank" flex>
-                    <img ng-src="{{::banner.imageUrl}}" class="img-responsive" alt="">
-                </a>
-                <div ta-bind ng-model="::banner.text" flex></div>
-            </div>
-        </div>
     </div>
+</div>
+<div ng-if="::banner.style=='textRight'">
+    <div layout="row">
+        <a href="{{::banner.linkUrl}}" flex>
+            <img ng-src="{{::banner.imageUrl}}" class="img-responsive" alt="">
+        </a>
+        <div ta-bind ng-model="::banner.text" flex></div>
     </div>
 </div>

@@ -26,6 +26,9 @@ angular
         if($state.params.s){
             vm.criteria = $state.params.s;
         }
+        //Grupo Cachos brand banners
+        vm.brand = $location.search().brand;
+        if(vm.brand){ vm.brand = vm.brand.replace(/\W/g, '').toLowerCase(); }
 
         vm.setFilter = setFilter;
         vm.removeFilter = Website.removeFilter;

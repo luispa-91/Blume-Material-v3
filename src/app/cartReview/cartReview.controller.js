@@ -19,12 +19,19 @@
       Delivery.restart();
       vm.currency = {value: '', symbol: ''}; 
       vm.errorMessage = "";
+
+      vm.buttonPrimaryStyle = {
+        'border-radius': '0px'
+      }
+  
+      vm.buttonSecondaryStyle = {
+        'border-radius': '0px'
+      }
       
       Cart.verifyStock();
 
       //Bind Functions
       vm.continueToCheckout = continueToCheckout;
-
       
       Helper.currency().then(function (results) { 
         vm.currency = results;

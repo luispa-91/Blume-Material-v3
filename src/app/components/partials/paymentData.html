@@ -1,6 +1,6 @@
 <md-card class="card-simple top-shadow" md-theme="custom">
     <md-card-content>
-            <h3> Método de Pago</h3> <br>
+            <h3>3. Seleccionar Método de Pago</h3> <br>
             <!-- PayPal Starts Here -->
             <div class="list-title" ng-click="vm.paymentMethod='paypal'" ng-if="vm.paymentMethods.paypal">
               <h4 ng-class="{'success-green':vm.paymentMethod=='paypal'}"> 
@@ -79,9 +79,19 @@
                     <div ng-if="vm.paymentMethods.bac.processorId=='grupocachos'" class="form-group c-c center-block text-center">
                         <md-checkbox ng-model="vm.useTasaCero" aria-label="Use Tasa Cero">
                             <img src="../assets/images/tasa0.png" class="img-responsive" />
+                            3 meses 
                         </md-checkbox>
                     </div>
-
+                    <div ng-if="vm.paymentMethods.bac.processorId=='11040616'" class="form-group c-c center-block text-center">
+                        <md-checkbox ng-model="vm.useTasaCero" aria-label="Use Tasa Cero">
+                            <img src="../assets/images/tasa0.png" class="img-responsive" />
+                            3 meses 
+                        </md-checkbox> 
+                        <md-checkbox ng-model="vm.useTasaCero6" aria-label="Use Tasa Cero">
+                            <img src="../assets/images/tasa0.png" class="img-responsive" />
+                            6 meses
+                        </md-checkbox>
+                    </div>
                     </div>
                     <input type="hidden" name="hash" value="{{vm.paymentMethods.bac.hash}}" />
                     <input type="hidden" name="time" value="{{vm.paymentMethods.bac.timestamp}}" />
@@ -203,7 +213,7 @@
         <!-- Complete Payment -->
         <md-card-actions layout="row" layout-align="center center">
             <md-button class="pull-left sm-margin-left" ui-sref="cartReview"><i class="fa fa-chevron-left"></i>&nbsp; Volver</md-button>
-            <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.makePayment()">
+            <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.makePayment()" ng-if="!vm.moneyTransferReceiptSent">
                 <span ng-show="!vm.saving"><i class="fa fa-check"></i>&nbsp; Finalizar Compra</span>
                 <span ng-show="vm.saving"><i class="fa fa-spinner fa-spin"></i></span>
             </md-button>

@@ -63,6 +63,12 @@
               }
             }
 
+            var currencyExchangeRate = function(){
+                return $http.get('https://api.currencylayer.com/live?access_key=fd4afd5638ec7614e784b2975e97b345&source=CRC&currencies=USD&format=1').then(function (results) {
+                    return results.data.quotes.CRCUSD;
+                });
+            }
+
             var getDeviceFingerprintId = function (merchantID,environment) {  
              
              if (environment.toLowerCase() == 'live') {
@@ -128,7 +134,8 @@
                 isGrupoCachos: isGrupoCachos,
                 showWrapGift: showWrapGift,
                 currentSite: currentSite,
-                getDeviceFingerprintId: getDeviceFingerprintId
+                getDeviceFingerprintId: getDeviceFingerprintId,
+                currencyExchangeRate: currencyExchangeRate
               }
           }
   })();

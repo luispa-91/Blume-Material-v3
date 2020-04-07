@@ -46,6 +46,12 @@
 
             }
 
+            // vm.footerStyle = {
+            //     'background-color': '#d3d2d2',
+            //     'color': '#000',
+            //     'font-family': 'Camphor'
+            //   }
+
         };
 
     }

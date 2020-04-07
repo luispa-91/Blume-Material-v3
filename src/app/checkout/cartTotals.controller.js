@@ -14,6 +14,7 @@
             vm.discount = { code: '', name:'', value: 0 };
             vm.showDiscountCodeInput = false;
             vm.currency = {value: '', symbol: ''}; 
+            vm.site = Helper.currentSite();
 
             //Bind functions
             vm.verifyDiscount = verifyDiscount;
@@ -23,6 +24,18 @@
                 vm.currency = results;
                 if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
              });
+             if(vm.site=="kamlung.madebyblume.com"){
+                Helper.currencyExchangeRate().then(function (results) { 
+                    vm.currencyExchangeRate = results;
+                 });
+             }
+            vm.buttonPrimaryStyle = {
+            'border-radius': '0px'
+            }
+            vm.buttonSecondaryStyle = {
+            'border-radius': '0px'
+            }
+            Discount.verifyRules().then(function(data){ vm.discount = data; });
         }
 
         Discount.broadcastDiscountUpdate($scope, function broadcastUpdate() {

@@ -1,9 +1,9 @@
-<md-divider class="max-top"></md-divider>
+<!-- <md-divider class="max-top"></md-divider> -->
 
 <div layout="row">
     </div>
 
-<div class="footer-bottom footer-color special-font-color">
+<div class="footer-bottom" ng-style="vm.footerStyle">
     <div class="container">
       <div class="col-md-4">
         <div ta-bind="text" ng-model="vm.footer.footerHtml" ta-readonly="true"></div>
@@ -22,13 +22,13 @@
         
       </div>
       <div class="col-md-4">
-        <h4 class="title-margin">Contáctenos</h4>
-        <p class="gray" ng-repeat="info in vm.footer.contactLinks">
+        <h3 class="title-margin">Contáctenos</h3>
+        <p ng-repeat="info in vm.footer.contactLinks">
           <a class="contact-link no-decor" target="_blank" href="{{::info.url}}"><i class="{{::info.iconClass}}"></i> {{::info.text}}</a>
         </p>
-        <p class="gray"><a href="info/trminosycondiciones" target="_blank" class="gray">Términos y Condiciones</a> / <a href="info/polticadeprivacidad" target="_blank" class="gray">Política de Privacidad</a>
+        <p><a href="info/trminosycondiciones" target="_blank" class="inherit-color">Términos y Condiciones</a> / <a href="info/polticadeprivacidad" target="_blank" class="inherit-color">Política de Privacidad</a>
         <br>
-        <a class="gray" href="https://madebyblume.com" target="_blank">Blume Software 2019 ©</a>
+        <a href="https://madebyblume.com" target="_blank" class="inherit-color">Blume Software 2019 ©</a>
         </p>
       </div>
     </div>

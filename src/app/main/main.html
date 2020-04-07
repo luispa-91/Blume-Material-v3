@@ -13,15 +13,30 @@
     <!-- Instagram Feed -->
     <div ng-include="'app/components/partials/instagramFeed.html'"></div>
 
-    <!-- Banners -->
-    <div ng-include="'app/components/partials/fullWidthBanners.html'"></div>
-    <br />
-
     <!-- Featured collection links with images -->
-    <!-- <div ng-include="'app/components/partials/featuredCollectionLinks.html'"></div> -->
+    <div ng-include="'app/components/partials/featuredCollectionLinks.html'"></div>
+
+    <!-- Banners 1 -->
+    <div class="container-fluid no-padding">
+        <div layout="column">
+          <div ng-repeat="banner in vm.banners.sectionOne" flex>
+            <div ng-include="'app/components/partials/fullWidthBanners.html'"></div>
+          </div>
+        </div>
+    </div>
+    <br />
 
     <!-- Featured Products -->
     <div ng-include="'app/components/partials/productsFeatured.html'"></div>
+
+    <!-- Banners 2 -->
+    <div class="container-fluid no-padding">
+        <div layout="column">
+          <div ng-repeat="banner in vm.banners.sectionTwo" flex>
+            <div ng-include="'app/components/partials/fullWidthBanners.html'"></div>
+          </div>
+        </div>
+    </div>
     
   </div>
 </section>

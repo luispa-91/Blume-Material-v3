@@ -2,7 +2,7 @@
 <md-card-content>
     <!-- Delivery Information -->
 <h3>
-    Método de Entrega 
+    2. Seleccionar Método de Entrega 
     <small ng-if="vm.addressComplete" class="success-green"><i class="fas fa-check-circle"></i></small>
 </h3> <br>
 <!-- Pick up in store section starts here -->
@@ -18,7 +18,7 @@
         <div ng-if="vm.showStorePickup" class="list-title" ng-click="vm.toggleDeliveryMethod('storepickup')" flex>
             <h4>
                 <span ng-class="{'success-green':vm.deliveryMethod=='storepickup'}">
-                    Recoger en tienda <i class="fas fa-store"></i> &nbsp;
+                    Recoger en tienda <i class="fas fa-store"></i> <small ng-if="vm.site=='tienda.nutricionydeportecr.com'"> (y/o descarga digital)</small> &nbsp;
                 </span>
             </h4>
         </div>
@@ -58,6 +58,7 @@
         <br> -->
         <small ng-if="vm.deliveryMethod=='storepickup'" class="gray"> Recuerde llevar su cédula y la tarjeta que utilizó para retirar su compra. <strong ng-if="vm.isGrupoCachos" style="font-size:1.2em;">No se hacen entregas de pedidos los fines de semana.</strong></small>
         <span ng-if="vm.isGrupoCachos"> <br> Solo se hacen entregas en tiendas donde hay disponible el o los productos, verificar antes por favor.</span>
+        <span ng-if="vm.site=='tienda.nutricionydeportecr.com'"> HOSPITAL METROPOLITANO SEDE LINDORA. SEGUNDO PISO. CONSULTORIO 17</span>
     </div>
 </div>
 <!-- National home delivery form starts here -->

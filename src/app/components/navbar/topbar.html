@@ -1,0 +1,27 @@
+<div class="topbar" ng-style="vm.topbarStyle">
+    <div class="topbar-column">
+      <form ng-submit="vm.searchProducts()">
+          <div class="input-icons"> 
+              <i class="fa fa-search icon"></i> 
+              <input class="input-field" placeholder="Buscar" type="text" ng-model="vm.searchQuery" />
+          </div> 
+      </form>
+    </div>
+  <div class="topbar-column" hide-xs hide-sm>
+    <!-- Store list -->
+    <md-menu ng-if="vm.site=='cachoscr.com'||vm.site=='nmnuevomundo.com'" class="menu-bar-small">
+      <md-button class="topbar-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+        Tiendas <md-icon style="color:white;" class="material-icons principal-color md-48">arrow_drop_down</md-icon>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item ng-repeat="store in vm.warehouseList">
+          <md-button href="/products?storeId={{::store.externalWarehouseId}}">
+            {{::store.name}}
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+    <!-- End Store list -->
+    <a ng-repeat="info in vm.navbar.contactLinks" class="hidden-md-down" href="{{::info.url}}" target="_blank"><i class="{{::info.iconClass}}"></i> {{::info.text}}</a>
+  </div>
+</div> 

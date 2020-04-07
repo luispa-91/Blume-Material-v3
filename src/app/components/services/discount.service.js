@@ -13,8 +13,8 @@
 
                 //------- START SPECIAL RULE ----------//
                 var site = Helper.currentSite();
-                if(site=="cachoscr.com"||site=="nmnuevomundo.com"){
-                    if(ngCart.totalCost()>30000){
+                if(site=="rutaurbana.com"){
+                    if(ngCart.getSubTotal()>10000){
                         discount = {
                             name: "Regla Especial",
                             applyTo: "delivery",
@@ -28,7 +28,7 @@
                         discount = { code: '', name:'', value: 0 };
                         $localStorage.discount = { code: '', value: 0 };
                     }
-                }
+                } 
                 //------- END SPECIAL RULE ----------//
 
                 //Verify if discount has been applied
@@ -66,6 +66,9 @@
                             if(discount.total > ngCart.getShipping()){ discount.total = ngCart.getShipping(); } 
                         }
                     }
+                    else if(discount.type=="combo"){
+                        discount.total = discount.value;
+                    }
                 } else {
                     discount = { code: '', value: 0, total: 0 };
                 }
@@ -85,6 +88,18 @@
                 });
             }
 
+            var verifyRules = function () {
+                var request = {
+                    items: ngCart.getCustomItems()
+                }
+                //Verify discount
+                return $http.post("https://api2.madebyblume.com/v3/storeFront/discounts/verify/rule",request).then(function (results) {
+                    $localStorage.discount = results.data.data;
+                    calculateDiscount();
+                    return results.data.data;
+                });
+            }
+
             var broadcastDiscountUpdate = function(scope, callback) {
                 var handler = $rootScope.$on('discountUpdate', callback);
                 scope.$on('$destroy', handler);
@@ -97,6 +112,7 @@
         return {
             calculateDiscount: calculateDiscount,
             verify:verify,
+            verifyRules: verifyRules,
             broadcastDiscountUpdate: broadcastDiscountUpdate,
             reset:reset
         }

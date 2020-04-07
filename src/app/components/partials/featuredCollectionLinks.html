@@ -1,15 +1,12 @@
-<section name="collectionLinks">
+<section name="collectionLinks" ng-if="vm.site=='nmnuevomundo.com'">
     <div class="container-fluid">
+        <h2 class="text-center" ng-style="vm.titleStyle">Colecciones</h2>
         <div class="row" style="padding-top: 5px;padding-bottom: 5px;">
-            <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;"><img src="../../assets/images/men.jpg" class="img-responsive" alt=""></div>
-            <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;"><img src="../../assets/images/women.jpg" class="img-responsive" alt=""></div>
-            <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;"><img src="../../assets/images/kids.jpg" class="img-responsive" alt=""></div>
-        </div>
-        <div class="row" style="padding-top: 5px;padding-bottom: 5px;">
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;"><img src="../../assets/images/men.jpg" class="img-responsive" alt=""></div>
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;"><img src="../../assets/images/women.jpg" class="img-responsive" alt=""></div>
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;"><img src="../../assets/images/kids.jpg" class="img-responsive" alt=""></div>
-            <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;"><img src="../../assets/images/kids.jpg" class="img-responsive" alt=""></div>
+            <div class="col-md-6" style="padding: 5px;"><a href="/products?family=ABRIGOS"><img src="../../assets/images/categoria1.jpg" class="img-responsive" alt=""></a></div>
+            <div class="col-md-6" style="padding: 5px;"><a href="/products?productType=CALZADO"><img src="../../assets/images/categoria2.jpg" class="img-responsive" alt=""></a></div>
+            <div class="col-md-6" style="padding: 5px;"><a href="/products?family=GORRA"><img src="../../assets/images/categoria3.jpg" class="img-responsive" alt=""></a></div>
+            <div class="col-md-6" style="padding: 5px;"><a href="/products?family=MALETIN"><img src="../../assets/images/categoria4.jpg" class="img-responsive" alt=""></a></div>
         </div>
     </div>
+    <br>
 </section>

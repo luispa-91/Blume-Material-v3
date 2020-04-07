@@ -124,7 +124,7 @@ angular.module('ngCart', ['ngCart.directives'])
             for (var i = 0; i < oldItems.length; i++) {
                 var item = {
                     productId: oldItems[i]._id,
-                    description: oldItems[i]._name,
+                    description: oldItems[i]._name + " " + oldItems[i]._data.comboCode,
                     quantity: oldItems[i]._quantity,
                     unitPrice: oldItems[i]._price,
                     total: oldItems[i]._quantity * oldItems[i]._price
@@ -293,8 +293,6 @@ angular.module('ngCart', ['ngCart.directives'])
 
 
         item.prototype.setQuantity = function(quantity, relative){
-
-
             var quantityInt = parseInt(quantity);
             if (quantityInt % 1 === 0){
                 if (relative === true){
@@ -309,8 +307,6 @@ angular.module('ngCart', ['ngCart.directives'])
                 $log.info('Quantity must be an integer and was defaulted to 1');
             }
             $rootScope.$emit('discountUpdate');
-
-
         };
 
         item.prototype.getQuantity = function(){
@@ -374,7 +370,18 @@ angular.module('ngCart', ['ngCart.directives'])
 
     .controller('CartController',['$scope', 'ngCart', function($scope, ngCart) {
         $scope.ngCart = ngCart;
-
+        
+    $scope.buttonPrimaryStyle = {
+        'border-radius': '0px'
+      }
+  
+      $scope.buttonSecondaryStyle = {
+        'border-radius': '0px'
+      }
+  
+      $scope.buttonTertiaryStyle = {
+        'border-radius': '0px'
+      }
     }])
 
     .value('version', '1.0.0');
