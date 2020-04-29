@@ -22,7 +22,7 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController(Navbar, ngCart, Website, Helper) {
+    function NavbarController(Navbar, ngCart, Website, Helper, Personalization) {
       var vm = this;
 
       init();
@@ -37,17 +37,7 @@
         vm.cart = ngCart;
         vm.searchProducts = searchProducts;
         vm.site = Helper.currentSite();
-        vm.topbarStyle = {
-          'background-color': '#000000',
-          'color': '#ffffff',
-          'font-family': 'Camphor'
-        }
-
-        vm.navbarStyle = {
-          'background-color': '#fff',
-          'color': '#000',
-          'font-family': 'Camphor'
-        }
+        vm.theme = Personalization.navbar(vm.site);
 
         //Get navbar
         Navbar.get().then(function(results){ vm.navbar = results; },function(err){ Mail.errorLog(err) });

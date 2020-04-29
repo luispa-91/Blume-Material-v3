@@ -5,8 +5,8 @@
     .module('angular')
     .controller('MainController', MainController);
     
-  MainController.$inject = ['Website', 'Mail','Helper'];
-  function MainController(Website, Mail, Helper) {
+  MainController.$inject = ['Website', 'Mail','Helper','Personalization'];
+  function MainController(Website, Mail, Helper, Personalization) {
     var vm = this;
 
     init();
@@ -23,6 +23,7 @@
       vm.site = Helper.currentSite();
       vm.timestamp = new Date().getTime();
       vm.loadingPage = true;
+      vm.banners = Personalization.mainPageBanners(vm.site);
 
       vm.titleStyle = {
         'background-color': '#fff',
@@ -33,26 +34,7 @@
       vm.buttonPrimaryStyle = {
         'border-radius': '0px'
       }
-
-      if(vm.site=="nmnuevomundo.com"){
-        vm.banners = {
-          sectionOne: [
-            {
-              imageUrl: 'assets/images/bannermid.jpg',
-              linkUrl: '/products',
-              style: 'full'
-            }
-          ]
-          // ,
-          // sectionTwo: [
-          //   {
-          //     imageUrl: 'assets/images/prefooter.jpg',
-          //     linkUrl: '#',
-          //     style: 'full'
-          //   }
-          // ]
-        }
-      }
+      
 
       //Load MainPage
       Website.mainPage().then(function (data) { 

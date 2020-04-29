@@ -8,7 +8,7 @@
 <!-- Pick up in store section starts here -->
 <section name="deliveryMethodSelection">
     <div layout="row" layout-align="center center">
-        <div class="list-title" ng-click="vm.toggleDeliveryMethod('national')" flex>
+        <div ng-if="vm.site!='tienda.elastechc.com'" class="list-title" ng-click="vm.toggleDeliveryMethod('national')" flex>
             <h4>
                 <span ng-class="{'success-green':vm.deliveryMethod=='national'}">
                     Envío a domicilio <i class="fas fa-shipping-fast"></i> &nbsp; 
@@ -37,7 +37,8 @@
     <div class="col-md-12">
         <div class="form-group">
             <md-input-container class="md-block" flex-gt-sm>
-                <label>Escriba aquí un mensaje para el vendedor</label>
+                <label ng-if="!vm.showWrapGift">Escriba aquí un mensaje para el vendedor</label>
+                <label ng-if="vm.showWrapGift">Escriba aquí el mensaje para la tarjeta de regalo</label>
                 <textarea ng-model="vm.orderNote" md-maxlength="300" rows="5" ng-blur="vm.verify(addressData.$valid)" required></textarea>
             </md-input-container>
         </div>
@@ -107,7 +108,8 @@
     <div class="col-md-6">
                 <div class="form-group">
                     <md-input-container class="md-block" flex-gt-sm>
-                        <label>Escriba aquí un mensaje para el vendedor</label>
+                        <label ng-if="!vm.showWrapGift">Escriba aquí un mensaje para el vendedor</label>
+                        <label ng-if="vm.showWrapGift">Escriba aquí el mensaje para la tarjeta de regalo</label>
                         <textarea ng-model="vm.orderNote" ng-blur="vm.verify(addressData.$valid)" md-maxlength="300" rows="3"></textarea>
                     </md-input-container>
                 </div>

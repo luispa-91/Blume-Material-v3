@@ -33,6 +33,7 @@
 
                 //Verify if discount has been applied
                 if($localStorage.discount){
+                    console.log($localStorage.discount);
                     discount = $localStorage.discount;
                     discount.total = 0;
                     //Verify discount type
@@ -43,6 +44,7 @@
                         if(discount.applyTo=="subtotal"){
                             var items = ngCart.getCart().items;
                             discount.total = 0;
+                            console.log(items);
                             for (var i = 0; i < items.length; i++) {
                                 if(items[i]._data.isDiscountPrice==0){
                                     discount.total += multiplier * (items[i]._price * items[i]._quantity);
@@ -94,8 +96,10 @@
                 }
                 //Verify discount
                 return $http.post("https://api2.madebyblume.com/v3/storeFront/discounts/verify/rule",request).then(function (results) {
-                    $localStorage.discount = results.data.data;
-                    calculateDiscount();
+                    if(results.data.data.value>0){
+                        $localStorage.discount = results.data.data;
+                        calculateDiscount();
+                    }
                     return results.data.data;
                 });
             }

@@ -54,7 +54,7 @@
             if(!$localStorage.deliveryType){
               vm.errorMessage = "Para continuar con tu compra debes escoger un método de entrega";
               vm.saving = false;
-            } else if(!$localStorage.customerComplete){
+            } else if(!$localStorage.customerComplete||!$localStorage.customerId){
               vm.errorMessage = "Para continuar con tu compra debes completar tus datos personales";
               vm.saving = false;
             } else if(!$localStorage.addressComplete){
@@ -63,7 +63,7 @@
             } else if(vm.paymentMethod==''){
               vm.errorMessage = "Para continuar con tu compra debes escoger un método de pago";
               vm.saving = false;
-            } else if(vm.paymentMethod=='moneytransfer'&&!vm.moneyTransferReceiptSent){
+            } else if(vm.paymentMethod=='moneytransfer'&&vm.uploader.queue.length==0){
               vm.errorMessage = "Para pagar con transferencia debes adjuntar el comprobante de pago. Haz click en el botón de adjuntar comprobante, una vez seleccionado, haz click en Finalizar Compra.";
               vm.saving = false;
             } else {

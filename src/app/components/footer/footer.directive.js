@@ -21,7 +21,7 @@
         return directive;
 
         /** @ngInject */
-        function FooterController(Website, BlumeAnalytics) {
+        function FooterController(Website, BlumeAnalytics, Helper, Personalization) {
             var vm = this;
 
             init();
@@ -32,6 +32,8 @@
                 vm.selectedMode = 'md-fling';
                 vm.selectedDirection = 'right';
                 vm.isOpen = false;
+                vm.site = Helper.currentSite();
+                vm.theme = Personalization.footer(vm.site);
                 
                 //Get footer
                 Website.footer().then(function(results){ 
@@ -45,12 +47,6 @@
                 },function(err){ Mail.errorLog(err) });
 
             }
-
-            // vm.footerStyle = {
-            //     'background-color': '#d3d2d2',
-            //     'color': '#000',
-            //     'font-family': 'Camphor'
-            //   }
 
         };
 

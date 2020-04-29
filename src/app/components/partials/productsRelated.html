@@ -23,6 +23,9 @@
                         </div>
                         <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
                     </span>
+                    <span>
+                        <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::product.customValueD}}.png" ng-if="::product.customValueD=='combocam'||product.customValueD=='comboshorts'"/>
+                    </span>
                 </div>
             </a>
             <h4>{{::product.title}}</h4>

@@ -35,12 +35,15 @@
             vm.buttonSecondaryStyle = {
             'border-radius': '0px'
             }
-            Discount.verifyRules().then(function(data){ vm.discount = data; });
+            Discount.verifyRules().then(function(data){ if(data.value>0){ vm.discount = data; } });
         }
 
         Discount.broadcastDiscountUpdate($scope, function broadcastUpdate() {
             // Handle notification
             setTimeout(function(){
+                if(vm.discount.type=='combo'){
+                    Discount.verifyRules().then(function(data){ if(data.value>0){ vm.discount = data; } else { Discount.reset(); } });
+                }
                 calculateDiscount();
                 $scope.$apply();
                 }, 500);

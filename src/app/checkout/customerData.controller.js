@@ -16,6 +16,7 @@
             vm.customerComplete = false;
             vm.loginModuleVisible = false;
             delete $localStorage.customerComplete;
+            delete $localStorage.customerId;
 
             //Bind functions
             vm.verify = verify;
@@ -28,7 +29,7 @@
                 $localStorage.customerComplete = true;
             } else {
                 vm.customerComplete = false;
-                delete $localStorage.customerComplete;
+                delete $localStorage.customerId;
             }
             //Verify if customer already exists
             if(vm.customer.email!=''&&vm.customer.id==''){

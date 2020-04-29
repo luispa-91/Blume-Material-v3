@@ -14,7 +14,7 @@ angular
         vm.products = [];
         vm.activeFilters = [];
         vm.criteria = "";
-        vm.brandBanner = "";
+        vm.customBanner = "";
         vm.loadingContent = false;
         vm.showFiltersMobile = false;
         vm.itemsDisplayed = 9;
@@ -28,6 +28,8 @@ angular
         }
         //Grupo Cachos brand banners
         vm.brand = $location.search().brand;
+        vm.customBanner = $location.search().customValueC;
+        if(vm.site=="nmnuevomundo.com"&&vm.customBanner){ vm.customBanner = vm.customBanner.replace(/\W/g, '').toLowerCase(); }
         if(vm.brand){ vm.brand = vm.brand.replace(/\W/g, '').toLowerCase(); }
 
         vm.setFilter = setFilter;

@@ -3,7 +3,7 @@
 <div layout="row">
     </div>
 
-<div class="footer-bottom" ng-style="vm.footerStyle">
+<div class="footer-bottom" ng-style="vm.theme.footer">
     <div class="container">
       <div class="col-md-4">
         <div ta-bind="text" ng-model="vm.footer.footerHtml" ta-readonly="true"></div>
@@ -11,7 +11,7 @@
         <span ng-repeat="method in vm.footer.paymentMethods">
           <img ng-if="::method=='fttech'" src="assets/images/bancoNacional.png" class="social-icon card-logo" />
           <img ng-if="::method=='bacsanjose'" src="assets/images/bacSanJose.png" class="social-icon card-logo" />
-          <img ng-if="::method=='bacsanjose'" src="assets/images/tasa0.png" class="social-icon card-logo" />
+          <img ng-if="::vm.site=='nmnuevomundo.com'||vm.site=='cachoscr.com'||vm.site=='tiendavertigo.com'" src="assets/images/tasa0.png" class="social-icon card-logo" />
           <img ng-if="::method=='fttech'" src="assets/images/credix.png" class="social-icon card-logo" />
           <img ng-if="::method=='paypal'" src="assets/images/paypal.svg" class="social-icon card-logo" />
         </span>

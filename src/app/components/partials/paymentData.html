@@ -206,14 +206,14 @@
 			<br>
 			<md-checkbox id="PrivacyPolicy" ng-model="vm.acceptedPrivacyPolicy" aria-label="Privacy Policy">	   
 			</md-checkbox>
-			Leí y acepto las <a href="#" onClick="window.open('politica-de-privacidad','pagename','resizable,height=600,width=400,left=200,top=50'); return false;">Políticas de Privacidad</a>
+			Leí y acepto las <a href="#" onClick="window.open('info/polticadeprivacidad','pagename','resizable,height=600,width=400,left=200,top=50'); return false;">Políticas de Privacidad</a>
             <br>
             <div class="center-block text-center"><span style="color:darkred">{{vm.errorMessage}}</span></div>
         </div>
         <!-- Complete Payment -->
         <md-card-actions layout="row" layout-align="center center">
             <md-button class="pull-left sm-margin-left" ui-sref="cartReview"><i class="fa fa-chevron-left"></i>&nbsp; Volver</md-button>
-            <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="btnProceed" ng-click="vm.makePayment()" ng-if="!vm.moneyTransferReceiptSent">
+            <md-button class="md-raised md-primary buttons-margin custom" ng-disabled="vm.saving" ng-click="vm.makePayment()" ng-if="!vm.moneyTransferReceiptSent">
                 <span ng-show="!vm.saving"><i class="fa fa-check"></i>&nbsp; Finalizar Compra</span>
                 <span ng-show="vm.saving"><i class="fa fa-spinner fa-spin"></i></span>
             </md-button>

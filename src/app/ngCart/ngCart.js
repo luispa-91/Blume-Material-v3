@@ -129,7 +129,7 @@ angular.module('ngCart', ['ngCart.directives'])
                     unitPrice: oldItems[i]._price,
                     total: oldItems[i]._quantity * oldItems[i]._price
                 };
-                if(oldItems[i]._data.isDiscountPrice = 1){ item.isDiscountPrice = true; } else { item.isDiscountPrice = false; }
+                if(oldItems[i]._data.isDiscountPrice == 1){ item.isDiscountPrice = true; } else { item.isDiscountPrice = false; }
                 newItems.push(item);
             }
 

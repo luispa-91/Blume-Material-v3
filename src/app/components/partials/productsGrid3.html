@@ -4,8 +4,9 @@
     </div>
 </div>
 <section name="PageContent" ng-if="!vm.loadingPage">
-    <img ng-if="vm.site=='cachoscr.com'" src="https://cms.blumewebsites.com/cachos/brands/{{vm.brand}}banner.png" class="img-responsive" alt="">
-    <img ng-if="vm.site=='nmnuevomundo.com'" src="https://cms.blumewebsites.com/cachos/brandsnm/{{vm.brand}}banner.png" class="img-responsive" alt="">
+    <img ng-if="::vm.site=='cachoscr.com'" src="https://cms.blumewebsites.com/cachos/brands/{{vm.brand}}banner.png" class="img-responsive" alt="">
+    <img ng-if="::vm.site=='nmnuevomundo.com'" src="https://cms.blumewebsites.com/cachos/brandsnm/{{vm.brand}}banner.png" class="img-responsive" alt="">
+    <img ng-if="::vm.site=='nmnuevomundo.com'" src="https://cms.blumewebsites.com/nuevomundo/website/{{vm.customBanner}}banner.jpg" class="img-responsive" alt="">
     <div class="col-md-4 col-sm-6 no-padding" ng-repeat="product in vm.products | filter:vm.criteria | filter: vm.saleProducts('discountPrice',0) | limitTo:vm.itemsDisplayed"> 
         <md-card class="center-block text-center card-h-3">
             <md-card-content>
@@ -24,6 +25,9 @@
                             <strong style="color:white">{{100-(product.discountPrice*100)/product.price | number:0}}%</strong>
                         </div>
                         <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
+                    </span>
+                    <span>
+                        <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::product.customValueD}}.png" ng-if="::product.customValueD=='combocam'||product.customValueD=='comboshorts'" />
                     </span>
                 </div>
             </a>

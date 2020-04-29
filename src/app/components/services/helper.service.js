@@ -56,7 +56,7 @@
 
             var showWrapGift = function () {
               var websiteHost = $location.$$host;
-              if(websiteHost=='killerqueencr.com'||websiteHost=='basicbcr.com'||websiteHost=='woohoo.cr'||websiteHost=='demo.madebyblume.com'||websiteHost=='localhost') {
+              if(websiteHost=='killerqueencr.com'||websiteHost=='basicbcr.com'||websiteHost=='woohoo.cr'||websiteHost=='demo.madebyblume.com'||websiteHost=='dieciseiscr.com'||websiteHost=='bajoaqua.com'||websiteHost=='localhost') {
                 return true;
               } else {
                 return false;
