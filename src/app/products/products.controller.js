@@ -21,6 +21,7 @@ angular
         vm.currency = {value: '', symbol: ''}; 
         vm.site = Helper.currentSite();
         vm.state = $state.$current.name;
+        vm.isGrupoCachos = Helper.isGrupoCachos();
         vm.loadingPage = true;
         vm.timestamp = new Date().getTime();
         if($state.params.s){

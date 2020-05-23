@@ -22,6 +22,7 @@
       vm.currency = {value: '', symbol: ''}; 
       vm.site = Helper.currentSite();
       vm.timestamp = new Date().getTime();
+      vm.keywords = [];
 
       //Initialize Variables
       Helper.currency().then(function (results) { 
@@ -35,12 +36,13 @@
           vm.relatedProducts = data.relatedProducts;
           vm.colorVariations = data.colorVariations;
           vm.isGrupoCachos = data.isGrupoCachos;
+          vm.keywords = vm.product.keywords.split(',');
           BlumeAnalytics.fbPixelViewContent(vm.product);
-          vm.getProductAvailability();  
+          vm.getProductAvailability();
         });
      });
 
-     if(vm.site=="kamlung.madebyblume.com"){
+     if(vm.site=="kamlungpuravida.com"){
           Helper.currencyExchangeRate().then(function (results) { 
               vm.currencyExchangeRate = results;
           });

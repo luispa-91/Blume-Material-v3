@@ -20,12 +20,32 @@
                 }
             }
             //Ruta Urbana
-            if(site=="rutaurbana.com"){
+            switch(site){
+              case "rutaurbana.com":
                 theme.topbar["background-color"] = "#275A53";
-            } else if(site=="bajoaqua.com"){
+                break;
+              case "bajoaqua.com":
                 theme.topbar["background-color"] = "#e8ba90";
-            } else if(site=="antonellaboutiquecr.com"){
+                break;
+              case "antonellaboutiquecr.com":
                 theme.topbar["background-color"] = "#d5a8af";
+                break;
+              case "mare.cr":
+                theme.topbar["background-color"] = "#c3b48b";
+                break;
+              case "desinid.madebyblume.com":
+                theme.topbar["background-color"] = "#f46a17";
+                break;
+              case "maky.madebyblume.com":
+                theme.topbar["background-color"] = "#2e2f7f";
+                break;
+              case "elmercatico.com":
+                theme.topbar["background-color"] = "#2E3192";
+                break;
+              case "coolbandscr.com":
+                theme.topbar["background-color"] = "#fff";
+                theme.topbar["color"] = "#000";
+                break;
             }
 
             return theme;
@@ -40,9 +60,15 @@
                     'font-family': 'Camphor'
                 }
             }
-            //Ruta Urbana
-            if(site=="rutaurbana.com"){
+            
+            switch(site){
+              case "rutaurbana.com":
                 theme.footer["background-color"] = "#F1F1F1";
+              break;
+              case "coolbandscr.com":
+                theme.footer["background-color"] = "#ff807f";
+                theme.footer["color"] = "#036780";
+              break;
             }
 
             return theme;
@@ -50,7 +76,8 @@
 
         var mainPageBanners = function(site){
             var banners = {};
-            if(site=="nmnuevomundo.com"){
+            switch(site){
+              case "nmnuevomundo.com":
                 banners = {
                   sectionTwo: [
                     {
@@ -60,7 +87,8 @@
                     }
                   ]
                 }
-              } else if(site=="cachoscr.com"){
+              break;
+              case "cachoscr.com":
                 banners = {
                   sectionTwo: [
                     {
@@ -70,7 +98,8 @@
                     }
                   ]
                 }
-              } else if(site=="dieciseiscr.com"){
+              break;
+              case "dieciseiscr.com":
                 banners = {
                   sectionTwo: [
                     {
@@ -80,8 +109,8 @@
                     }
                   ]
                 }
-              }
-              else if(site=="antonellaboutiquecr.com"){
+              break;
+              case "antonellaboutiquecr.com":
                 banners = {
                   sectionTwo: [
                     {
@@ -91,10 +120,37 @@
                     }
                   ]
                 }
-              }
-              else if(site=="mare.cr"){
+              break;
+              case "desinid.madebyblume.com":
+                banners = {
+                  sectionTwo: [
+                    {
+                      imageUrl: 'assets/images/bannerBotDesinid.png',
+                      linkUrl: '/sale',
+                      style: 'full'
+                    }
+                  ]
+                }
+              break;
+              case "elmercatico.com":
+                banners = {
+                  sectionTwo: [
+                    {
+                      imageUrl: 'assets/images/bannerBotMercatico.jpg',
+                      linkUrl: '#',
+                      style: 'full'
+                    }
+                  ]
+                }
+              break;
+              case "mare.cr":
                 banners = {
                   sectionOne: [
+                    {
+                        imageUrl: 'assets/images/bannerMidMare0.jpg',
+                        linkUrl: '#',
+                        style: 'full'
+                    },
                     {
                         imageUrl: 'assets/images/bannerMidMare1.jpg',
                         linkUrl: '#',
@@ -104,16 +160,24 @@
                         imageUrl: 'assets/images/bannerMidMare2.jpg',
                         linkUrl: '#',
                         style: 'full'
-                    },
+                    }
+                  ]
+                }
+              break;
+              case "coolbandscr.com":
+                banners = {
+                  sectionOne: [
                     {
-                        imageUrl: 'assets/images/bannerMidMare3.jpg',
-                        linkUrl: '#',
+                        imageUrl: 'assets/images/bannerMidCoolbands.jpg',
+                        linkUrl: '/info/puntosdeventa',
                         style: 'full'
                     }
                   ]
                 }
-              }
-              return banners;
+              break;
+            }
+            
+            return banners;
         }
 
         return {

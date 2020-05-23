@@ -24,7 +24,7 @@
                         <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
                     </span>
                     <span>
-                        <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::product.customValueD}}.png" ng-if="::product.customValueD=='combocam'||product.customValueD=='comboshorts'"/>
+                        <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::product.customValueD}}.png" ng-if="::product.customValueD!=''&&vm.isGrupoCachos"/>
                     </span>
                 </div>
             </a>

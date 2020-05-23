@@ -601,3 +601,7 @@ md-checkbox.md-custom-theme.md-checked .md-icon {
   padding-right: 0px;
   margin: 0px;
 }
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+  box-shadow: none !important;
+}

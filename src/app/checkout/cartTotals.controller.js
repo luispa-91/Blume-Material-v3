@@ -24,11 +24,11 @@
                 vm.currency = results;
                 if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
              });
-             if(vm.site=="kamlung.madebyblume.com"){
+             if(vm.site=="kamlungpuravida.com"){
                 Helper.currencyExchangeRate().then(function (results) { 
                     vm.currencyExchangeRate = results;
-                 });
-             }
+                });
+            }
             vm.buttonPrimaryStyle = {
             'border-radius': '0px'
             }

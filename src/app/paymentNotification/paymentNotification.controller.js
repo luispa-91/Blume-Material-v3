@@ -18,6 +18,8 @@
                 Payments.receivePaymentNotificationCredix().then(function(response){ vm.paymentData = response; });
             } else if($state.$current.name=="paymentNotificationFttech"){
                 Payments.receivePaymentNotificationFttech().then(function(response){ vm.paymentData = response; });
+            } else if($state.$current.name=="paymentNotificationGreenPay"){
+                Payments.receivePaymentNotificationGreenPay().then(function(response){ vm.paymentData = response; });
             } else if($state.$current.name=="paymentNotificationCybersource"){
                 vm.paymentData = Payments.receivePaymentNotificationCybersource();
             } else if($state.$current.name=="paymentNotification"){

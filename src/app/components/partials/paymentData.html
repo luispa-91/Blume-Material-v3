@@ -111,13 +111,16 @@
         <div class="list-title ng-scope" ng-click="vm.paymentMethod='fttech'" ng-if="vm.paymentMethods.fttech" role="button" tabindex="0">
             <h4 ng-class="{'success-green':vm.paymentMethod=='fttech'}">Tarjeta de Crédito o Débito <i class="fa fa-credit-card"></i> &nbsp;</h4>
         </div>
+        <div class="list-title ng-scope" ng-click="vm.paymentMethod='greenpay'" ng-if="vm.paymentMethods.greenpay" role="button" tabindex="0">
+            <h4 ng-class="{'success-green':vm.paymentMethod=='greenpay'}">Tarjeta de Crédito o Débito <i class="fa fa-credit-card"></i> &nbsp;</h4>
+        </div>
         <div class="list-title ng-scope" ng-click="vm.paymentMethod='cybersource'" ng-if="vm.paymentMethods.cybersource" role="button" tabindex="0">
             <h4 ng-class="{'success-green':vm.paymentMethod=='cybersource'}">Tarjeta de Crédito o Débito <i class="fa fa-credit-card"></i> &nbsp;</h4>
         </div>
         <div class="list-title ng-scope" ng-click="vm.paymentMethod='fac'" ng-if="vm.paymentMethods.fac" role="button" tabindex="0">
             <h4 ng-class="{'success-green':vm.paymentMethod=='fac'}">Tarjeta de Crédito o Débito <i class="fa fa-credit-card"></i> &nbsp;</h4>
         </div>
-        <div layout="row" ng-if="vm.paymentMethod=='fttech'||vm.paymentMethod=='cybersource'||vm.paymentMethod=='fac'">
+        <div layout="row" ng-if="vm.paymentMethod=='fttech'||vm.paymentMethod=='cybersource'||vm.paymentMethod=='fac'||vm.paymentMethod=='greenpay'">
             <div flex="25" hide-xs></div>
             <div flex>
                     <div class="form-group c-c">

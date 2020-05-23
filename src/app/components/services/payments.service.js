@@ -3,8 +3,8 @@
       angular
           .module('angular')
           .factory('Payments', Payments);
-          Payments.$inject = ['$http', 'md5', '$window','$location','$state','$timeout'];
-          function Payments($http, md5, $window,$location,$state,$timeout){
+          Payments.$inject = ['$http', 'md5', '$window','$location','$state'];
+          function Payments($http, md5, $window,$location,$state){
   
               var availableMethods = function () {
                   return $http.get("https://api2.madebyblume.com/v3/storeFront/payment/methods").then(function (results) {
@@ -36,6 +36,26 @@
                     $state.go("paymentNotificationFttech", {
                         paymentStatus: temp,
                         orderId: request.chargeDescription
+                    })
+                  });
+              }
+
+              var sendPaymentGreenPay = function(orderId, card, sessionId) {
+                //Build request
+                var request = {
+                    orderId: orderId,
+                    number: card.number,
+                    expMonth: card.expMonth,
+                    expYear: card.expYear,
+                    cvc: card.cvc,
+                    sessionId: sessionId
+                };
+                return $http.post("https://api2.madebyblume.com/v3/payments/greenPay/submit", request).then(function (results) {
+                    var temp = "";
+                     if(results.data.isApproved){ temp = "approved"; } else { temp = "declined"; }
+                    $state.go("paymentNotificationGreenPay", {
+                        paymentStatus: temp,
+                        orderId: request.orderId
                     })
                   });
               }
@@ -142,6 +162,25 @@
                 });
               }
 
+              var receivePaymentNotificationGreenPay = function(){
+                //Disect location
+                var n = $location.path().lastIndexOf('/');
+                var result = $location.path().substring(n + 1);
+                //Get payment status
+                var array = result.split('&');
+                var paymentStatus = array[0].toLowerCase();
+                var orderId = array[1].split('=')[1];
+                var responseText = "";
+                var temp = {
+                    paymentStatus: paymentStatus,
+                    responseText: responseText
+                };
+                if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
+                return $http.get("https://api2.madebyblume.com/v3/payments/ipn/greenPay?paymentStatus=" + paymentStatus + "&orderId=" + orderId).then(function (results) {
+                  return temp;
+                });
+              }
+
               var receivePaymentNotificationCybersource = function(){
                 //Disect location
                 var n = $location.path().lastIndexOf('/');
@@ -170,11 +209,13 @@
                 availableMethods: availableMethods,
                 bacCreateMd5Hash: bacCreateMd5Hash,
                 sendPaymentFttech: sendPaymentFttech,
+                sendPaymentGreenPay: sendPaymentGreenPay,
                 sendPaymentCredix: sendPaymentCredix,
                 sendPaymentCybersource: sendPaymentCybersource,
                 sendPaymentFAC: sendPaymentFAC,
                 receivePaymentNotificationCredix: receivePaymentNotificationCredix,
                 receivePaymentNotificationFttech: receivePaymentNotificationFttech,
+                receivePaymentNotificationGreenPay: receivePaymentNotificationGreenPay,
                 receivePaymentNotificationCybersource: receivePaymentNotificationCybersource,
                 receivePaymentNotification: receivePaymentNotification
               }

@@ -21,6 +21,7 @@
       vm.featuredProducts = [];
       vm.currency = {value: '', symbol: ''}; 
       vm.site = Helper.currentSite();
+      vm.isGrupoCachos = Helper.isGrupoCachos();
       vm.timestamp = new Date().getTime();
       vm.loadingPage = true;
       vm.banners = Personalization.mainPageBanners(vm.site);

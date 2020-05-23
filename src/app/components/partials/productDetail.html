@@ -16,7 +16,7 @@
                         <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
                 </span>
                 <span>
-                    <img class="comboTag2" ng-src="https://cms.blumewebsites.com/blume/img/{{::vm.product.customValueD}}.png" ng-if="::vm.product.customValueD=='combocam'||vm.product.customValueD=='comboshorts'"/>
+                    <img class="comboTag2" ng-src="https://cms.blumewebsites.com/blume/img/{{::vm.product.customValueD}}.png" ng-if="::vm.product.customValueD!=''&&vm.isGrupoCachos"/>
                 </span>
             </div>
         </div>
@@ -24,16 +24,15 @@
             <br hide-gt-xs>
             <h1 class="no-margin">{{::vm.product.title}} </h1> 
             <h5>Ref:{{::vm.product.referenceCode}}</h5>
+
+            <br>
             
-            <p class="text-muted" ng-if="vm.colorVariations.length>0">Colores disponibles</p>
-            <div layout="row" ng-if="vm.colorVariations.length>0">
-                <div class="col-xs-1 col-sm-1 col-md-1 no-padding" ng-repeat="variation in vm.colorVariations">
-                    <a href="" ui-sref="product(::{referenceCode:vm.referenceCode,colorCode:variation.colorCode})">
-                        <img ng-src="{{::variation.imageUrl}}" style="width:100%">
-                    </a>
+            <div layout="row" ng-if="!vm.product.isSingleImage">
+                <div class="col-xs-2 col-sm-2 col-md-2 no-padding" ng-repeat="image in vm.productImages">
+                <img ng-src="{{::image.url}}" style="width:100%" ng-click="::vm.setActive($index)">
                 </div>
             </div>
-            
+
             <br>
 
             <table ng-if="vm.isGrupoCachos">
@@ -76,24 +75,26 @@
                     </li>
                 </ul>
             </div>
-            <!-- <div ng-if="vm.site=='tiendavertigo.com'">
-                <span style="color:darkgreen">Disponible en:</span><br>
-                <span style="color:darkgreen;font-weight: bold;" ng-if="vm.isGrupoCachos">Compra en línea</span>
-            </div> -->
 
-            
-            <div layout="row" ng-if="!vm.product.isSingleImage">
-                <div class="col-xs-2 col-sm-2 col-md-2 no-padding" ng-repeat="image in vm.productImages">
-                <img ng-src="{{::image.url}}" style="width:100%" ng-click="::vm.setActive($index)">
+            <p class="text-muted" ng-if="vm.colorVariations.length>0">Colores disponibles</p>
+            <div layout="row" ng-if="vm.colorVariations.length>0">
+                <div class="col-xs-1 col-sm-1 col-md-1 no-padding" ng-repeat="variation in vm.colorVariations">
+                    <a href="" ui-sref="product(::{referenceCode:vm.referenceCode,colorCode:variation.colorCode})">
+                        <img ng-src="{{::variation.imageUrl}}" style="width:100%">
+                    </a>
                 </div>
             </div>
     
             <br>
+            <md-chips ng-if="vm.keywords.length > 1" ng-model="vm.keywords" input-aria-label="Product Keywords" input-aria-describedby="productKeywords" readonly="true">
+                
+            </md-chips>
     
             <div layout="row">
             <div flex>
                 <div ng-if="vm.products.length > 0 && vm.products[0].size!=''">
-                    <h3>Tallas</h3>
+                    <h3 ng-if="::vm.site!='maky.madebyblume.com'">Tallas</h3>
+                    <h3 ng-if="::vm.site=='maky.madebyblume.com'">Peso</h3>
                     <md-select ng-model="vm.option1" ng-change="vm.getProductAvailability()" aria-label="Sizes">
                         <md-option ng-repeat="variant in vm.products" value="{{::variant.externalId}}">
                             {{::variant.size}} <span ng-if="variant.customValueB!=''&&vm.isGrupoCachos">({{::variant.customValueB}})</span>
@@ -110,12 +111,12 @@
                         <div class="product-price">
                             <h3 ng-if="::variant.discountPrice==0">
                                 {{::variant.price | currency:vm.currency.symbol}} 
-                                <small ng-if="vm.site=='kamlung.madebyblume.com'" class="gray">({{::variant.price / vm.currencyExchangeRate |currency:'₡':0}})</small>
+                                <small ng-if="vm.site=='kamlungpuravida.com'" class="gray">({{::variant.price / vm.currencyExchangeRate |currency:'₡':0}})</small>
                             </h3>
                             <h3 ng-if="::variant.discountPrice!=0">
                                 <small class="darkred"><strike>{{::variant.price | currency:vm.currency.symbol}}</strike></small><br />
                                 {{::variant.discountPrice | currency:vm.currency.symbol}} 
-                                <small ng-if="vm.site=='kamlung.madebyblume.com'" class="gray">({{::variant.discountPrice / vm.currencyExchangeRate |currency:'₡':0}})</small>
+                                <small ng-if="vm.site=='kamlungpuravida.com'" class="gray">({{::variant.discountPrice / vm.currencyExchangeRate |currency:'₡':0}})</small>
                                 <strong ng-if="variant.discountTimerEnd">
                                     <br>
                                     <timer class="discountTimerLarge" end-time="variant.discountTimerEnd" max-time-unit="'hour'">{{hours}} h {{minutes}} min {{seconds}} s</timer>
@@ -125,8 +126,8 @@
                         </div>
                         <ngcart-detail ng-if="variant.discountPrice==0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }}" price="{{ variant.price }}" quantity="1" quantity-max="50" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:0,brand:variant.brand,stock:100,isReserve:0,weight:variant.weight,comboCode:variant.customValueD}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
                         <ngcart-detail ng-if="variant.discountPrice>0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }}" price="{{ variant.discountPrice }}" quantity="1" quantity-max="50" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:1,brand:variant.brand,stock:100,isReserve:0,weight:variant.weight,comboCode:variant.customValueD}"><i class="glyphicon glyphicon-shopping-cart"></i> Agregar</ngcart-detail>
-                        <ngcart-reserve ng-if="variant.customValueA=='PREVENTA'&&variant.discountPrice>0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }} + (Apartado con 25%)" price="{{ variant.discountPrice * .25 }}" quantity="1" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:1,brand:variant.brand,stock:100,isReserve:1,weight:variant.weight,comboCode:variant.customValueD}"><i class="glyphicon glyphicon-shopping-cart"></i> Apartar con 25%</ngcart-reserve>
-                        <ngcart-reserve ng-if="variant.customValueA=='PREVENTA'&&variant.discountPrice==0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }} + (Apartado con 25%)" price="{{ variant.price * .25 }}" quantity="1" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:0,brand:variant.brand,stock:100,isReserve:1,weight:variant.weight,comboCode:variant.customValueD}"><i class="glyphicon glyphicon-shopping-cart"></i> Apartar con 25%</ngcart-reserve>
+                        <ngcart-reserve ng-if="variant.customValueA=='PREVENTA'&&variant.discountPrice>0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }} + (Apartado con 50%)" price="{{ variant.discountPrice * .5 }}" quantity="1" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:1,brand:variant.brand,stock:100,isReserve:1,weight:variant.weight,comboCode:variant.customValueD}"><i class="glyphicon glyphicon-shopping-cart"></i> Apartar con 50%</ngcart-reserve>
+                        <ngcart-reserve ng-if="variant.customValueA=='PREVENTA'&&variant.discountPrice==0&&variant.stock>0" id="{{ variant.externalId }}" name="{{ variant.description }} + (Apartado con 50%)" price="{{ variant.price * .5 }}" quantity="1" data="{referenceCode:variant.referenceCode,colorCode:variant.colorCode,size:variant.size,imageUrl:vm.productImages[0].url,isDiscountPrice:0,brand:variant.brand,stock:100,isReserve:1,weight:variant.weight,comboCode:variant.customValueD}"><i class="glyphicon glyphicon-shopping-cart"></i> Apartar con 50%</ngcart-reserve>
                     </div>
                 </div>
                 <div flex hide-xs></div>

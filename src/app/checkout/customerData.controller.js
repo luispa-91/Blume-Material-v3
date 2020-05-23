@@ -27,6 +27,7 @@
             if(isValid){
                 vm.customerComplete = true;
                 $localStorage.customerComplete = true;
+                $localStorage.customerId = vm.customer.id;
             } else {
                 vm.customerComplete = false;
                 delete $localStorage.customerId;

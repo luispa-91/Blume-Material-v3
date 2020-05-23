@@ -126,7 +126,28 @@
              document.body.appendChild(tmscript);
              
              return sessionID;
-            }           
+            }
+            
+            function getKountSessionId(){
+              return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+              });
+            }
+
+            function setSessionId(sessionId){
+              var JSLink = "https://ssl.kaptcha.com/collect/sdk?m=790000&s=" + sessionId;
+              var JSElement = document.createElement('script');
+              JSElement.src = JSLink;
+              JSElement.onload = OnceLoaded;
+              document.getElementsByTagName('head')[0].appendChild(JSElement);
+            }
+    
+            function OnceLoaded() {
+                // Once loaded.. load other JS or CSS or call objects of version.js
+                var client = new ka.ClientSDK();
+                client.autoLoadEvents();
+            }
               
               return {
                 currency:currency,
@@ -135,7 +156,9 @@
                 showWrapGift: showWrapGift,
                 currentSite: currentSite,
                 getDeviceFingerprintId: getDeviceFingerprintId,
-                currencyExchangeRate: currencyExchangeRate
+                currencyExchangeRate: currencyExchangeRate,
+                getKountSessionId: getKountSessionId,
+                setSessionId: setSessionId
               }
           }
   })();

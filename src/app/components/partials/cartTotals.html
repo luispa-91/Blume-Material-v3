@@ -43,10 +43,12 @@
             </div>
             <div class="col-md-8">
                 <h4 ng-if="vm.discount.total==0"><strong>{{ cart.totalCost() | currency:vm.currency.symbol }}</strong> 
-                    <small ng-if="vm.site=='kamlung.madebyblume.com'">({{cart.totalCost() / vm.currencyExchangeRate | currency:'₡':0}})</small>
+                    <small ng-if="vm.currency.value=='USD'&&vm.site=='kamlungpuravida.com'">({{cart.totalCost() / vm.currencyExchangeRate | currency:'₡':0}})</small>
+                    <small ng-if="vm.currency.value=='CRC'&&vm.site=='kamlungpuravida.com'">({{cart.totalCost() * vm.currencyExchangeRate | currency}})</small>
                 </h4>
                 <h4 ng-if="vm.discount.total!=0"><strong>{{ cart.totalCost() - vm.discount.total | currency:vm.currency.symbol }}</strong> 
-                    <small ng-if="vm.site=='kamlung.madebyblume.com'">({{cart.totalCost() / vm.currencyExchangeRate | currency:'₡':0}})</small>
+                    <small ng-if="vm.currency.value=='USD'&&vm.site=='kamlungpuravida.com'">({{ (cart.totalCost() - vm.discount.total) / vm.currencyExchangeRate | currency:'₡':0}})</small>
+                    <small ng-if="vm.currency.value=='CRC'&&vm.site=='kamlungpuravida.com'">({{ (cart.totalCost() - vm.discount.total) * vm.currencyExchangeRate | currency}})</small>
                 </h4>
             </div>
         </div>

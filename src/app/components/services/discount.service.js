@@ -33,7 +33,6 @@
 
                 //Verify if discount has been applied
                 if($localStorage.discount){
-                    console.log($localStorage.discount);
                     discount = $localStorage.discount;
                     discount.total = 0;
                     //Verify discount type

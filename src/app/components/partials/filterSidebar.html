@@ -1,5 +1,8 @@
 <section id="filters" ng-repeat="filter in vm.filters" ng-if="::filter.filters.length>1" class="filter-list-height">
-    <strong style="margin-left:5px;" ng-click="filter.isOpen=!filter.isOpen">{{::filter.title}} 
+    <strong style="margin-left:5px;" ng-click="filter.isOpen=!filter.isOpen">
+        <span ng-if="::vm.site!='maky.madebyblume.com'">{{::filter.title}} </span>
+        <span ng-if="::filter.title!='Talla'&&vm.site=='maky.madebyblume.com'">{{::filter.title}} </span>
+        <span ng-if="::filter.title=='Talla'&&vm.site=='maky.madebyblume.com'">Peso </span>
         <i class="fa fa-chevron-down" ng-if="!filter.isOpen"></i>
         <i class="fa fa-chevron-up" ng-if="filter.isOpen"></i>
     </strong>

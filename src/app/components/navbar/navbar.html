@@ -1,5 +1,5 @@
 <!-- Topbar-->
-<div ng-if="vm.site!='costaskincare.com'">
+<div ng-if="::vm.site!='costaskincare.com'&&vm.site!='kamlungpuravida.com'">
   <div ng-include="'app/components/navbar/topbar.html'"></div>
 </div>
 <!-- Navbar -->
@@ -48,7 +48,7 @@
               </md-menu-content>
             </md-menu> -->
             </div>
-            <md-button class="darkred" ng-if="::!tab.submenu&&vm.site!='costaskincare.com'" href="/sale" hide-xs>&nbsp; <strong>Descuentos</strong></md-button>
+            <md-button class="darkred" ng-if="::!tab.submenu&&vm.site!='costaskincare.com'&&vm.site!='kamlungpuravida.com'&&vm.site!='maky.madebyblume.com'" href="/sale" hide-xs>&nbsp; <strong>Descuentos</strong></md-button>
             <span flex></span>
             <md-button ng-if="vm.navbar.logoUrl!='https://cms.blumewebsites.com/fox/website/logo.png'" ui-sref="cartReview" class="md-icon-button" aria-label="Go to Cart and Checkout">
                 <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>

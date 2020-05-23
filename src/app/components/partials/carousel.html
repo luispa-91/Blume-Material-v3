@@ -1,4 +1,4 @@
-<carousel interval="5000" pause="false">
+<carousel interval="5000" pause="false" ng-if="::vm.site!='maky.madebyblume.com'">
     <slide ng-repeat="slide in vm.carousel">
         <div ng-if="slide.overlay" class="center-block text-center">
             <div class="slider-center-overlay" ng-class="::{'light-overlay':slide.overlay.style=='light','dark-overlay':slide.overlay.style=='dark'}" hide-xs>
@@ -10,5 +10,20 @@
             </div>
         </div>
         <img class="img-responsive main-slider" ng-src="{{::slide.imageUrl}}" />
+    </slide>
+</carousel>
+
+<carousel ng-if="::vm.site=='maky.madebyblume.com'">
+    <slide>
+        <a href="/products?productType=Aceite%20de%20oliva"><img class="img-responsive main-slider" ng-src="assets/images/maky1.jpg" /></a>
+    </slide>
+    <slide>
+        <a href="/products?s=nostimo"><img class="img-responsive main-slider" ng-src="assets/images/maky2.jpg" /></a>
+    </slide>
+    <slide>
+        <a href="/products?productType=Tahini"><img class="img-responsive main-slider" ng-src="assets/images/maky3.jpg" /></a>
+    </slide>
+    <slide>
+        <a href="https://www.youtube.com/channel/UCmZ-oQfa1bGwWTIGHgnKbXA" target="_blank"><img class="img-responsive main-slider" ng-src="assets/images/maky4.jpg" /></a>
     </slide>
 </carousel>

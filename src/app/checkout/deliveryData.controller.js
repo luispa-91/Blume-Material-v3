@@ -90,6 +90,7 @@
 
         function toggleDeliveryMethod(selectedMethod){
             vm.addressComplete = false;
+            delete $localStorage.addressComplete;
             vm.deliveryMethod = selectedMethod;
             Delivery.reset(selectedMethod,vm.selectedFare,vm.deliveryMethods);
             if(selectedMethod=="international"){

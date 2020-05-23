@@ -11,6 +11,7 @@
 
         function init(){
             //Initialize Controller
+            vm.sessionId = Helper.getKountSessionId();
             vm.saving = false;
             vm.useTasaCero = false;
             vm.useTasaCero6 = false;
@@ -29,6 +30,8 @@
             vm.makePayment = makePayment;
             
             getPaymentMethods();
+            Helper.setSessionId(vm.sessionId);
+
         }
 
         BlumeStorage.broadcastUploadComplete($scope, function broadcastUpdate() {
@@ -102,6 +105,11 @@
                   case "fttech":
                     DataCollection.logPayment(vm.payment.orderId,vm.paymentMethod,vm.payment.card.number).then(function(data){ 
                       Payments.sendPaymentFttech(vm.payment.orderId,vm.currency.value,vm.payment.amount,vm.payment.card,vm.paymentMethods.fttech).then(function(data){ vm.saving = false; });
+                    });
+                    break;
+                  case "greenpay":
+                    DataCollection.logPayment(vm.payment.orderId,vm.paymentMethod,vm.payment.card.number).then(function(data){ 
+                      Payments.sendPaymentGreenPay(vm.payment.orderId,vm.payment.card,vm.sessionId).then(function(data){ vm.saving = false; });
                     });
                     break;
                   case "cybersource":
