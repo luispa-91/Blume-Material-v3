@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('PaymentDataController', PaymentDataController);
-        PaymentDataController.$inject = ['Payments','Order','DataCollection','BlumeStorage','$scope','$localStorage','Helper'];
-    function PaymentDataController(Payments,Order,DataCollection,BlumeStorage,$scope,$localStorage,Helper) {
+        PaymentDataController.$inject = ['Payments','Order','DataCollection','BlumeStorage','$scope','$localStorage','Helper','Personalization','Mail'];
+    function PaymentDataController(Payments,Order,DataCollection,BlumeStorage,$scope,$localStorage,Helper,Personalization,Mail) {
         var vm = this;
         init();
         ///////////////
@@ -25,6 +25,8 @@
             vm.years = ["2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"];
             vm.uploader = BlumeStorage.createImageUploader();
             vm.moneyTransferReceiptUrl = "moneyTransferReceipt/";
+            vm.site = Helper.currentSite();
+            vm.customStyles = Personalization.customStyles(vm.site);
 
             //Bind functions
             vm.makePayment = makePayment;
@@ -53,6 +55,7 @@
         function makePayment(){
           vm.saving = true;
           vm.errorMessage = "";
+          vm.moneyTransferReceiptSent = false;
           if(vm.acceptedPrivacyPolicy==true){
             if(!$localStorage.deliveryType){
               vm.errorMessage = "Para continuar con tu compra debes escoger un método de entrega";
@@ -134,6 +137,13 @@
                     DataCollection.logPayment(vm.payment.orderId,vm.paymentMethod,"Transferencia").then(function(data){ 
                       vm.uploader.uploadAll();
                       vm.saving = false;
+                    });
+                    break;
+                  case "po":
+                    DataCollection.logPayment(vm.payment.orderId,vm.paymentMethod,"Orden de Pago").then(function(data){ 
+                      vm.moneyTransferReceiptSent = true;
+                      vm.saving = false;
+                      Mail.sendEmail(vm.payment.orderId,'pending').then(function(response){ });
                     });
                     break;
                 }

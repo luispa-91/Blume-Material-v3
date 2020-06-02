@@ -3,8 +3,8 @@
 angular
     .module('angular')
     .controller('ProductsController', ProductsController);
-    ProductsController.$inject = ['$location','Website','Products','$state','$scope','Helper'];
-    function ProductsController($location, Website,Products,$state,$scope,Helper) {
+    ProductsController.$inject = ['$location','Website','Products','$state','$scope','Helper','Personalization'];
+    function ProductsController($location, Website,Products,$state,$scope,Helper,Personalization) {
     var vm = this;
 
     init();
@@ -24,6 +24,7 @@ angular
         vm.isGrupoCachos = Helper.isGrupoCachos();
         vm.loadingPage = true;
         vm.timestamp = new Date().getTime();
+        vm.customStyles = Personalization.customStyles(vm.site);
         if($state.params.s){
             vm.criteria = $state.params.s;
         }

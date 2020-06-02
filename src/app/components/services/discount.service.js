@@ -28,7 +28,37 @@
                         discount = { code: '', name:'', value: 0 };
                         $localStorage.discount = { code: '', value: 0 };
                     }
-                } 
+                } else if(site=="thefaceshopcr.com"){
+                    if(ngCart.getSubTotal()>50000){
+                        discount = {
+                            name: "Regla Especial",
+                            applyTo: "delivery",
+                            type: "percent",
+                            value: 100,
+                            code: "reglaespecial",
+                            total: 0
+                        };
+                        $localStorage.discount = discount;
+                    } else  {
+                        discount = { code: '', name:'', value: 0 };
+                        $localStorage.discount = { code: '', value: 0 };
+                    }
+                } else if(site=="elmercatico.com"){
+                    if(ngCart.getSubTotal()>50000){
+                        discount = {
+                            name: "Regla Especial",
+                            applyTo: "delivery",
+                            type: "percent",
+                            value: 100,
+                            code: "reglaespecial",
+                            total: 0
+                        };
+                        $localStorage.discount = discount;
+                    } else  {
+                        discount = { code: '', name:'', value: 0 };
+                        $localStorage.discount = { code: '', value: 0 };
+                    }
+                }
                 //------- END SPECIAL RULE ----------//
 
                 //Verify if discount has been applied

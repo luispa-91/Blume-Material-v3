@@ -38,6 +38,8 @@
                 break;
               case "maky.madebyblume.com":
                 theme.topbar["background-color"] = "#2e2f7f";
+                theme.topbar["font-family"] = "Roboto Mono";
+                theme.navbar["font-family"] = "Roboto Mono";
                 break;
               case "elmercatico.com":
                 theme.topbar["background-color"] = "#2E3192";
@@ -45,6 +47,9 @@
               case "coolbandscr.com":
                 theme.topbar["background-color"] = "#fff";
                 theme.topbar["color"] = "#000";
+                break;
+              case "pasocacr.com":
+                theme.topbar["background-color"] = "#5cb5e5";
                 break;
             }
 
@@ -69,10 +74,29 @@
                 theme.footer["background-color"] = "#ff807f";
                 theme.footer["color"] = "#036780";
               break;
+              case "maky.madebyblume.com":
+                theme.footer["font-family"] = "Roboto Mono";
+              break;
             }
 
             return theme;
         }
+
+        var customStyles = function(site){
+          var theme = {
+            'background-color': '#fff',
+            'color': '#000',
+            'font-family': 'Camphor'
+          }
+          
+          switch(site){
+            case "maky.madebyblume.com":
+              theme["font-family"] = "Roboto Mono";
+            break;
+          }
+
+          return theme;
+      }
 
         var mainPageBanners = function(site){
             var banners = {};
@@ -94,6 +118,17 @@
                     {
                       imageUrl: 'assets/images/bannermidcachos.jpg',
                       linkUrl: '/products',
+                      style: 'full'
+                    }
+                  ]
+                }
+              break;
+              case "tiendavertigo.com":
+                banners = {
+                  sectionTwo: [
+                    {
+                      imageUrl: 'assets/images/vertigo-banner-mid.jpg',
+                      linkUrl: '#',
                       style: 'full'
                     }
                   ]
@@ -168,6 +203,11 @@
                 banners = {
                   sectionOne: [
                     {
+                        imageUrl: 'assets/images/bannerMasCategoriasCoolbands.png',
+                        linkUrl: '/info/mascategorias',
+                        style: 'full'
+                    },
+                    {
                         imageUrl: 'assets/images/bannerMidCoolbands.jpg',
                         linkUrl: '/info/puntosdeventa',
                         style: 'full'
@@ -183,6 +223,7 @@
         return {
             navbar: navbar,
             footer: footer,
+            customStyles: customStyles,
             mainPageBanners: mainPageBanners
         }
     }

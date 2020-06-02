@@ -4,8 +4,8 @@
   angular
     .module('angular')
     .controller('ProductDetailController', ProductDetailController);
-  ProductDetailController.$inject = ['BlumeAnalytics','$stateParams','Products','Helper'];
-  function ProductDetailController(BlumeAnalytics,$stateParams,Products,Helper) {
+  ProductDetailController.$inject = ['BlumeAnalytics','$stateParams','Products','Helper','Personalization'];
+  function ProductDetailController(BlumeAnalytics,$stateParams,Products,Helper,Personalization) {
     var vm = this;
     
     init();
@@ -20,8 +20,9 @@
       if($stateParams.referenceCode){vm.referenceCode = $stateParams.referenceCode;}
       if($stateParams.colorCode){vm.colorCode = $stateParams.colorCode;}
       vm.currency = {value: '', symbol: ''}; 
-      vm.site = Helper.currentSite();
       vm.timestamp = new Date().getTime();
+      vm.site = Helper.currentSite();
+      vm.customStyles = Personalization.customStyles(vm.site);
       vm.keywords = [];
 
       //Initialize Variables
@@ -42,11 +43,11 @@
         });
      });
 
-     if(vm.site=="kamlungpuravida.com"){
-          Helper.currencyExchangeRate().then(function (results) { 
-              vm.currencyExchangeRate = results;
-          });
-      }
+    //  if(vm.site=="kamlungpuravida.com"){
+    //       Helper.currencyExchangeRate().then(function (results) { 
+    //           vm.currencyExchangeRate = results;
+    //       });
+    //   }
       
     }
 

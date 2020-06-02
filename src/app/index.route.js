@@ -111,7 +111,7 @@
         controllerAs: "vm"
       })
       .state("paymentNotificationGreenPay", {
-        url: "/payment/greenpay/:paymentStatus&orderId=:orderId",
+        url: "/payment/greenpay/:paymentStatus&orderId=:orderId&responseText=:responseText",
         title: "Notificación del Pago",
         templateUrl: "app/paymentNotification/paymentNotification.view.html",
         controller: "PaymentNotificationController",

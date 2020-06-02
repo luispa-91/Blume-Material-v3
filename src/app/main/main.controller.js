@@ -25,12 +25,7 @@
       vm.timestamp = new Date().getTime();
       vm.loadingPage = true;
       vm.banners = Personalization.mainPageBanners(vm.site);
-
-      vm.titleStyle = {
-        'background-color': '#fff',
-        'color': '#000',
-        'font-family': 'Camphor'
-      }
+      vm.customStyles = Personalization.customStyles(vm.site);
 
       vm.buttonPrimaryStyle = {
         'border-radius': '0px'

@@ -55,7 +55,8 @@
                      if(results.data.isApproved){ temp = "approved"; } else { temp = "declined"; }
                     $state.go("paymentNotificationGreenPay", {
                         paymentStatus: temp,
-                        orderId: request.orderId
+                        orderId: request.orderId,
+                        responseText: results.data.apiStatus
                     })
                   });
               }
@@ -170,13 +171,12 @@
                 var array = result.split('&');
                 var paymentStatus = array[0].toLowerCase();
                 var orderId = array[1].split('=')[1];
-                var responseText = "";
+                var responseText = array[2].split('=')[1];;
                 var temp = {
                     paymentStatus: paymentStatus,
                     responseText: responseText
                 };
-                if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
-                return $http.get("https://api2.madebyblume.com/v3/payments/ipn/greenPay?paymentStatus=" + paymentStatus + "&orderId=" + orderId).then(function (results) {
+                return $http.get("https://api2.madebyblume.com/v3/payments/ipn/greenPay?paymentStatus=" + paymentStatus + "&orderId=" + orderId + "&responseText=" + responseText).then(function (results) {
                   return temp;
                 });
               }

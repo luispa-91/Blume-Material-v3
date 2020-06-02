@@ -2,15 +2,15 @@
 	<div class="col-md-1"></div>
 	<div class="col-md-7">
     <!-- Customer Data -->
-    <div ng-controller="CustomerDataController as vm" ng-include="'app/components/partials/customerData.html'"></div>
+    <div ng-controller="CustomerDataController as vm" ng-include="'app/components/partials/customerData.html'" ng-style="vm.customStyles"></div>
     <!-- Delivery Data -->
-    <div ng-controller="DeliveryDataController as vm" ng-include="'app/components/partials/deliveryData.html'"></div>
+    <div ng-controller="DeliveryDataController as vm" ng-include="'app/components/partials/deliveryData.html'" ng-style="vm.customStyles"></div>
     <!-- Payment Data -->
-    <div ng-controller="PaymentDataController as vm" ng-include="'app/components/partials/paymentData.html'"></div>
+    <div ng-controller="PaymentDataController as vm" ng-include="'app/components/partials/paymentData.html'" ng-style="vm.customStyles"></div>
 	</div>
 	<div class="col-md-3">
     <!-- Cart Totals -->
-		<div ng-controller="CartTotalsController as vm" ng-include="'app/components/partials/cartTotals.html'"></div>
+		<div ng-controller="CartTotalsController as vm" ng-include="'app/components/partials/cartTotals.html'" ng-style="vm.customStyles"></div>
 	</div>
 	<div class="col-md-1"></div>
 </div>

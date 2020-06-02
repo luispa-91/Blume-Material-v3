@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 @font-face {font-family: "Camphor";
+  font-display: swap;
   src: url("../assets/fonts/camphor.eot"); /* IE9*/
   src: url("../assets/fonts/camphor.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
   url("../assets/fonts/camphor.woff2") format("woff2"), /* chrome、firefox */
@@ -10,12 +11,28 @@
 }
 
 @font-face {font-family: "Camphor Medium";
+  font-display: swap;
   src: url("../assets/fonts/camphor-med.eot"); /* IE9*/
   src: url("../assets/fonts/camphor-med.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
   url("../assets/fonts/camphor-med.woff2") format("woff2"), /* chrome、firefox */
   url("../assets/fonts/camphor-med.woff") format("woff"), /* chrome、firefox */
   url("../assets/fonts/camphor-med.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
   url("../assets/fonts/camphor-med.svg#Camphor Medium") format("svg"); /* iOS 4.1- */
+}
+
+/* roboto-mono-regular - latin */
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/roboto-mono-v7-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Roboto Mono'), local('RobotoMono-Regular'),
+       url('../assets/fonts/roboto-mono-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/roboto-mono-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/roboto-mono-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/roboto-mono-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../assets/fonts/roboto-mono-v7-latin-regular.svg#RobotoMono') format('svg'); /* Legacy iOS */
 }
 
 html,body{

@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('DeliveryDataController', DeliveryDataController);
-        DeliveryDataController.$inject = ['LocationAutoComplete', 'Delivery','$localStorage','Helper','$scope','Customer'];
-    function DeliveryDataController(LocationAutoComplete, Delivery,$localStorage,Helper,$scope,Customer) {
+        DeliveryDataController.$inject = ['LocationAutoComplete','Delivery','$localStorage','Helper','$scope','Customer','Personalization'];
+    function DeliveryDataController(LocationAutoComplete,Delivery,$localStorage,Helper,$scope,Customer,Personalization) {
         var vm = this;
         init();
         ///////////////
@@ -27,6 +27,7 @@
             vm.isGrupoCachos = Helper.isGrupoCachos();
             vm.showWrapGift = Helper.showWrapGift();
             vm.site = Helper.currentSite();
+            vm.customStyles = Personalization.customStyles(vm.site);
 
             //Bind functions
             vm.verify = verify;

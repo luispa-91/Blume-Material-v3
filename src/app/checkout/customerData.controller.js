@@ -4,8 +4,8 @@
     angular
         .module('angular')
         .controller('CustomerDataController', CustomerDataController);
-        CustomerDataController.$inject = ['Customer','$localStorage'];
-    function CustomerDataController(Customer,$localStorage) {
+        CustomerDataController.$inject = ['Customer','$localStorage','Helper','Personalization'];
+    function CustomerDataController(Customer,$localStorage,Helper,Personalization) {
         var vm = this;
         init();
         ///////////////
@@ -15,6 +15,8 @@
             vm.customer = {id: '', fullName:'',documentId:'',email:'',phone:'',password:'',isLoggedIn:false,exists:false};
             vm.customerComplete = false;
             vm.loginModuleVisible = false;
+            vm.site = Helper.currentSite();
+            vm.customStyles = Personalization.customStyles(vm.site);
             delete $localStorage.customerComplete;
             delete $localStorage.customerId;
 

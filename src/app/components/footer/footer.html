@@ -9,14 +9,15 @@
         <div ta-bind="text" ng-model="vm.footer.footerHtml" ta-readonly="true"></div>
         <br>
         <span ng-repeat="method in vm.footer.paymentMethods">
-          <img ng-if="::method=='fttech'" src="assets/images/bancoNacional.png" class="social-icon card-logo" />
-          <img ng-if="::method=='bacsanjose'" src="assets/images/bacSanJose.png" class="social-icon card-logo" />
-          <img ng-if="::vm.site=='nmnuevomundo.com'||vm.site=='cachoscr.com'||vm.site=='tiendavertigo.com'" src="assets/images/tasa0.png" class="social-icon card-logo" />
-          <img ng-if="::method=='fttech'" src="assets/images/credix.png" class="social-icon card-logo" />
-          <img ng-if="::method=='paypal'" src="assets/images/paypal.svg" class="social-icon card-logo" />
+          <img ng-if="::method=='fttech'" src="assets/images/bancoNacional.png" class="social-icon card-logo" alt="Banco Nacional" />
+          <img ng-if="::method=='bacsanjose'" src="assets/images/bacSanJose.png" class="social-icon card-logo" alt="Bac San José" />
+          <img ng-if="::vm.site=='nmnuevomundo.com'||vm.site=='cachoscr.com'||vm.site=='tiendavertigo.com'" src="assets/images/tasa0.png" class="social-icon card-logo" alt="Tasa 0 BAC San José" />
+          <img ng-if="::method=='fttech'" src="assets/images/credix.png" class="social-icon card-logo" alt="Pagos con Credix" />
+          <img ng-if="::method=='paypal'" src="assets/images/paypal.svg" class="social-icon card-logo" alt="Paypal" />
         </span>
-        <img src="assets/images/visa.svg" class="social-icon card-logo" />
-        <img src="assets/images/mastercard.svg" class="social-icon card-logo" />
+        <img src="assets/images/visa.svg" class="social-icon card-logo" alt="Logo visa" />
+        <img src="assets/images/mastercard.svg" class="social-icon card-logo" alt="Logo mastercard" />
+        <img ng-if="::vm.site=='elmercatico.com'" src="assets/images/logo-liberty-express.jpg" class="social-icon card-logo" alt="Logo Liberty Express" />
       </div>
       <div class="col-md-4">
         
@@ -24,11 +25,11 @@
       <div class="col-md-4">
         <h3 class="title-margin">Contáctenos</h3>
         <p ng-repeat="info in vm.footer.contactLinks">
-          <a class="contact-link no-decor" target="_blank" href="{{::info.url}}"><i class="{{::info.iconClass}}"></i> {{::info.text}}</a>
+          <a class="contact-link no-decor" target="_blank" href="{{::info.url}}" rel="noreferrer"><i class="{{::info.iconClass}}"></i> {{::info.text}}</a>
         </p>
         <p><a href="info/trminosycondiciones" target="_blank" class="inherit-color">Términos y Condiciones</a> / <a href="info/polticadeprivacidad" target="_blank" class="inherit-color">Política de Privacidad</a>
         <br>
-        <a href="https://madebyblume.com" target="_blank" class="inherit-color">Blume Software 2019 ©</a>
+        <a href="https://madebyblume.com" target="_blank" class="inherit-color" rel="noreferrer">Blume Software 2019 ©</a>
         </p>
       </div>
     </div>

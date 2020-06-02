@@ -1,7 +1,7 @@
 <!-- Remove next line to remove keds banner -->
 <img ng-if="vm.state=='keds'" src="https://cms.blumewebsites.com/blume/keds.jpg" class="center-block img-responsive" alt="">
 
-<div ng-show="!vm.loadingContent">
+<div ng-style="vm.customStyles" ng-show="!vm.loadingContent">
   <div class="container">
     <div layout="row" md-theme="custom">
         <md-input-container flex>

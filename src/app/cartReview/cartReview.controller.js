@@ -4,8 +4,8 @@
   angular
     .module('angular')
     .controller('CartReviewController', CartReviewController);
-  CartReviewController.$inject = ['$stateParams','Cart','$state','Discount','Delivery','Helper'];
-  function CartReviewController($stateParams,Cart,$state,Discount,Delivery,Helper) {
+  CartReviewController.$inject = ['$stateParams','Cart','$state','Discount','Delivery','Helper','Personalization'];
+  function CartReviewController($stateParams,Cart,$state,Discount,Delivery,Helper,Personalization) {
     var vm = this;
 
     init();
@@ -19,6 +19,8 @@
       Delivery.restart();
       vm.currency = {value: '', symbol: ''}; 
       vm.errorMessage = "";
+      vm.site = Helper.currentSite();
+      vm.customStyles = Personalization.customStyles(vm.site);
 
       vm.buttonPrimaryStyle = {
         'border-radius': '0px'

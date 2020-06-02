@@ -1,7 +1,7 @@
 
 <div class="container-fluid">
 	<div class="col-md-1"></div>
-	<div ng-controller="CartReviewController as vm" class="col-md-7">
+	<div ng-controller="CartReviewController as vm" class="col-md-7" ng-style="vm.customStyles">
 			<div ng-include="'app/ngCart/summary.html'"></div>
 			<span class="darkred center-block text-center">{{vm.errorMessage}}</span>
 	</div>

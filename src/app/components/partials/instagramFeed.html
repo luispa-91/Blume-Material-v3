@@ -1,6 +1,6 @@
 <div layout="row">
     <div ng-repeat="post in vm.instagramFeed.posts | limitTo:vm.instagramFeed.limit" flex>
-        <a href="{{::post.link}}" target="_blank">
+        <a href="{{::post.link}}" name="{{::post.caption.text}}" target="_blank" rel="noreferrer">
             <div class="imageContainer" style="padding:2px;">
                 <div style="background:url({{::post.images.standard_resolution.url}}) no-repeat center; background-size:cover;" class="md-card-image imageInstagram">
                 </div>

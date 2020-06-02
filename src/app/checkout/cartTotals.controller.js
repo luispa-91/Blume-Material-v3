@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('CartTotalsController', CartTotalsController);
-        CartTotalsController.$inject = ['Discount','$scope','Helper'];
-    function CartTotalsController(Discount,$scope,Helper) {
+        CartTotalsController.$inject = ['Discount','$scope','Helper','Personalization'];
+    function CartTotalsController(Discount,$scope,Helper,Personalization) {
         var vm = this;
         init();
         ///////////////
@@ -15,6 +15,7 @@
             vm.showDiscountCodeInput = false;
             vm.currency = {value: '', symbol: ''}; 
             vm.site = Helper.currentSite();
+            vm.customStyles = Personalization.customStyles(vm.site);
 
             //Bind functions
             vm.verifyDiscount = verifyDiscount;

@@ -163,7 +163,7 @@
         <!-- Money Transfers Start Here -->
         <div class="list-title" ng-click="vm.paymentMethod='moneytransfer'" ng-if="vm.paymentMethods.bankAccounts.length>0">
             <h4 ng-class="{'success-green':vm.paymentMethod=='moneytransfer'}">
-                Transferencia <i class="fas fa-file-import"></i> 
+                Transferencia <i class="fas fa-money-bill"></i> 
             </h4>
         </div>
         <div layout="row" layout-align="center center">
@@ -203,6 +203,18 @@
                 Credix 
                 <small ng-if="vm.paymentMethod=='credix'" class="success-green"> Para pagar con credix haz click en Finalizar Compra.</small>
             </h4>
+        </div>
+        <!-- Purchase Order -->
+        <div class="list-title" ng-click="vm.paymentMethod='po'" ng-if="vm.paymentMethods.po">
+            <h4 ng-class="{'success-green':vm.paymentMethod=='po'}">
+                Orden de Compra <i class="fas fa-file-import"></i> 
+                <small ng-if="vm.paymentMethod=='po'" class="success-green"> Para crear tu orden haz click en Finalizar Compra.</small>
+            </h4>
+        </div>
+        <div layout="row" layout-align="center center" ng-if="vm.paymentMethod=='po' && vm.moneyTransferReceiptSent">
+            <div class="center-block text-center">
+                <p class="success-green">Recibimos tu orden correctamente! Enviamos una copia a tu correo, ya puedes cerrar esta página.</p>
+            </div>
         </div>
         <!-- Terms and Conditions -->
         <div class="center-block text-center">
