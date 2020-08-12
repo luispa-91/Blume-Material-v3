@@ -48,7 +48,7 @@
               </md-menu-content>
             </md-menu> -->
             </div>
-            <md-button class="darkred" ng-if="::!tab.submenu&&vm.site!='costaskincare.com'&&vm.site!='kamlungpuravida.com'&&vm.site!='maky.madebyblume.com'" href="/sale" hide-xs>&nbsp; <strong>Descuentos</strong></md-button>
+            <md-button class="darkred" ng-if="::!tab.submenu&&vm.site!='costaskincare.com'&&vm.site!='kamlungpuravida.com'&&vm.site!='redscocr.com'&&vm.site!='themommylifecr.com'&&vm.site!='pintajewels.com'&&vm.site!='laguaria.madebyblume.com'" href="/sale" hide-xs>&nbsp; <strong>Descuentos</strong></md-button>
             <span flex></span>
             <md-button ng-if="vm.navbar.logoUrl!='https://cms.blumewebsites.com/fox/website/logo.png'" ui-sref="cartReview" class="md-icon-button" aria-label="Go to Cart and Checkout">
                 <md-icon><i class="material-icons icon-color">shopping_cart</i></md-icon>
@@ -86,17 +86,17 @@
             </md-menu>
           </md-list-item>
          </div>
-         <md-list-item ng-click="::vm.goTo('sale')">
+         <md-list-item ng-if="::vm.site!='costaskincare.com'&&vm.site!='kamlungpuravida.com'&&vm.site!='redscocr.com'&&vm.site!='themommylifecr.com'&&vm.site!='pintajewels.com'&&vm.site!='laguaria.madebyblume.com'" ng-click="::vm.goTo('sale')">
           <p class="upper-text darkred"> &nbsp;<strong>Descuentos</strong></p>
         </md-list-item>
        </md-list>
        <div layout="row" ng-if="vm.navbar.isGrupoCachos" class="ng-scope layout-row">
-         <a class="site-mini-logo" href="https://cachoscr.com"><img src="assets/images/stores/cachos.png" alt="Cachos"></a> 
-         <a class="site-mini-logo" href="https://nmnuevomundo.com"><img src="assets/images/stores/nuevomundo2.png" alt="Nuevo Mundo"></a>
-         <a class="site-mini-logo" href="https://foxracingcr.com"><img src="assets/images/stores/foxweb.png" alt="Fox Head"></a> 
-         <a class="site-mini-logo" href="https://freaks.fit"><img src="assets/images/stores/freaksweb.png" alt="Freaks"></a> 
-         <a class="site-mini-logo" href="https://beakcr.com"><img src="assets/images/stores/beak.png" alt="Freaks"></a> 
-         <a class="site-mini-logo" href="https://newwavecr.com"><img src="assets/images/stores/newwave.png" alt="Freaks"></a>
+         <a class="site-mini-logo" href="https://cachoscr.com"><img src="assets/images/stores/cachos.png" alt="Cachos" rel="noreferrer"></a> 
+         <a class="site-mini-logo" href="https://nmnuevomundo.com"><img src="assets/images/stores/nuevomundo2.png" alt="Nuevo Mundo" rel="noreferrer"></a>
+         <a class="site-mini-logo" href="https://foxracingcr.com"><img src="assets/images/stores/foxweb.png" alt="Fox Head" rel="noreferrer"></a> 
+         <a class="site-mini-logo" href="https://freaks.fit"><img src="assets/images/stores/freaksweb.png" alt="Freaks" rel="noreferrer"></a> 
+         <a class="site-mini-logo" href="https://beakcr.com"><img src="assets/images/stores/beak.png" alt="Beak" rel="noreferrer"></a> 
+         <a class="site-mini-logo" href="https://newwavecr.com"><img src="assets/images/stores/newwave.png" alt="New Wave" rel="noreferrer"></a>
         </div>
     </md-content>
    </md-sidenav>

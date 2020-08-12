@@ -1,4 +1,4 @@
-<md-card class="card-simple top-shadow" md-theme="custom">
+<md-card class="card-simple top-shadow">
 <md-card-content>
     <!-- Delivery Information -->
 <h3>
@@ -8,7 +8,7 @@
 <!-- Pick up in store section starts here -->
 <section name="deliveryMethodSelection">
     <div layout="row" layout-align="center center">
-        <div ng-if="vm.site!='tienda.elastechc.com'" class="list-title" ng-click="vm.toggleDeliveryMethod('national')" flex>
+        <div class="list-title" ng-click="vm.toggleDeliveryMethod('national')" flex>
             <h4>
                 <span ng-class="{'success-green':vm.deliveryMethod=='national'}">
                     Envío a domicilio <i class="fas fa-shipping-fast"></i> &nbsp; 

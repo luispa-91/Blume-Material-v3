@@ -1,8 +1,14 @@
 <section id="filters" ng-repeat="filter in vm.filters" ng-if="::filter.filters.length>1" class="filter-list-height">
     <strong style="margin-left:5px;" ng-click="filter.isOpen=!filter.isOpen">
-        <span ng-if="::vm.site!='maky.madebyblume.com'">{{::filter.title}} </span>
-        <span ng-if="::filter.title!='Talla'&&vm.site=='maky.madebyblume.com'">{{::filter.title}} </span>
-        <span ng-if="::filter.title=='Talla'&&vm.site=='maky.madebyblume.com'">Peso </span>
+        <span ng-if="::vm.site!='productosmaky.com'&&vm.site!='themommylifecr.com'&&vm.site!='vitare.madebyblume.com'&&vm.site!='naturaurbanacr.com'">{{::filter.title}} </span>
+        <span ng-if="::filter.title!='Talla'&&filter.title!='Tipo'&&filter.title!='Categoría'&&vm.site=='productosmaky.com'">{{filter.title}} </span>
+        <span ng-if="::filter.title!='Talla'&&vm.site=='vitare.madebyblume.com'">{{filter.title}} </span>
+        <span ng-if="::filter.title!='Talla'&&vm.site=='naturaurbanacr.com'">{{filter.title}} </span>
+        <span ng-if="::filter.title=='Talla'&&vm.site=='productosmaky.com'">Peso </span>
+        <span ng-if="::filter.title=='Talla'&&vm.site=='vitare.madebyblume.com'">Opciones </span>
+        <span ng-if="::filter.title=='Talla'&&vm.site=='naturaurbanacr.com'">Opciones </span>
+        <span ng-if="::filter.title=='Tipo'&&vm.site=='productosmaky.com'">Categoría </span>
+        <span ng-if="::filter.title=='Categoría'&&vm.site=='productosmaky.com'">Ingredientes </span>
         <i class="fa fa-chevron-down" ng-if="!filter.isOpen"></i>
         <i class="fa fa-chevron-up" ng-if="filter.isOpen"></i>
     </strong>

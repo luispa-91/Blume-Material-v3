@@ -1,5 +1,5 @@
 <md-card class="card-simple top-shadow">
-    <md-card-content md-theme="custom">
+    <md-card-content>
         <h3>Resumen</h3>
         <md-list>
             <md-list-item>
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-md-6">Descuento</div>
                     <div class="col-md-6">
-                        <span><strong>{{ vm.discount.total | currency:vm.currency.symbol }}</strong></span>
+                        <span><strong>{{ vm.discount.value | currency:vm.currency.symbol }}</strong></span>
                     </div>
                 </div>
             </md-list-item>
@@ -32,7 +32,7 @@
             <input ng-model="vm.discount.code" type="text" ng-blur="vm.verifyDiscount()" />
         </md-input-container> 
         <small ng-if="vm.discount.value!=0" class="success-green"> &nbsp;&nbsp; Cupón aplicado <i class="fas fa-check-circle"></i></small>
-        <small ng-if="vm.discount.value==0&&vm.discount.name!=null&&vm.showDiscountCodeInput&&vm.discount.type==''" class="darkred"><i class="fas fa-times-circle"></i></small>
+        <small ng-if="vm.discount.value==0&&vm.discount.name!=''&&vm.showDiscountCodeInput&&vm.discount.type==''" class="darkred"><i class="fas fa-times-circle"></i></small>
         <br>
         <md-button class="md-button md-raised" ng-style="vm.buttonSecondaryStyle" ng-click="vm.showDiscountCodeInput=false" ng-if="vm.showDiscountCodeInput&&vm.discount.value==0"><i class="fas fa-times"></i>&nbsp; Cancelar</md-button>
     </md-card-content>
@@ -42,13 +42,15 @@
                 <h4 class="pull-left upper-text">Total</h4>
             </div>
             <div class="col-md-8">
-                <h4 ng-if="vm.discount.total==0"><strong>{{ cart.totalCost() | currency:vm.currency.symbol }}</strong> 
+                <h4 ng-if="vm.discount.value==0"><strong>{{ cart.totalCost() | currency:vm.currency.symbol }}</strong> 
                     <small ng-if="vm.currency.value=='USD'&&vm.site=='kamlungpuravida.com'">({{cart.totalCost() / vm.currencyExchangeRate | currency:'₡':0}})</small>
                     <small ng-if="vm.currency.value=='CRC'&&vm.site=='kamlungpuravida.com'">({{cart.totalCost() * vm.currencyExchangeRate | currency}})</small>
+                    <small> i.v.i</small>
                 </h4>
-                <h4 ng-if="vm.discount.total!=0"><strong>{{ cart.totalCost() - vm.discount.total | currency:vm.currency.symbol }}</strong> 
-                    <small ng-if="vm.currency.value=='USD'&&vm.site=='kamlungpuravida.com'">({{ (cart.totalCost() - vm.discount.total) / vm.currencyExchangeRate | currency:'₡':0}})</small>
-                    <small ng-if="vm.currency.value=='CRC'&&vm.site=='kamlungpuravida.com'">({{ (cart.totalCost() - vm.discount.total) * vm.currencyExchangeRate | currency}})</small>
+                <h4 ng-if="vm.discount.value!=0"><strong>{{ cart.totalCost() - vm.discount.value | currency:vm.currency.symbol }}</strong> 
+                    <small ng-if="vm.currency.value=='USD'&&vm.site=='kamlungpuravida.com'">({{ (cart.totalCost() - vm.discount.value) / vm.currencyExchangeRate | currency:'₡':0}})</small>
+                    <small ng-if="vm.currency.value=='CRC'&&vm.site=='kamlungpuravida.com'">({{ (cart.totalCost() - vm.discount.value) * vm.currencyExchangeRate | currency}})</small>
+                    <small> i.v.i</small>
                 </h4>
             </div>
         </div>

@@ -60,12 +60,13 @@
     }
   }
 
-  function LeftCtrl(Navbar){
+  function LeftCtrl(Navbar, Helper){
     var vm = this;
 
     init();
 
     function init(){
+      vm.site = Helper.currentSite();
       //Get navbar
       Navbar.get().then(function(results){ vm.navbar = results; },function(err){ Mail.errorLog(err) });
       

@@ -1,9 +1,9 @@
 <div class="container">
-    <md-card class="card-simple top-shadow" md-theme="custom">
+    <md-card class="card-simple top-shadow">
         <md-card-content class="text-center">
             <div ng-if="vm.paymentData.paymentStatus=='approved'">
                 <h2>Transacción aprobada </h2>
-                <p> <small class="success-green"><i class="fas fa-check-circle"></i></small> Le enviamos un correo con todos los detalles de la orden. </p>
+                <p> <small class="success-green"><i class="fas fa-check-circle"></i></small> Le enviamos un correo con todos los detalles de la orden. Si no encuentra su correo revise la carpeta de spam (correo no deseado).</p>
                 <mb-button ng-click="vm.sendEmail()" class="md-button md-raised custom">
                     <span ng-if="!vm.loading"><i class="fas fa-paper-plane"></i>&nbsp; Reenviar Correo</span>
                 </mb-button>

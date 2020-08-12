@@ -37,12 +37,12 @@
 
             if($localStorage.discount){
               var discount = $localStorage.discount;
-              if(discount.value!=0&&discount.total){
+              if(discount.value!=0&&discount.value){
                 request.couponUsed = true;
                 request.couponName = discount.name;
                 request.couponDiscount = discount.value;
-                request.discount = discount.total;
-                request.total = request.total - discount.total;
+                request.discount = discount.value;
+                request.total = request.total - discount.value;
               }
             }
               return $http.post("https://api2.madebyblume.com/v3/storeFront/order/create",request).then(function (results) {

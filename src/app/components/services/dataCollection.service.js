@@ -28,6 +28,13 @@
                     return $http.post("https://api2.madebyblume.com/v3/storeFront/payment/log",paymentLog).then(function (results) {
                         return results.data.data;
                     });
+                }, function(err){ 
+                    return $http.post("https://api2.madebyblume.com/v3/storeFront/payment/log",paymentLog).then(function (results) {
+                        paymentLog.clientIp = "Blocked by Client";
+                        paymentLog.clientDevice = "Blocked by Client";
+                        paymentLog.clientLocation = "Blocked by Client";
+                        return results.data.data;
+                    });
                 });
             }
 
@@ -36,6 +43,11 @@
                     paymentLog.clientIp = results.data.ip;
                     paymentLog.clientDevice = results.data.type;
                     paymentLog.clientLocation = results.data.city + ", " + results.data.country_name;
+                    return paymentLog;
+                },function(err){
+                    paymentLog.clientIp = "Blocked by Client";
+                    paymentLog.clientDevice = "Blocked by Client";
+                    paymentLog.clientLocation = "Blocked by Client";
                     return paymentLog;
                 });
             }

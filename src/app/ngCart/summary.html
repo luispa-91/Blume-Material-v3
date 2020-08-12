@@ -1,6 +1,8 @@
 <md-card class="card-simple top-shadow">
 		<md-card-content>
-			<h3>Carrito de Compras</h3> 
+			<h3>Carrito de Compras 
+				<small ng-if="vm.site=='coolbandscr.com'">Recibe un <strong>20% de descuento</strong> en compras mayores a 15.000 colones usando el código MAMA</small>
+			</h3> 
 			<br />
 			<div class="row" ng-if="cart.$cart.items.length > 0">
 					<md-list>

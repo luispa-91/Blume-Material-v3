@@ -33,10 +33,10 @@
               case "mare.cr":
                 theme.topbar["background-color"] = "#c3b48b";
                 break;
-              case "desinid.madebyblume.com":
+              case "mercadosaliados.desinid.com":
                 theme.topbar["background-color"] = "#f46a17";
                 break;
-              case "maky.madebyblume.com":
+              case "productosmaky.com":
                 theme.topbar["background-color"] = "#2e2f7f";
                 theme.topbar["font-family"] = "Roboto Mono";
                 theme.navbar["font-family"] = "Roboto Mono";
@@ -50,6 +50,41 @@
                 break;
               case "pasocacr.com":
                 theme.topbar["background-color"] = "#5cb5e5";
+                break;
+              case "danceco.co.cr":
+                theme.topbar["background-color"] = "#C9C1B5";
+                break;
+              case "apartadocreativo.com":
+                theme.topbar["background-color"] = "#be7a5e";
+                break;
+              case "parpar.madebyblume.com":
+                theme.topbar["background"] = "url(assets/images/topbar-parpar.jpeg)";
+                theme.topbar["color"] = "#000";
+                theme.topbar["font-weight"] = "bold";
+                break;
+              case "themommylifecr.com":
+                theme.topbar["background-color"] = "#ffdbd5";
+                theme.navbar["background-color"] = "#ffdbd5";
+                theme.navbar["color"] = "#fff";
+                theme.topbar["font-family"] = "Gothic";
+                theme.navbar["font-family"] = "Gothic";
+                break;
+              case "pintajewels.com":
+                theme.navbar["background-color"] = "#000";
+                theme.navbar["color"] = "#fff";
+                break;
+              case "laguaria.madebyblume.com":
+                theme.topbar["background-color"] = "#39384a";
+                theme.navbar["background-color"] = "#39384a";
+                theme.navbar["color"] = "#fff";
+                break;
+              case "karamawi.madebyblume.com":
+                theme.topbar["background-color"] = "#ffd7d7";
+                theme.navbar["background-color"] = "#ffd7d7";
+                theme.navbar["color"] = "#000";
+                theme.topbar["color"] = "#000";
+                theme.topbar["font-family"] = "Roboto Mono";
+                theme.navbar["font-family"] = "Roboto Mono";
                 break;
             }
 
@@ -74,8 +109,14 @@
                 theme.footer["background-color"] = "#ff807f";
                 theme.footer["color"] = "#036780";
               break;
-              case "maky.madebyblume.com":
+              case "productosmaky.com":
                 theme.footer["font-family"] = "Roboto Mono";
+              break;
+              case "karamawi.madebyblume.com":
+                theme.footer["font-family"] = "Roboto Mono";
+              break;
+              case "themommylifecr.com":
+                theme.footer["font-family"] = "Gothic";
               break;
             }
 
@@ -90,8 +131,14 @@
           }
           
           switch(site){
-            case "maky.madebyblume.com":
+            case "productosmaky.com":
               theme["font-family"] = "Roboto Mono";
+            break;
+            case "karamawi.madebyblume.com":
+              theme["font-family"] = "Roboto Mono";
+            break;
+            case "themommylifecr.com":
+              theme["font-family"] = "Gothic";
             break;
           }
 
@@ -156,7 +203,7 @@
                   ]
                 }
               break;
-              case "desinid.madebyblume.com":
+              case "mercadosaliados.desinid.com":
                 banners = {
                   sectionTwo: [
                     {
@@ -173,6 +220,22 @@
                     {
                       imageUrl: 'assets/images/bannerBotMercatico.jpg',
                       linkUrl: '#',
+                      style: 'full'
+                    }
+                  ]
+                }
+              break;
+              case "themommylifecr.com":
+                banners = {
+                  sectionTwo: [
+                    {
+                      imageUrl: 'assets/images/bannerMidSuperbabies.jpeg',
+                      linkUrl: '/info/superbabies',
+                      style: 'full'
+                    },
+                    {
+                      imageUrl: 'assets/images/bannerMidTml.png',
+                      linkUrl: '/info/themommylife',
                       style: 'full'
                     }
                   ]
@@ -199,16 +262,39 @@
                   ]
                 }
               break;
+              case "karamawi.madebyblume.com":
+                banners = {
+                  sectionOne: [
+                    {
+                        imageUrl: 'assets/images/bannerMidKaramawi.jpg',
+                        linkUrl: '#',
+                        style: 'full'
+                    }
+                  ],
+                  sectionTwo: [
+                    {
+                      imageUrl: 'assets/images/bannerBotKaramawi.jpg',
+                      linkUrl: '#',
+                      style: 'full'
+                    }
+                  ]
+                }
+              break;
               case "coolbandscr.com":
                 banners = {
                   sectionOne: [
+                    {
+                      imageUrl: 'assets/images/coolbandsPromoColas.jpg',
+                      linkUrl: '/products?customValueB=promo colas',
+                      style: 'full'
+                    },
                     {
                         imageUrl: 'assets/images/bannerMasCategoriasCoolbands.png',
                         linkUrl: '/info/mascategorias',
                         style: 'full'
                     },
                     {
-                        imageUrl: 'assets/images/bannerMidCoolbands.jpg',
+                        imageUrl: 'assets/images/bannerMidCoolbandsNew.png',
                         linkUrl: '/info/puntosdeventa',
                         style: 'full'
                     }

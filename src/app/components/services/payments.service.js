@@ -3,8 +3,8 @@
       angular
           .module('angular')
           .factory('Payments', Payments);
-          Payments.$inject = ['$http', 'md5', '$window','$location','$state'];
-          function Payments($http, md5, $window,$location,$state){
+          Payments.$inject = ['$http', 'md5', '$window','$location','$state', 'ngCart'];
+          function Payments($http, md5, $window,$location,$state, ngCart){
   
               var availableMethods = function () {
                   return $http.get("https://api2.madebyblume.com/v3/storeFront/payment/methods").then(function (results) {
@@ -128,16 +128,15 @@
                     paymentStatus="approved";
                     orderId=$location.search().referencia;
                   } else {
-                    var array = result.split('&');
-                    paymentStatus = array[0].toLowerCase();
-                    orderId = array[1].split('=')[1];
+                    paymentStatus = "declined";
+                    orderId=$location.search().referencia;
                   }
                   var responseText = "";
                   var temp = {
                       paymentStatus: paymentStatus,
                       responseText: responseText
                   };
-                  if(paymentStatus.toLowerCase()=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
+                  if(paymentStatus.toLowerCase()=="approved"){ temp.responseText = "Tu compra fue aprobada."; ngCart.init(); } else { temp.responseText = "Tu compra fue denegada." }
                   return $http.get("https://api2.madebyblume.com/v3/payments/ipn/credix?paymentStatus=" + paymentStatus + "&orderId=" + orderId).then(function (results) {
                     return temp;
                   });
@@ -157,7 +156,7 @@
                     paymentStatus: paymentStatus,
                     responseText: responseText
                 };
-                if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
+                if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada."; ngCart.init(); } else { temp.responseText = "Tu compra fue denegada." }
                 return $http.get("https://api2.madebyblume.com/v3/payments/ipn/fttech?paymentStatus=" + paymentStatus + "&orderId=" + orderId).then(function (results) {
                   return temp;
                 });
@@ -193,7 +192,7 @@
                     paymentStatus: paymentStatus,
                     responseText: responseText
                 };
-                if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada." } else { temp.responseText = "Tu compra fue denegada." }
+                if(paymentStatus=="approved"){ temp.responseText = "Tu compra fue aprobada."; ngCart.init(); } else { temp.responseText = "Tu compra fue denegada." }
                 return temp;
               }
 

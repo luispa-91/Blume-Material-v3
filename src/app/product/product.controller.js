@@ -26,6 +26,7 @@
       vm.keywords = [];
 
       //Initialize Variables
+      vm.setSelectedOption = setSelectedOption;
       Helper.currency().then(function (results) { 
         vm.currency = results;
         if(vm.currency.value=='USD'){vm.currency.symbol='$'} else {vm.currency.symbol='₡'};
@@ -39,20 +40,26 @@
           vm.isGrupoCachos = data.isGrupoCachos;
           vm.keywords = vm.product.keywords.split(',');
           BlumeAnalytics.fbPixelViewContent(vm.product);
-          vm.getProductAvailability();
+          getProductAvailability();
         });
      });
 
-    //  if(vm.site=="kamlungpuravida.com"){
-    //       Helper.currencyExchangeRate().then(function (results) { 
-    //           vm.currencyExchangeRate = results;
-    //       });
-    //   }
+     if(vm.site=="kamlungpuravida.com"){
+          // Helper.currencyExchangeRate().then(function (results) { 
+          //     vm.currencyExchangeRate = results;
+          // });
+          vm.currencyExchangeRate = 0.001728;
+      }
       
     }
 
     function getProductAvailability(){
       Products.availability(vm.option1).then(function(response){ vm.productAvailability = response; });
+    }
+
+    function setSelectedOption(variant){
+      vm.option1 = variant.externalId;
+      getProductAvailability();
     }
 
       vm.setActive = function(index) {

@@ -25,6 +25,6 @@
     'mdRangeSlider',
     'angularFileUpload',
     'timer']).config(function($mdThemingProvider) {
-      $mdThemingProvider.theme("custom").primaryPalette("green").accentPalette("green");
+      $mdThemingProvider.disableTheming();
     });
 })();

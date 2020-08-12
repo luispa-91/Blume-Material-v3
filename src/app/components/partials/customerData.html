@@ -1,9 +1,11 @@
-<md-card class="card-simple top-shadow" md-theme="custom">
+<md-card class="card-simple top-shadow">
     <md-card-content>
             <h3>
                 1. Datos Personales 
                 <small ng-if="vm.customerComplete" class="success-green"><i class="fas fa-check-circle"></i></small>
             </h3>
+            <small ng-if="vm.site=='productosmaky.com'||vm.site=='redscocr.com'||vm.site=='mercadosaliados.desinid.com'"><small>Si desea que le enviemos factura electrónica favor indicar su Nombre Completo o Razón Social, Cédula física o jurídica, correo electrónico, número de teléfono y dirección.</small></small>
+            <small ng-if="vm.site=='thefaceshopcr.com'"><small>Estimado cliente le recordamos que las tarjetas de Cliente Frecuente no aplica en compras mediante Tienda en Línea !</small></small>
             <br />
             <div class="row">
                 <form ng-if="!vm.loginModuleVisible" name="customerData">

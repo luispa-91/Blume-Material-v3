@@ -118,14 +118,15 @@
         controllerAs: "vm"
       })
     .state("paymentNotificationCredix", {
-        url: "/payment/credix/:paymentStatus?hash&referencia",
+        url: "/payment/credix/:paymentStatus?hash&referencia&autorizacion",
         title: "Notificación del Pago",
         templateUrl: "app/paymentNotification/paymentNotification.view.html",
         controller: "PaymentNotificationController",
         controllerAs: "vm",
         params: {
           hash: {squash:true},
-          referencia: {squash:true}
+          referencia: {squash:true},
+          autorizacion: {squash:true}
         }
       })
         .state('informationPage', {
@@ -138,6 +139,13 @@
         .state('promoSelina', {
           url: '/promoselina',
           title: 'Promo Selina',
+          templateUrl: 'app/informationPage/informationPage.view.html',
+          controller: 'InformationPageController',
+          controllerAs: 'vm'
+        })
+        .state('promoRideNM', {
+          url: '/promo',
+          title: 'Promo De Ride NM',
           templateUrl: 'app/informationPage/informationPage.view.html',
           controller: 'InformationPageController',
           controllerAs: 'vm'

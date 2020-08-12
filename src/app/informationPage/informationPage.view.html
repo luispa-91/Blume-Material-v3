@@ -1,22 +1,27 @@
 
-<div ng-if="vm.pageName!='promoselina'"  class="container">
+<div ng-if="vm.pageName!='promoselina'&&vm.pageName!='promo'"  class="container">
     <div ta-bind="text" ng-model="vm.page.htmlContent" ta-readonly="false"></div>
 </div>
+<script id="bx24_form_button" data-skip-moving="true">
+    
+    
+</script>
+
 <div class="container-fluid" ng-if="vm.pageName=='promoselina'">
     <div class="row">
         <img src="assets/images/banner-promo-selina.jpg" style="width:100%" alt="">
     </div>
     <br />
     <div class="row text-center">
-        <script id="bx24_form_button" data-skip-moving="true">
-            (function(w,d,u,b){w['Bitrix24FormObject']=b;w[b] = w[b] || function(){arguments[0].ref=u;
-                    (w[b].forms=w[b].forms||[]).push(arguments[0])};
-                    if(w[b]['forms']) return;
-                    var s=d.createElement('script');s.async=1;s.src=u+'?'+(1*new Date());
-                    var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
-            })(window,document,'https://grupocacho.bitrix24.com/bitrix/js/crm/form_loader.js','b24form');
-    
-            b24form({"id":"23","lang":"en","sec":"c8idmp","type":"button","click":""});
-    </script><button class="b24-web-form-popup-btn-23 md-button md-raised custom">Participar</button>
+        <button class="b24-web-form-popup-btn-23 md-button md-raised custom">Participar</button>
+    </div>
+</div>
+
+<div class="container-fluid" ng-if="vm.pageName=='promo'" style="background:url(assets/images/banner-promo-deridenm.jpg) no-repeat center center; height: 1000px;">
+    <div class="row">
+        <img class="center-block text-center" src="assets/images/logo-deridenm.png" style="width:350px;padding-top: 10em;padding-bottom: 10em;" alt="">
+    </div>
+    <div class="row text-center">
+        <button class="b24-web-form-popup-btn-2 md-button md-raised custom">Participar</button>
     </div>
 </div>

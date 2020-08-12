@@ -1,4 +1,4 @@
-<md-card class="card-simple top-shadow" md-theme="custom">
+<md-card class="card-simple top-shadow">
     <md-card-content>
             <h3>3. Seleccionar Método de Pago</h3> <br>
             <!-- PayPal Starts Here -->
@@ -76,7 +76,7 @@
                             <input style="margin-top:10px" name="cvv" type="text" ng-model="vm.payment.card.cvc" />
                         </md-input-container>
                     </div>
-                    <div ng-if="vm.paymentMethods.bac.processorId=='grupocachos'" class="form-group c-c center-block text-center">
+                    <div ng-if="vm.paymentMethods.bac.processorId=='grupocachos'&&vm.showTasaCero" class="form-group c-c center-block text-center">
                         <md-checkbox ng-model="vm.useTasaCero" aria-label="Use Tasa Cero">
                             <img src="../assets/images/tasa0.png" class="img-responsive" />
                             3 meses 
@@ -168,7 +168,7 @@
         </div>
         <div layout="row" layout-align="center center">
             <div class="center-block text-center" ng-if="vm.paymentMethod=='moneytransfer' && vm.moneyTransferReceiptSent">
-                <p class="success-green">Recibimos el comprobante correctamente, gracias por tu compra! Te enviamos una copia de la orden al correo, ya puedes cerrar esta página.</p>
+                <p class="success-green">Recibimos el comprobante correctamente, gracias por tu compra! Te enviamos una copia de la orden al correo, ya puedes cerrar esta página. Si no encuentras tu correo revisa la carpeta de spam (correo no deseado).</p>
             </div>
             <div ng-if="vm.paymentMethod=='moneytransfer' && !vm.moneyTransferReceiptSent" class="center-block text-center">
                 <p>1. Para pagar tu orden, deposita el monto total de la compra 
@@ -213,7 +213,7 @@
         </div>
         <div layout="row" layout-align="center center" ng-if="vm.paymentMethod=='po' && vm.moneyTransferReceiptSent">
             <div class="center-block text-center">
-                <p class="success-green">Recibimos tu orden correctamente! Enviamos una copia a tu correo, ya puedes cerrar esta página.</p>
+                <p class="success-green">Recibimos tu orden correctamente! Enviamos una copia a tu correo, ya puedes cerrar esta página. Si no encuentras tu correo revisa la carpeta de spam (correo no deseado).</p>
             </div>
         </div>
         <!-- Terms and Conditions -->

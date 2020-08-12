@@ -9,7 +9,7 @@
     <img ng-if="::vm.site=='apartadocreativo.com'" ng-src="https://cms.blumewebsites.com/apartadocreativo/brands/{{vm.brand}}banner.png" class="img-responsive" alt="">
     <img ng-if="::vm.site=='nmnuevomundo.com'" ng-src="https://cms.blumewebsites.com/nuevomundo/website/{{vm.customBanner}}banner.jpg" class="img-responsive" alt="">
     <div class="col-md-4 col-sm-6 no-padding" ng-repeat="product in vm.products | filter:vm.criteria | filter: vm.saleProducts('discountPrice',0) | limitTo:vm.itemsDisplayed"> 
-        <md-card class="center-block text-center card-h-3">
+        <md-card class="center-block text-center" ng-class="::{'card-h-3':vm.site!='pasocacr.com','card-h-alt':vm.site=='pasocacr.com'}">
             <md-card-content>
             <a href="" ui-sref="product(::{referenceCode:product.referenceCode,colorCode:product.colorCode})">
                 <div class="imageContainer">
@@ -18,17 +18,18 @@
                     <div class="imageOverlay">
                         <div class="imageOverlayText"><i class="fa fa-2x fa-search"></i></div>
                     </div>
-                    <span ng-if="::product.stock==0">
-                        <img class="soldOutTagSmall" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
-                    </span>
                     <span ng-if="::product.discountPrice!=0">
                         <div style="position:absolute;top:40px;right:33px;z-index:1">
-                            <strong style="color:white">{{100-(product.discountPrice*100)/product.price | number:0}}%</strong>
+                            <strong ng-if="::vm.site!='nmnuevomundo.com'" style="color:white">{{100-(product.discountPrice*100)/product.price | number:0}}%</strong>
+                            <strong ng-if="::vm.site=='nmnuevomundo.com'" style="color:black">{{100-(product.discountPrice*100)/product.price | number:0}}%</strong>
                         </div>
-                        <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
+                        <img ng-if="::vm.site!='nmnuevomundo.com'&&vm.site!='cachoscr.com'" class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
+                        <img ng-if="::vm.site=='nmnuevomundo.com'" class="salesTag" src="assets/images/nuevomundo-discount-tag.png" />
+                        <img ng-if="::vm.site=='cachoscr.com'" class="salesTag" src="assets/images/cachos-discount-tag.png" />
                     </span>
-                    <span>
-                        <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::product.customValueD}}.png" ng-if="::product.customValueD!=''&&vm.isGrupoCachos" />
+                    <span ng-if="::product.gender=='FEMENINO'||product.brand=='NEW WAVE'">
+                        <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::product.customValueD}}.png" ng-if="::product.customValueD!=''&&vm.site=='nmnuevomundo.com'"/>
+                        <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::product.customValueD}}.png" ng-if="::product.customValueD!=''&&vm.site=='cachoscr.com'"/>
                     </span>
                 </div>
             </a>
@@ -36,11 +37,13 @@
             <p class="no-margin" ng-if="product.price!=0">
                 <span ng-if="::product.discountPrice==0">
                     {{::product.price | currency:vm.currency.symbol}} 
+                    <small> i.v.i</small>
                     <!-- <small class="gray">({{::product.priceUsd|currency}})</small> -->
                 </span>
                 <span ng-if="::product.discountPrice!=0">
                     <small class="darkred"><strike>{{::product.price | currency:vm.currency.symbol}}</strike></small><br />
                     {{::product.discountPrice | currency:vm.currency.symbol}} 
+                    <small> i.v.i</small>
                     <!-- <small class="gray">({{::product.discountPriceUsd|currency}})</small> -->
                 </span>
                 <strong ng-if="product.discountTimerEnd">
@@ -48,6 +51,8 @@
                     <timer class="discountTimer" end-time="product.discountTimerEnd" max-time-unit="'hour'">{{hours}} h {{minutes}} min {{seconds}} s</timer>
                 </strong>
             </p>
+            <ngcart-detail ng-if="product.discountPrice==0&&vm.site=='pasocacr.com'" id="{{ product.externalId }}" name="{{ product.title }}" price="{{ product.price }}" quantity="1" quantity-max="50" data="{referenceCode:product.referenceCode,colorCode:product.colorCode,size:product.size,imageUrl:vm.productImages[0].url,isDiscountPrice:0,brand:product.brand,stock:100,isReserve:0,weight:product.weight,comboCode:product.customValueD}"><i class="fa fa-shopping-cart"></i> Agregar</ngcart-detail>
+            <ngcart-detail ng-if="product.discountPrice>0&&vm.site=='pasocacr.com'" id="{{ product.externalId }}" name="{{ product.title }}" price="{{ product.discountPrice }}" quantity="1" quantity-max="50" data="{referenceCode:product.referenceCode,colorCode:product.colorCode,size:product.size,imageUrl:vm.productImages[0].url,isDiscountPrice:1,brand:product.brand,stock:100,isReserve:0,weight:product.weight,comboCode:product.customValueD}"><i class="fa fa-shopping-cart"></i> Agregar</ngcart-detail>
             </md-card-content>
         </md-card>
     </div>

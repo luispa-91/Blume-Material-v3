@@ -13,8 +13,8 @@
             }
 
             var getInstagramFeed = function(accessToken){
-                return $http.get('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + accessToken).then(function (results) {
-                    return results.data.data;
+                return $http.get('https://graph.instagram.com/me/media?fields=id,timestamp,caption,media_url,permalink&access_token=' + accessToken).then(function (results) {    
+                return results.data.data;
                 });
             }
 

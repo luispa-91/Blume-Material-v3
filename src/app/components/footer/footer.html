@@ -11,7 +11,9 @@
         <span ng-repeat="method in vm.footer.paymentMethods">
           <img ng-if="::method=='fttech'" src="assets/images/bancoNacional.png" class="social-icon card-logo" alt="Banco Nacional" />
           <img ng-if="::method=='bacsanjose'" src="assets/images/bacSanJose.png" class="social-icon card-logo" alt="Bac San José" />
-          <img ng-if="::vm.site=='nmnuevomundo.com'||vm.site=='cachoscr.com'||vm.site=='tiendavertigo.com'" src="assets/images/tasa0.png" class="social-icon card-logo" alt="Tasa 0 BAC San José" />
+          <img ng-if="::vm.site=='nmnuevomundo.com'&&method=='bacsanjose'" src="assets/images/tasa0.png" class="social-icon card-logo" alt="Tasa 0 BAC San José" />
+          <img ng-if="::vm.site=='cachoscr.com'&&method=='bacsanjose'" src="assets/images/tasa0.png" class="social-icon card-logo" alt="Tasa 0 BAC San José" />
+          <img ng-if="::vm.site=='tiendavertigo.com'&&method=='bacsanjose'" src="assets/images/tasa0.png" class="social-icon card-logo" alt="Tasa 0 BAC San José" />
           <img ng-if="::method=='fttech'" src="assets/images/credix.png" class="social-icon card-logo" alt="Pagos con Credix" />
           <img ng-if="::method=='paypal'" src="assets/images/paypal.svg" class="social-icon card-logo" alt="Paypal" />
         </span>

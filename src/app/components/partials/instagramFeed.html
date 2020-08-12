@@ -1,8 +1,8 @@
 <div layout="row">
     <div ng-repeat="post in vm.instagramFeed.posts | limitTo:vm.instagramFeed.limit" flex>
-        <a href="{{::post.link}}" name="{{::post.caption.text}}" target="_blank" rel="noreferrer">
+        <a href="{{::post.permalink}}" name="{{::post.caption}}" target="_blank" rel="noreferrer">
             <div class="imageContainer" style="padding:2px;">
-                <div style="background:url({{::post.images.standard_resolution.url}}) no-repeat center; background-size:cover;" class="md-card-image imageInstagram">
+                <div style="background:url({{::post.media_url}}) no-repeat center; background-size:cover;" class="md-card-image imageInstagram">
                 </div>
                 <!-- <img ng-src="{{::post.images.standard_resolution.url}}" alt="Blume Instagram Feed" class="img-responsive"> -->
                 <div class="imageOverlay">

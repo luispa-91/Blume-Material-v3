@@ -3,8 +3,8 @@
     angular
         .module('angular')
         .controller('PaymentDataController', PaymentDataController);
-        PaymentDataController.$inject = ['Payments','Order','DataCollection','BlumeStorage','$scope','$localStorage','Helper','Personalization','Mail'];
-    function PaymentDataController(Payments,Order,DataCollection,BlumeStorage,$scope,$localStorage,Helper,Personalization,Mail) {
+        PaymentDataController.$inject = ['Payments','Order','DataCollection','BlumeStorage','$scope','$localStorage','Helper','Personalization','Mail','Discount'];
+    function PaymentDataController(Payments,Order,DataCollection,BlumeStorage,$scope,$localStorage,Helper,Personalization,Mail,Discount) {
         var vm = this;
         init();
         ///////////////
@@ -15,6 +15,7 @@
             vm.saving = false;
             vm.useTasaCero = false;
             vm.useTasaCero6 = false;
+            vm.showTasaCero = true;
             vm.acceptedPrivacyPolicy = false;
             vm.moneyTransferReceiptSent = false;
             vm.errorMessage = "";
@@ -35,6 +36,14 @@
             Helper.setSessionId(vm.sessionId);
 
         }
+
+        Discount.broadcastDiscountUpdate($scope, function broadcastUpdate() {
+            // Handle notification
+            setTimeout(function(){
+              getCurrentDiscount();
+                $scope.$apply();
+                }, 500);
+        });
 
         BlumeStorage.broadcastUploadComplete($scope, function broadcastUpdate() {
             // Handle notification
@@ -153,6 +162,13 @@
             vm.errorMessage = "Para continuar con tu compra debes aceptar las políticas de privacidad.";
             vm.saving = false;
           }
+        }
+
+        function getCurrentDiscount(){
+          if($localStorage.discount){
+              var discount = $localStorage.discount;
+              if(discount.value>0){ vm.showTasaCero = false; }
+          } else { return { code: '', name:'', value: 0, type: '', applyTo: '' }; }
         }
     }
 })();

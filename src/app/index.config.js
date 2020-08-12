@@ -14,7 +14,6 @@
     AnalyticsProvider.setPageEvent('$stateChangeSuccess');
     // Enable log
     $logProvider.debugEnabled(true);
-
     $qProvider.errorOnUnhandledRejections(false);
   }
 

@@ -14,8 +14,8 @@
     function init(){
       //Initialize Controller
       vm.cartId = "";
-      if($stateParams.cartId){vm.cartId = $stateParams.cartId;}
       Discount.reset();
+      if($stateParams.cartId){vm.cartId = $stateParams.cartId;}
       Delivery.restart();
       vm.currency = {value: '', symbol: ''}; 
       vm.errorMessage = "";

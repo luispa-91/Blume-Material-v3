@@ -30,11 +30,15 @@
     Helper.googleAnalyticsId().then(function(response){ gtag('config', response.id); });
 
     $transitions.onStart( {}, function (trans) {
+      var isGrupoCachos = Helper.isGrupoCachos();
       var to = trans.to().name;
       // Google Analytics during state change
       gtag('set', 'page', to);
       gtag('set', 'title', to);
       gtag('send', 'pageview');
+      if(trans.to().controller == "PaymentNotificationController" && isGrupoCachos){
+        gtag('event', 'conversion', {'send_to': 'AW-617710477/r2HMCN2ortYBEI2HxqYC'});
+      }
     });
   }
 })();

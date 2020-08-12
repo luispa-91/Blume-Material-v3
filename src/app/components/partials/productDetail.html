@@ -6,17 +6,18 @@
                     <img class="img-responsive" ng-src="{{::image.url}}" alt="{{::vm.product.description}}">
                 </slide>
                 </carousel>
-                <span ng-if="::vm.product.stock==0">
-                    <img class="soldOutTag" src="https://cms.blumewebsites.com/demoshop/website/sold-out.png" />
-                </span>
                 <span ng-if="::vm.product.discountPrice!=0">
                         <div style="position:absolute;top:50px;right:38px;z-index:1">
-                            <strong style="color:white">{{100-(vm.product.discountPrice*100)/vm.product.price | number:0}}%</strong>
+                            <strong ng-if="::vm.site!='nmnuevomundo.com'" style="color:white">{{100-(vm.product.discountPrice*100)/vm.product.price | number:0}}%</strong>
+                            <strong ng-if="::vm.site=='nmnuevomundo.com'" style="color:black">{{100-(vm.product.discountPrice*100)/vm.product.price | number:0}}%</strong>
                         </div>
-                        <img class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
+                        <img ng-if="::vm.site!='nmnuevomundo.com'&&vm.site!='cachoscr.com'" class="salesTag" src="https://cms.blumewebsites.com/demoshop/website/offer-tag.png" />
+                        <img ng-if="::vm.site=='nmnuevomundo.com'" class="salesTag" src="assets/images/nuevomundo-discount-tag.png" />
+                        <img ng-if="::vm.site=='cachoscr.com'" class="salesTag" src="assets/images/cachos-discount-tag.png" />
                 </span>
-                <span>
-                    <img class="comboTag2" ng-src="https://cms.blumewebsites.com/blume/img/{{::vm.product.customValueD}}.png" ng-if="::vm.product.customValueD!=''&&vm.isGrupoCachos"/>
+                <span ng-if="::vm.product.gender=='FEMENINO'||vm.product.brand=='NEW WAVE'">
+                    <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::vm.product.customValueD}}.png" ng-if="::vm.product.customValueD!=''&&vm.site=='nmnuevomundo.com'"/>
+                    <img class="comboTag" ng-src="https://cms.blumewebsites.com/blume/img/{{::vm.product.customValueD}}.png" ng-if="::vm.product.customValueD!=''&&vm.site=='cachoscr.com'"/>
                 </span>
             </div>
         </div>
@@ -93,13 +94,27 @@
             <div layout="row">
             <div flex>
                 <div ng-if="vm.products.length > 0 && vm.products[0].size!=''">
-                    <h3 ng-if="::vm.site!='maky.madebyblume.com'">Tallas</h3>
-                    <h3 ng-if="::vm.site=='maky.madebyblume.com'">Peso</h3>
-                    <md-select ng-model="vm.option1" ng-change="vm.getProductAvailability()" aria-label="Sizes">
+                    <h3 ng-if="::vm.site!='productosmaky.com'&&vm.site!='thefaceshopcr.com'&&vm.site!='themommylifecr.com'&&vm.site!='vitare.madebyblume.com'&&vm.site!='naturaurbanacr.com'">Tallas</h3>
+                    <h3 ng-if="::vm.site=='productosmaky.com'">Peso</h3>
+                    <h3 ng-if="::vm.site=='thefaceshopcr.com'||vm.site=='themommylifecr.com'||vm.site=='vitare.madebyblume.com'||vm.site=='naturaurbanacr.com'">Opciones</h3>
+                    <div class="c-pwa-sku-selection__size-inner" ng-if="vm.products.length > 0 && vm.products[0].size!=''">
+                        <div class="c-pwa-radio-boxes c-pwa-radio-boxes--default">
+                            <ul class="c-pwa-radio-boxes__list c-pwa-radio-boxes__list--default">
+                                <li class="c-pwa-radio-boxes__item c-pwa-radio-boxes__item--default" ng-repeat="variant in vm.products">
+                                    <input ng-click="vm.setSelectedOption(variant)" type="radio" name="selectedSize" id="{{variant.size}}" value="{{variant.externalId}}" class="c-pwa-radio-boxes__input c-pwa-custom-radio__input">
+                                    <label ng-class="{ 'selectedOption' : variant.externalId == vm.option1 }" for="{{variant.size}}" class="c-pwa-radio-boxes__label c-pwa-custom-radio__label c-pwa-custom-radio__label--default">
+                                        {{variant.size}} <span ng-if="variant.customValueB!=''&&vm.isGrupoCachos">({{::variant.customValueB}})</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div> 
+                    </div>
+                    <!-- Uncomment for old size picker -->
+                    <!-- <md-select ng-model="vm.option1" ng-change="vm.getProductAvailability()" aria-label="Sizes">
                         <md-option ng-repeat="variant in vm.products" value="{{::variant.externalId}}">
                             {{::variant.size}} <span ng-if="variant.customValueB!=''&&vm.isGrupoCachos">({{::variant.customValueB}})</span>
                         </md-option>
-                    </md-select>
+                    </md-select> -->
                     </div> 
             </div>
             <div flex hide-xs></div>
@@ -111,12 +126,14 @@
                         <div class="product-price">
                             <h3 ng-if="::variant.discountPrice==0">
                                 {{::variant.price | currency:vm.currency.symbol}} 
-                                <!-- <small ng-if="vm.site=='kamlungpuravida.com'" class="gray">({{::variant.price / vm.currencyExchangeRate |currency:'₡':0}})</small> -->
+                                <small> i.v.i</small>
+                                <small ng-if="vm.site=='kamlungpuravida.com'" class="gray">({{::variant.price / vm.currencyExchangeRate |currency:'₡':0}})</small>
                             </h3>
                             <h3 ng-if="::variant.discountPrice!=0">
                                 <small class="darkred"><strike>{{::variant.price | currency:vm.currency.symbol}}</strike></small><br />
                                 {{::variant.discountPrice | currency:vm.currency.symbol}} 
-                                <!-- <small ng-if="vm.site=='kamlungpuravida.com'" class="gray">({{::variant.discountPrice / vm.currencyExchangeRate |currency:'₡':0}})</small> -->
+                                <small> i.v.i</small>
+                                <small ng-if="vm.site=='kamlungpuravida.com'" class="gray">({{::variant.discountPrice / vm.currencyExchangeRate |currency:'₡':0}})</small>
                                 <strong ng-if="variant.discountTimerEnd">
                                     <br>
                                     <timer class="discountTimerLarge" end-time="variant.discountTimerEnd" max-time-unit="'hour'">{{hours}} h {{minutes}} min {{seconds}} s</timer>

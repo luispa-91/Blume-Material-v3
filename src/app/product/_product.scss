@@ -63,3 +63,31 @@
     background-image: none;
     color: black
 }
+
+/*! CSS Used from: https://www.urbanoutfitters.com/static/v3/app.ef72b5ce690d7492e131.css */
+button,div,input,label,li,p,ul{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+*{box-sizing:border-box;}
+:focus{outline-color:#767676;}
+.has-pwa-mouse-click-focus-disabled{outline:none;box-shadow:none;}
+.o-pwa-button-link{letter-spacing:inherit;text-align:left;background:none;cursor:pointer;text-decoration:underline;color:#767676;}
+.o-pwa-button-link:focus,.o-pwa-button-link:hover{text-decoration:none;color:#767676;}
+/*! CSS Used from: https://www.urbanoutfitters.com/static/v3/product.7503a5f1dda1b4b02ec6.css */
+.c-pwa-custom-radio__input{margin:0;padding:0;opacity:0;}
+.c-pwa-custom-radio__label{position:relative;display:inline-block;cursor:pointer;}
+.c-pwa-custom-radio__label.is-disabled:not(.is-selectable){cursor:default;pointer-events:none;}
+.c-pwa-radio-boxes__item{display:inline-block;}
+.c-pwa-radio-boxes__label{font:1.2rem/normal Helvetica,Arial,sans-serif;letter-spacing:.05rem;min-height:38px;padding:18px 10px 9px;border:1px solid #ddd;line-height:0;text-align:center;color:#767676;background-color:#fff;}
+.c-pwa-radio-boxes--default .c-pwa-radio-boxes__label{min-width:38px;max-width:100%;margin-right:5px;margin-bottom:5px;}
+.c-pwa-radio-boxes__label.is-disabled{border-color:#ddd;color:#ddd;background-color:#fff;}
+.c-pwa-radio-boxes__label:hover{border-color:#ddd;color:#222;background-color:#f5f5f5;}
+.c-pwa-radio-boxes__input{position:absolute;}
+
+.c-pwa-radio-boxes__input:focus.has-pwa-mouse-click-focus-disabled+.c-pwa-radio-boxes__label{outline:none;}
+.c-pwa-radio-boxes__input:checked+.c-pwa-radio-boxes__label{border-color:#222;color:#222;background-color:#fff;}
+.c-pwa-radio-boxes__input:checked+.c-pwa-radio-boxes__label.is-disabled{border-color:#e00;color:#767676;background-color:#fff;}
+.c-pwa-size-fit-guide{font:1.2rem/normal Helvetica,Arial,sans-serif;letter-spacing:.05rem;color:#767676;margin-top:5px;margin-bottom:-10px;}
+.c-pwa-size-guide-link{margin-bottom:10px;}
+.s-pwa-size-fit-guide-both .c-pwa-size-guide-link:after{display:inline-block;margin:0 10px;color:#aaa;content:"|";}
+.s-pwa-size-fit-guide-both .c-pwa-size-guide-link:last-child:after{content:"";margin:0;}
+
+.selectedOption{border-color:#ddd;outline:5px auto #767676;color:#222;background-color:#f5f5f5;}
